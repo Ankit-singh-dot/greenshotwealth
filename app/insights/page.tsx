@@ -413,18 +413,22 @@ export default function InsightsPage() {
               </p>
 
               <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-                <button
-                  onClick={() => alert("iOS App Store link ready! Launching soon.")}
+                <a
+                  href="https://apps.apple.com/in/app/green-shoots-wealth/id6778030809"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-black text-white text-xs font-semibold hover:bg-neutral-800 transition-colors shadow-sm cursor-pointer"
                 >
                   <span> Download on the App Store</span>
-                </button>
-                <button
-                  onClick={() => alert("Google Play link ready! Launching soon.")}
+                </a>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.greenshoots.greenshootswealth"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#1b3628] text-white text-xs font-semibold hover:bg-[#12281c] transition-colors shadow-sm cursor-pointer"
                 >
                   <span>▶ GET IT ON Google Play</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
