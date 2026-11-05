@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckIcon, FigmaTickBadge, ArrowRightIcon, ArrowUpRightIcon, ChevronDownIcon } from "@/components/Icons";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
 
 export default function WomenAndWealthPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -108,23 +109,30 @@ export default function WomenAndWealthPage() {
             </div>
           </div>
 
-          {/* 4 Stat Cards matching Figma Image 1 */}
+          {/* 4 Stat Cards matching Figma Image 1 with Count-Up Motion */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 pt-2">
             {[
               {
-                number: "5 YEARS",
+                target: 5,
+                suffix: " YEARS",
                 label: "Approximate global longevity advantage for women.",
               },
               {
-                number: "74.4 YEARS",
+                target: 74.4,
+                decimals: 1,
+                suffix: " YEARS",
                 label: "Female life expectancy cited in the supplied client material.",
               },
               {
-                number: "71.2 YEARS",
+                target: 71.2,
+                decimals: 1,
+                suffix: " YEARS",
                 label: "Male life expectancy cited in the supplied client material.",
               },
               {
-                number: "₹73 LAKH CRORE",
+                target: 73,
+                prefix: "₹",
+                suffix: " LAKH CRORE",
                 label: "Expected to transfer to women in India over the next decade.",
               },
             ].map((stat, idx) => (
@@ -135,7 +143,13 @@ export default function WomenAndWealthPage() {
                 <FigmaTickBadge className="w-10 h-10 mt-0.5" />
                 <div>
                   <div className="font-sans font-bold text-base sm:text-lg text-[#1F3A2C] uppercase leading-snug tracking-normal">
-                    {stat.number}
+                    <AnimatedCounter
+                      target={stat.target}
+                      decimals={stat.decimals || 0}
+                      prefix={stat.prefix || ""}
+                      suffix={stat.suffix}
+                      duration={2000}
+                    />
                   </div>
                   <p className="text-xs sm:text-[13px] text-[#55695c] font-sans font-normal leading-relaxed mt-1">
                     {stat.label}
@@ -346,35 +360,47 @@ export default function WomenAndWealthPage() {
               <span className="italic text-[#4a6344]">responsibility can change too.</span>
             </h2>
             <p className="text-sm sm:text-base text-[#526658] font-sans leading-relaxed">
-              Nearly 80% of married women will eventually become solely responsible for managing their household finances, often because they outlive their husbands.
+              Nearly{" "}
+              <span className="font-bold text-[#1F3A2C]">
+                <AnimatedCounter target={80} suffix="%" duration={1600} />
+              </span>{" "}
+              of married women will eventually become solely responsible for managing their household finances, often because they outlive their husbands.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               {
-                number: "258M+",
+                target: 258,
+                suffix: "M+",
                 label: "Women navigating life after the loss of a spouse.",
               },
               {
-                number: "42M",
+                target: 42,
+                suffix: "M",
                 label: "Women in India living through widowhood.",
               },
               {
-                number: "43M",
+                target: 43,
+                suffix: "M",
                 label: "Women in China living through widowhood.",
               },
               {
-                number: "11M+",
+                target: 11,
+                suffix: "M+",
                 label: "Women in the United States living through widowhood.",
               },
             ].map((card, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl sm:rounded-3xl p-7 shadow-sm border border-[#d6e0c6] flex flex-col justify-between"
+                className="bg-white rounded-2xl sm:rounded-3xl p-7 shadow-sm border border-[#d6e0c6] flex flex-col justify-between hover:shadow-md transition-all"
               >
                 <div className="font-sans text-4xl font-bold tracking-tight text-[#1F3A2C] mb-3">
-                  {card.number}
+                  <AnimatedCounter
+                    target={card.target}
+                    suffix={card.suffix}
+                    duration={2200}
+                  />
                 </div>
                 <p className="text-xs text-[#526658] font-sans leading-relaxed">
                   {card.label}
