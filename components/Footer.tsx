@@ -78,7 +78,7 @@ export default function Footer() {
               </div>
 
               {/* Brand Title */}
-              <div className="font-serif tracking-[0.2em] text-sm sm:text-base font-semibold text-white uppercase">
+              <div className="brand-logo-text text-white text-base sm:text-[17px] leading-none">
                 Green Shoot Wealth
               </div>
 
@@ -160,17 +160,17 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#how-we-invest" className="hover:text-white transition-colors">
+                <Link href="/indian-investing" className="hover:text-white transition-colors">
                   India Investing
                 </Link>
               </li>
               <li>
-                <Link href="/#gift-city" className="hover:text-white transition-colors">
+                <Link href="/global-investing" className="hover:text-white transition-colors">
                   Global Investing
                 </Link>
               </li>
               <li>
-                <Link href="/#gift-city" className="hover:text-white transition-colors">
+                <Link href="/gift-city" className="hover:text-white transition-colors">
                   GIFT City
                 </Link>
               </li>
