@@ -73,6 +73,18 @@ body {
 .font-sans {
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
+
+.brand-logo-text {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0;
+  font-variant: small-caps;
+  font-feature-settings: "smcp" 1;
+  text-transform: none !important;
+}
+
 `;
 
   const built = res.build(candidates);
