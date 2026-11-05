@@ -4,7 +4,8 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import WealthScoreQuiz from "@/components/WealthScoreQuiz";
-import { CheckIcon, CheckCircleSolid, ArrowRightIcon, ArrowUpRightIcon } from "@/components/Icons";
+import ApproachSection from "@/components/ApproachSection";
+import { CheckIcon, CheckCircleSolid, ArrowRightIcon, ArrowUpRightIcon, LinkedinIcon } from "@/components/Icons";
 
 export default function Home() {
   const [investMode, setInvestMode] = useState<"india" | "global">("india");
@@ -200,8 +201,8 @@ export default function Home() {
               <button
                 onClick={() => setInvestMode("india")}
                 className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${investMode === "india"
-                    ? "bg-[#1F3A2C] text-white shadow"
-                    : "text-[#586c60] hover:text-[#1F3A2C]"
+                  ? "bg-[#1F3A2C] text-white shadow"
+                  : "text-[#586c60] hover:text-[#1F3A2C]"
                   }`}
               >
                 India Investing
@@ -209,8 +210,8 @@ export default function Home() {
               <button
                 onClick={() => setInvestMode("global")}
                 className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${investMode === "global"
-                    ? "bg-[#1F3A2C] text-white shadow"
-                    : "text-[#586c60] hover:text-[#1F3A2C]"
+                  ? "bg-[#1F3A2C] text-white shadow"
+                  : "text-[#586c60] hover:text-[#1F3A2C]"
                   }`}
               >
                 Global Investing
@@ -630,85 +631,7 @@ export default function Home() {
       </section>
 
       {/* 10. OUR APPROACH: WEALTH GROWS LIKE A TREE */}
-      <section className="w-full bg-[#F5F1E8] py-20 border-b border-[#e8e2d4]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Content */}
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#bda15f]">
-                OUR APPROACH
-              </span>
-              <h2 className="font-editorial-heading text-[#1F3A2C]">
-                <span>Wealth grows </span>
-                <span className="text-[#8fa868]">like a tree.</span>
-              </h2>
-              <p className="text-sm sm:text-base text-[#5d7064] font-sans leading-relaxed max-w-lg">
-                We start with where you are, learn where you&apos;re going and grow from there.
-              </p>
-
-              {/* 4 Progression Steps */}
-              <div className="space-y-6 pt-4">
-                {[
-                  {
-                    step: "Seed Understand",
-                    desc: "Your goals, your worries, your starting point.",
-                  },
-                  {
-                    step: "Roots Plan",
-                    desc: "A simple roadmap with protection and discipline built in.",
-                  },
-                  {
-                    step: "Growth Invest",
-                    desc: "The right choices, made patiently and steadily.",
-                  },
-                  {
-                    step: "Forest Review",
-                    desc: "We keep tending it, so it can shelter the next generation.",
-                  },
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-4 group">
-                    <div className="flex items-center gap-2 shrink-0 mt-1">
-                      <div className="w-6 h-0.5 bg-[#bda15f]" />
-                      <div className="w-2 h-2 rounded-full bg-[#1F3A2C]" />
-                    </div>
-                    <div>
-                      <h4 className="font-serif text-xl font-semibold text-[#1F3A2C]">
-                        {item.step}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[#5d7064] font-sans mt-0.5">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Tree Visual */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-72 h-80 sm:w-88 sm:h-96 flex items-center justify-center p-8 bg-white rounded-3xl border border-[#e8e2d4] shadow-sm">
-                <svg viewBox="0 0 200 240" fill="none" className="w-full h-full text-[#1F3A2C]">
-                  {/* Subtle root network */}
-                  <path d="M100 170 Q70 210 40 230 M100 170 Q130 210 160 230 M100 180 V235 M85 190 Q60 220 30 225 M115 190 Q140 220 170 225" stroke="#bda15f" strokeWidth="2" strokeLinecap="round" opacity="0.6" />
-                  {/* Trunk */}
-                  <path d="M96 170 C96 130 90 100 100 70 C110 100 104 130 104 170 Z" fill="#1F3A2C" />
-                  {/* Branches */}
-                  <path d="M98 110 Q70 80 45 75 M102 110 Q130 80 155 75 M99 90 Q80 65 60 45 M101 90 Q120 65 140 45 M100 70 V35" stroke="#1F3A2C" strokeWidth="2.5" strokeLinecap="round" />
-                  {/* Leaves / Canopy circles */}
-                  <circle cx="100" cy="30" r="14" fill="#8fa868" fillOpacity="0.85" />
-                  <circle cx="60" cy="45" r="12" fill="#8fa868" fillOpacity="0.8" />
-                  <circle cx="140" cy="45" r="12" fill="#8fa868" fillOpacity="0.8" />
-                  <circle cx="45" cy="75" r="11" fill="#8fa868" fillOpacity="0.75" />
-                  <circle cx="155" cy="75" r="11" fill="#8fa868" fillOpacity="0.75" />
-                  <circle cx="80" cy="55" r="10" fill="#1F3A2C" fillOpacity="0.85" />
-                  <circle cx="120" cy="55" r="10" fill="#1F3A2C" fillOpacity="0.85" />
-                  <circle cx="100" cy="70" r="9" fill="#bda15f" fillOpacity="0.9" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ApproachSection />
 
       {/* 11. ABOUT SALONI (MATCHING SCREENSHOT 1) */}
       <section className="w-full bg-[#EEF0D9] py-20 border-b border-[#dbe4ca]">
@@ -718,8 +641,8 @@ export default function Home() {
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-72 h-[420px] sm:w-80 sm:h-[460px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
-                  src="/saloni_sinha.jpg"
-                  alt="Saloni Sinha - Financial Therapist & Wealth Architect"
+                  src="/saloni_mehta.jpeg"
+                  alt="Saloni Mehta - Financial Therapist & Wealth Architect"
                   fill
                   priority
                   className="object-cover object-top"
@@ -734,11 +657,11 @@ export default function Home() {
               </span>
 
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1F3A2C] font-normal leading-tight">
-                Saloni Sinha. – <span className="italic text-[#4a6344]">Financial Therapist &amp; Wealth Architect.</span>
+                Saloni Mehta. – <span className="italic text-[#4a6344]">Financial Therapist &amp; Wealth Architect.</span>
               </h2>
 
               <p className="text-xs sm:text-sm text-[#485c4f] font-sans leading-relaxed">
-                Saloni Sinha built Green Shoots Wealth on a conviction: that financial advice in India needed to evolve beyond product distribution into something far more human — a practice that combines the rigor of wealth planning with the empathy of therapy.
+                Saloni Mehta built Green Shoots Wealth on a conviction: that financial advice in India needed to evolve beyond product distribution into something far more human — a practice that combines the rigor of wealth planning with the empathy of therapy.
               </p>
 
               <p className="text-xs sm:text-sm text-[#485c4f] font-sans leading-relaxed">
@@ -778,7 +701,7 @@ export default function Home() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-6">
+              <div className="pt-4 flex flex-wrap items-center gap-4 sm:gap-6">
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#1F3A2C] hover:bg-[#12281c] text-white text-xs font-semibold transition-all shadow-md group"
@@ -786,12 +709,15 @@ export default function Home() {
                   <span>Schedule a Conversation</span>
                   <ArrowRightIcon className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link
-                  href="/insights"
-                  className="text-xs font-semibold text-[#1F3A2C] hover:underline underline-offset-6"
+                <a
+                  href="https://www.linkedin.com/in/the-saloni-mehta/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#1F3A2C]/60 text-[#1F3A2C] hover:bg-[#1F3A2C] hover:text-white text-xs font-semibold transition-all"
                 >
-                  Wealth Academy
-                </Link>
+                  <LinkedinIcon className="w-3.5 h-3.5" />
+                  <span>LinkedIn Profile</span>
+                </a>
               </div>
             </div>
           </div>
@@ -865,11 +791,10 @@ export default function Home() {
                 key={idx}
                 onClick={() => scrollStory(idx)}
                 aria-label={`View story ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  activeStoryIdx === idx
+                className={`transition-all duration-300 rounded-full cursor-pointer ${activeStoryIdx === idx
                     ? "w-7 h-1.5 bg-[#EEF0D9]"
                     : "w-1.5 h-1.5 bg-[#3d5e4a] hover:bg-[#527d63]"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -899,18 +824,22 @@ export default function Home() {
               </p>
 
               <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
-                <button
-                  onClick={() => alert("iOS App Store link ready! Launching soon.")}
+                <a
+                  href="https://apps.apple.com/in/app/green-shoots-wealth/id6778030809"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-black text-white text-xs font-semibold hover:bg-neutral-800 transition-colors shadow-sm"
                 >
                   <span> Download on App Store</span>
-                </button>
-                <button
-                  onClick={() => alert("Google Play link ready! Launching soon.")}
+                </a>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.greenshoots.greenshootswealth"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#1b3628] text-white text-xs font-semibold hover:bg-[#12281c] transition-colors shadow-sm"
                 >
                   <span>▶ Get it on Google Play</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
