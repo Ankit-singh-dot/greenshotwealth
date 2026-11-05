@@ -1,11 +1,91 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckIcon, FigmaTickBadge, ArrowRightIcon, ArrowUpRightIcon } from "@/components/Icons";
 
 export default function OurApproachPage() {
+  const [activeStage, setActiveStage] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const philosophyRef = useRef<HTMLDivElement>(null);
+
+  const philosophyStages = [
+    {
+      id: "understand",
+      stage: "Seed Stage",
+      stepNum: "01",
+      title: "Understand (Seed Stage)",
+      subtitle: "Know where you stand",
+      desc: "We begin by understanding your goals, priorities, existing financial position, and time horizon.",
+      pillars: ["Goals Discovery", "Cash Flow & Liabilities", "Risk Assessment"],
+      quote: "Every enduring tree begins with a seed grounded in deep self-knowledge.",
+      image: "/images/framework_understand.jpg",
+    },
+    {
+      id: "plan",
+      stage: "Roots Stage",
+      stepNum: "02",
+      title: "Plan (Roots Stage)",
+      subtitle: "Give your goals a direction",
+      desc: "We organise your priorities and develop a structured strategy aligned with your needs, preferences, and time horizon.",
+      pillars: ["Asset Allocation", "Tax Efficiency Blueprint", "Emergency Safety Net"],
+      quote: "Strong subterranean roots keep your portfolio grounded through all market seasons.",
+      image: "/images/framework_plan.jpg",
+    },
+    {
+      id: "invest",
+      stage: "Growth Stage",
+      stepNum: "03",
+      title: "Invest (Growth Stage)",
+      subtitle: "Put your strategy into action",
+      desc: "We help you explore investment decisions suited to your objectives, risk profile, and long-term plan.",
+      pillars: ["Goal-Linked Disciplined SIPs", "Global & Domestic Funds", "Compounding Power"],
+      quote: "Growth is not about timing the market, but spending patient time in great assets.",
+      image: "/images/framework_invest.jpg",
+    },
+    {
+      id: "review",
+      stage: "Forest Stage",
+      stepNum: "04",
+      title: "Review (Forest Stage)",
+      subtitle: "Stay aligned as life changes",
+      desc: "We revisit your goals and financial strategy to help keep your decisions relevant as your circumstances evolve.",
+      pillars: ["Annual Rebalancing", "Milestone & Life Pivots", "Generational Continuity"],
+      quote: "A mature forest creates its own climate — enduring, self-sustaining, and legacy-defining.",
+      image: "/images/framework_review.jpg",
+    },
+  ];
+
+  // Auto-progress when not hovered
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setActiveStage((prev) => (prev + 1) % philosophyStages.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isHovered, philosophyStages.length]);
+
+  // Scroll tracking: when user scrolls through section, advance stage smoothly
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!philosophyRef.current || isHovered) return;
+      const rect = philosophyRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      if (rect.top <= windowHeight * 0.55 && rect.bottom >= windowHeight * 0.25) {
+        const progress = Math.min(
+          Math.max(0, (windowHeight * 0.55 - rect.top) / (rect.height * 0.75)),
+          0.99
+        );
+        const stageIndex = Math.floor(progress * philosophyStages.length);
+        setActiveStage(stageIndex);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHovered, philosophyStages.length]);
   return (
     <div className="w-full flex flex-col bg-[#F5F1E8]">
       {/* 1. HERO (MATCHING FIGMA SCREENSHOT 1) */}
@@ -237,69 +317,177 @@ export default function OurApproachPage() {
         </div>
       </section>
 
-      {/* 4. THE GREEN SHOOTS PHILOSOPHY: LIKE A TREE... (IMPROVISED MATCHING FIGMA IMAGE 3) */}
-      <section className="w-full py-20 sm:py-24 bg-[#F5F1E8]">
+      {/* 4. THE GREEN SHOOTS PHILOSOPHY: LIKE A TREE... (INTERACTIVE HOVER & SCROLL SECTION) */}
+      <section
+        ref={philosophyRef}
+        className="w-full py-20 sm:py-28 bg-[#F5F1E8] border-b border-[#eae4d7]"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            {/* Left Column: Heading & Description & Stages */}
-            <div className="lg:col-span-8 space-y-6">
-              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#bda15f] block">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            {/* Left Column: Heading, Description & Interactive Hoverable Stages */}
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#bda15f] block font-sans">
                 THE GREEN SHOOTS PHILOSOPHY
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-[54px] text-[#1F3A2C] font-normal leading-[1.15]">
-                Like a tree, wealth needs <br />
-                strong roots <span className="italic text-[#7a9a75]">before it can grow.</span>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[50px] text-[#1F3A2C] font-normal leading-[1.14]">
+                <span>Like a tree, wealth needs </span> <br />
+                <span>strong roots </span>
+                <span className="italic text-[#7a9a75]">before it can grow.</span>
               </h2>
-              <p className="text-xs sm:text-sm text-[#5d7064] font-sans leading-relaxed max-w-xl">
+              <p className="text-xs sm:text-sm text-[#5d7064] font-sans leading-relaxed max-w-xl font-normal">
                 Lasting growth begins beneath the surface. We believe a thoughtful financial strategy is built through understanding, a clear direction, informed decisions, and regular care.
               </p>
 
-              {/* 4 Stages Stepper List (Editorial Typography matching Image 3) */}
-              <div className="pt-6 space-y-7 border-l border-dashed border-[#bda15f]/40 pl-6 sm:pl-8">
-                <div>
-                  <h4 className="font-serif italic text-lg sm:text-xl text-[#3b5243] font-normal">
-                    — Understand (Seed Stage)
-                  </h4>
-                  <p className="text-xs text-[#6e8275] font-sans mt-1 leading-relaxed">
-                    Know where you stand — We begin by understanding your goals, priorities, existing financial position, and time horizon.
-                  </p>
-                </div>
+              {/* 4 Interactive Hoverable Stages */}
+              <div className="pt-4 space-y-3">
+                {philosophyStages.map((stage, idx) => {
+                  const isActive = activeStage === idx;
+                  return (
+                    <div
+                      key={stage.id}
+                      onMouseEnter={() => {
+                        setActiveStage(idx);
+                        setIsHovered(true);
+                      }}
+                      onMouseLeave={() => setIsHovered(false)}
+                      onClick={() => {
+                        setActiveStage(idx);
+                        setIsHovered(true);
+                      }}
+                      className={`p-4 sm:p-5 rounded-2xl transition-all duration-300 cursor-pointer text-left ${
+                        isActive
+                          ? "bg-white/90 shadow-md border border-[#c79a4b]/40 -translate-y-0.5"
+                          : "hover:bg-white/50 border border-transparent"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {isActive ? (
+                          <div className="w-7 h-[2.5px] bg-[#c79a4b] rounded-full shrink-0 transition-all duration-300" />
+                        ) : (
+                          <span className="text-[#87998d] font-serif text-lg shrink-0">
+                            —
+                          </span>
+                        )}
+                        <h4
+                          className={`font-serif italic text-lg sm:text-xl transition-colors duration-200 ${
+                            isActive
+                              ? "text-[#1F3A2C] font-semibold"
+                              : "text-[#4d6655] hover:text-[#1F3A2C] font-normal"
+                          }`}
+                        >
+                          {stage.title}
+                        </h4>
+                      </div>
 
-                <div>
-                  <h4 className="font-serif italic text-lg sm:text-xl text-[#3b5243] font-normal">
-                    — Plan (Roots Stage)
-                  </h4>
-                  <p className="text-xs text-[#6e8275] font-sans mt-1 leading-relaxed">
-                    Give your goals a direction — We organise your priorities and develop a structured strategy aligned with your needs, preferences, and time horizon.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-serif italic text-lg sm:text-xl text-[#3b5243] font-normal">
-                    — Invest (Growth Stage)
-                  </h4>
-                  <p className="text-xs text-[#6e8275] font-sans mt-1 leading-relaxed">
-                    Put your strategy into action — We help you explore investment decisions suited to your objectives, risk profile, and long-term plan.
-                  </p>
-                </div>
-
-                <div className="pt-2">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-[2px] bg-[#c79a4b]" />
-                    <h4 className="font-serif italic text-xl sm:text-2xl text-[#1F3A2C] font-medium">
-                      Review (Forest Stage)
-                    </h4>
-                  </div>
-                  <p className="text-xs text-[#526658] font-sans mt-1.5 leading-relaxed pl-11">
-                    <span className="text-[#b58832] font-medium">Stay aligned as life changes —</span> We revisit your goals and financial strategy to help keep your decisions relevant as your circumstances evolve.
-                  </p>
-                </div>
+                      <p
+                        className={`text-xs sm:text-[13px] font-sans mt-2 leading-relaxed transition-all duration-200 ${
+                          isActive
+                            ? "text-[#485c4f] pl-10"
+                            : "text-[#718678] pl-6"
+                        }`}
+                      >
+                        <span
+                          className={`font-medium ${
+                            isActive ? "text-[#b58832]" : "text-[#5b7364]"
+                          }`}
+                        >
+                          {stage.subtitle} —{" "}
+                        </span>
+                        {stage.desc}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Right Column: Architectural Divider Line matching Image 3 */}
-            <div className="lg:col-span-4 hidden lg:flex flex-col justify-end h-full pt-64">
-              <div className="w-full border-b border-[#ded8cb]" />
+            {/* Right Column: Dynamic Visual Showcase Card that shifts on Hover / Scroll */}
+            <div className="lg:col-span-6 flex justify-center">
+              <div
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                className="relative w-full max-w-lg h-[460px] sm:h-[500px] lg:h-[530px] rounded-3xl overflow-hidden shadow-2xl border border-[#ded8cb]/80 bg-[#162a20]"
+              >
+                {/* 4 Layered Background Images with Smooth Crossfade */}
+                {philosophyStages.map((stage, idx) => (
+                  <div
+                    key={stage.id}
+                    className={`absolute inset-0 transition-all duration-700 ease-out ${
+                      activeStage === idx
+                        ? "opacity-100 scale-100 pointer-events-auto"
+                        : "opacity-0 scale-105 pointer-events-none"
+                    }`}
+                  >
+                    <Image
+                      src={stage.image}
+                      alt={stage.title}
+                      fill
+                      priority={idx === 0}
+                      className="object-cover object-center"
+                    />
+                    {/* Atmospheric readability gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/60" />
+                  </div>
+                ))}
+
+                {/* Top Badge: Stage Number & Name */}
+                <div className="absolute top-6 left-6 right-6 z-10 flex items-center justify-between">
+                  <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white">
+                    <span className="w-2 h-2 rounded-full bg-[#8fa868] animate-pulse" />
+                    <span className="text-[11px] font-semibold tracking-[0.2em] uppercase font-sans">
+                      STAGE {philosophyStages[activeStage].stepNum} · {philosophyStages[activeStage].stage}
+                    </span>
+                  </div>
+
+                  {/* 4 Stage Mini Switcher Tabs */}
+                  <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15">
+                    {philosophyStages.map((_, dotIdx) => (
+                      <button
+                        key={dotIdx}
+                        onClick={() => {
+                          setActiveStage(dotIdx);
+                          setIsHovered(true);
+                        }}
+                        className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                          activeStage === dotIdx
+                            ? "w-6 bg-[#8fa868]"
+                            : "w-2 bg-white/40 hover:bg-white/70"
+                        }`}
+                        aria-label={`Jump to stage ${dotIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom Overlay: Title, Subtitle, Pillars & Quote */}
+                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 z-10 text-white space-y-4">
+                  <div>
+                    <span className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#c5a963] font-sans block mb-1">
+                      {philosophyStages[activeStage].subtitle}
+                    </span>
+                    <h3 className="font-editorial-heading text-2xl sm:text-3xl text-white leading-tight">
+                      {philosophyStages[activeStage].title}
+                    </h3>
+                  </div>
+
+                  {/* 3 Key Pillars */}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {philosophyStages[activeStage].pillars.map((pillar, pIdx) => (
+                      <span
+                        key={pIdx}
+                        className="text-[11px] font-medium font-sans px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white/95"
+                      >
+                        ✓ {pillar}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-xs sm:text-[13px] italic font-serif text-[#d5e3da] leading-relaxed pt-1 border-t border-white/15">
+                    &ldquo;{philosophyStages[activeStage].quote}&rdquo;
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
