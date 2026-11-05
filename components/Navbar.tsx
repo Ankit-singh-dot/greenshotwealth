@@ -273,14 +273,18 @@ export default function Navbar() {
             </p>
             <div className="space-y-3">
               <a
-                href="#download"
+                href="https://apps.apple.com/in/app/green-shoots-wealth/id6778030809"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setAppModalOpen(false)}
                 className="flex items-center justify-center gap-3 w-full py-3 bg-black text-white rounded-xl text-sm font-medium hover:bg-neutral-800 transition-colors"
               >
                 <span> Download on App Store</span>
               </a>
               <a
-                href="#download"
+                href="https://play.google.com/store/apps/details?id=com.greenshoots.greenshootswealth"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setAppModalOpen(false)}
                 className="flex items-center justify-center gap-3 w-full py-3 bg-[#1F3A2C] text-white rounded-xl text-sm font-medium hover:bg-[#172e23] transition-colors"
               >
