@@ -84,18 +84,8 @@ export default function TeamPage() {
 
   return (
     <div className="w-full flex flex-col bg-[#F5F1E8]">
-      {/* 1. HERO SECTION (MATCHING FIGMA SCREENSHOT 1) */}
+      {/* 1. HERO SECTION */}
       <section className="relative w-full py-16 sm:py-20 lg:py-24 bg-[#EEF0D9] overflow-hidden">
-        {/* Natural botanical leaf overlays on left and right matching Figma screenshot */}
-        <div
-          className="absolute -left-12 -top-10 w-72 sm:w-96 lg:w-[440px] h-[520px] pointer-events-none opacity-20 mix-blend-multiply bg-contain bg-no-repeat bg-left-top z-0"
-          style={{ backgroundImage: "url('/images/leaf_transparent.png')" }}
-        />
-        <div
-          className="absolute -right-12 -top-10 w-72 sm:w-96 lg:w-[440px] h-[520px] pointer-events-none opacity-20 mix-blend-multiply bg-contain bg-no-repeat bg-right-top scale-x-[-1] z-0"
-          style={{ backgroundImage: "url('/images/leaf_transparent.png')" }}
-        />
-
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#bda15f] block">
