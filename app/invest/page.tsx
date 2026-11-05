@@ -1,6 +1,5 @@
-import { redirect } from "next/navigation";
+import IndianInvestingPage from "@/app/indian-investing/page";
 
-export default function InvestRedirect() {
-  redirect("/#how-we-invest");
+export default function InvestPage() {
+  return <IndianInvestingPage />;
 }
-
