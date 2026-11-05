@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckIcon, FigmaTickBadge, ArrowRightIcon } from "@/components/Icons";
+import { CheckIcon, FigmaTickBadge, ArrowRightIcon, LinkedinIcon } from "@/components/Icons";
 
 export default function TeamPage() {
   const [activeStoryIdx, setActiveStoryIdx] = useState(0);
@@ -113,17 +113,16 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* 2. FOUNDER & CO-FOUNDER PROFILES (MATCHING FIGMA SCREENSHOT 2) */}
+      {/* 2. FOUNDER PROFILE */}
       <section className="w-full py-20 lg:py-24 bg-[#1F3A2C] text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-          {/* Card 1: Text on Left, Full Editorial Photo on Right */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7 space-y-4">
               <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c7af75] block">
-                CO-FOUNDER
+                FOUNDER
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal leading-[1.18]">
-                <span>Saloni Sinha - </span>
+                <span>Saloni Mehta - </span>
                 <span className="italic text-[#8fa868]">
                   Financial Therapist &amp; Wealth Architect.
                 </span>
@@ -131,46 +130,28 @@ export default function TeamPage() {
               <p className="text-xs sm:text-sm text-[#cfded5] font-sans leading-relaxed pt-2">
                 Saloni Mehta founded Green Shoots Wealth with a belief that financial planning should begin with understanding the person behind the portfolio. She brings together financial planning, investment strategy and financial wellbeing to help individuals and families make clearer decisions around wealth creation, retirement, protection and long-term financial independence. Her approach is personal, structured and focused on building financial strategies that evolve with each client&apos;s goals and life stage.
               </p>
+              <div className="pt-2">
+                <a
+                  href="https://www.linkedin.com/in/the-saloni-mehta/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors border border-white/20"
+                >
+                  <LinkedinIcon className="w-3.5 h-3.5 text-[#8fa868]" />
+                  <span>Connect on LinkedIn</span>
+                </a>
+              </div>
             </div>
 
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative w-full max-w-xs sm:max-w-sm h-96 sm:h-[440px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#244534]">
                 <Image
-                  src="/saloni_sinha.jpg"
-                  alt="Saloni Sinha - Full Length Editorial"
+                  src="/saloni_mehta.jpeg"
+                  alt="Saloni Mehta - Founder & Wealth Strategist"
                   fill
                   className="object-cover object-top"
                 />
               </div>
-            </div>
-          </div>
-
-          {/* Card 2: Executive Portrait on Left, Text on Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            <div className="lg:col-span-5 flex justify-center order-2 lg:order-1">
-              <div className="relative w-full max-w-xs sm:max-w-sm h-96 sm:h-[440px] rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-[#244534]">
-                <Image
-                  src="/images/saloni_portrait.jpg"
-                  alt="Saloni Sinha - Executive Portrait"
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 space-y-4 order-1 lg:order-2">
-              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c7af75] block">
-                CO-FOUNDER
-              </span>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-[42px] font-normal leading-[1.18]">
-                <span>Saloni Sinha - </span>
-                <span className="italic text-[#8fa868]">
-                  Financial Therapist &amp; Wealth Architect.
-                </span>
-              </h2>
-              <p className="text-xs sm:text-sm text-[#cfded5] font-sans leading-relaxed pt-2">
-                Saloni Mehta founded Green Shoots Wealth with a belief that financial planning should begin with understanding the person behind the portfolio. She brings together financial planning, investment strategy and financial wellbeing to help individuals and families make clearer decisions around wealth creation, retirement, protection and long-term financial independence. Her approach is personal, structured and focused on building financial strategies that evolve with each client&apos;s goals and life stage.
-              </p>
             </div>
           </div>
         </div>
