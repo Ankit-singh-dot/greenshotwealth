@@ -85,6 +85,14 @@ body {
   text-transform: none !important;
 }
 
+/* Approach section: stage caption swap */
+@keyframes stageIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.stage-in { animation: stageIn 0.5s ease-out; }
+@media (prefers-reduced-motion: reduce) { .stage-in { animation: none; } }
+
 `;
 
   const built = res.build(candidates);
