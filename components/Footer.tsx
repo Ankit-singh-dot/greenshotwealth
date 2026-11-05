@@ -66,11 +66,11 @@ export default function Footer() {
           {/* Brand Info Column - Vertically stacked emblem, brand, gold rule, motto, location, socials */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex flex-col items-start">
-              {/* White circular tree emblem from uploaded screenshot */}
+              {/* White circular tree emblem */}
               <div className="relative w-12 h-12 sm:w-14 sm:h-14 mb-2">
                 <Image
-                  src="/images/tree_circle_white.png"
-                  alt="Green Shoots Wealth Tree Emblem"
+                  src="/footer_logo.png"
+                  alt="Green Shoots Wealth Emblem"
                   width={56}
                   height={56}
                   className="w-full h-full object-contain"
@@ -114,7 +114,7 @@ export default function Footer() {
                 <InstagramIcon className="w-4 h-4" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/the-saloni-mehta/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-[#3b5f4c] flex items-center justify-center text-[#cfded5] hover:text-[#c5a963] hover:border-[#c5a963] transition-colors"
