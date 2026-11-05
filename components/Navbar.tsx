@@ -16,11 +16,12 @@ export default function Navbar() {
     { name: "Our Approach", href: "/our-approach" },
     {
       name: "Invest",
-      href: "/invest",
+      href: "/indian-investing",
       hasDropdown: true,
       items: [
-        { title: "India Investing", desc: "Mutual funds, goal-linked SIPs, tax-aware portfolios", href: "/#how-we-invest" },
-        { title: "Global Investing", desc: "USD accounts & international funds via GIFT City IFSC", href: "/#gift-city" },
+        { title: "India Investing", desc: "Mutual funds, goal-linked SIPs, tax-aware portfolios", href: "/indian-investing" },
+        { title: "Global Investing", desc: "USD accounts & international funds", href: "/global-investing" },
+        { title: "GIFT City (IFSC)", desc: "India's international financial gateway for cross-border wealth", href: "/gift-city" },
       ],
     },
     { name: "Women & Wealth", href: "/women-and-wealth" },
@@ -34,16 +35,11 @@ export default function Navbar() {
       <header className="sticky top-0 z-50 w-full bg-[#F5F1E8]/95 backdrop-blur-md border-b border-[#e7e1d5] transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <TreeLogo className="w-10 h-10 group-hover:scale-105 transition-transform" />
-            <div className="flex flex-col">
-              <span className="font-serif tracking-[0.16em] text-sm sm:text-base font-semibold text-[#1F3A2C] uppercase leading-tight">
-                Green Shoot Wealth
-              </span>
-              <span className="text-[9px] tracking-[0.2em] text-[#718277] uppercase font-sans font-medium">
-                FINTECH LLP
-              </span>
-            </div>
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+            <TreeLogo className="w-9 h-9 sm:w-10 sm:h-10 group-hover:scale-105 transition-transform" />
+            <span className="brand-logo-text text-[#1F3A2C] leading-none whitespace-nowrap">
+              Green Shoot Wealth
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -141,16 +137,43 @@ export default function Navbar() {
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-[#F5F1E8] border-b border-[#e7e1d5] px-6 py-6 flex flex-col gap-4 animate-in slide-in-from-top duration-200">
-            {navLinks.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-medium text-[#1F3A2C] py-1 border-b border-neutral-200/60"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navLinks.map((item) => {
+              if (item.hasDropdown) {
+                return (
+                  <div key={item.name} className="flex flex-col border-b border-neutral-200/60 py-1">
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-base font-medium text-[#1F3A2C]"
+                    >
+                      {item.name}
+                    </Link>
+                    <div className="pl-3 pt-1.5 pb-1 flex flex-col gap-1.5">
+                      {item.items?.map((sub) => (
+                        <Link
+                          key={sub.title}
+                          href={sub.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-xs text-[#52704e] font-semibold flex items-center gap-1.5"
+                        >
+                          <span>• {sub.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-base font-medium text-[#1F3A2C] py-1 border-b border-neutral-200/60"
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
             <div className="pt-2 flex flex-col gap-3">
               <button
                 onClick={() => {
