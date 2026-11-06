@@ -8,12 +8,27 @@ import { InstagramIcon, LinkedinIcon, YoutubeIcon, TwitterXIcon } from "./Icons"
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
+    if (!email) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "footer" }),
+      });
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail("");
+      }
+    } catch (err) {
+      console.error("Newsletter subscription error:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,9 +64,10 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#1F3A2C] hover:bg-[#12281c] text-white text-xs font-semibold tracking-wide transition-all shrink-0 cursor-pointer font-sans"
+                  disabled={loading}
+                  className="px-6 py-2.5 rounded-full bg-[#1F3A2C] hover:bg-[#12281c] disabled:opacity-70 text-white text-xs font-semibold tracking-wide transition-all shrink-0 cursor-pointer font-sans"
                 >
-                  {subscribed ? "Subscribed! ✓" : "Subscribe"}
+                  {loading ? "Saving..." : subscribed ? "Subscribed! ✓" : "Subscribe"}
                 </button>
               </div>
             </form>
