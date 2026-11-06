@@ -21,10 +21,32 @@ export default function ContactPage() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to submit inquiry.");
+      }
+
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -154,14 +176,22 @@ export default function ContactPage() {
                   />
                 </div>
 
+                {/* Error Banner */}
+                {errorMsg && (
+                  <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-2xl text-xs">
+                    {errorMsg}
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full py-4 px-6 rounded-full bg-[#1F3A2C] hover:bg-[#172e23] text-white font-medium text-sm transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer"
+                    disabled={loading}
+                    className="w-full py-4 px-6 rounded-full bg-[#1F3A2C] hover:bg-[#172e23] disabled:opacity-60 text-white font-medium text-sm transition-all shadow-md flex items-center justify-center gap-2 group cursor-pointer"
                   >
-                    <span>Book a Consultation</span>
-                    <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <span>{loading ? "Submitting..." : "Book a Consultation"}</span>
+                    {!loading && <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
                   </button>
                 </div>
               </form>
