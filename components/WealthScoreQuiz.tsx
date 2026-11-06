@@ -68,6 +68,9 @@ export default function WealthScoreQuiz() {
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [, setActiveTab] = useState("wellness");
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [leadData, setLeadData] = useState({ fullName: "", email: "", phone: "" });
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [submittingLead, setSubmittingLead] = useState(false);
 
   const handleSelectOption = (score: number) => {
     const updated = [...selectedAnswers];
@@ -91,6 +94,36 @@ export default function WealthScoreQuiz() {
     setCurrentStep(0);
     setSelectedAnswers([]);
     setQuizCompleted(false);
+    setLeadSubmitted(false);
+    setLeadData({ fullName: "", email: "", phone: "" });
+  };
+
+  const handleSaveAssessment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmittingLead(true);
+    try {
+      await fetch("/api/quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          totalScore,
+          level: getScoreSummary().level,
+          answers: selectedAnswers.map((score, idx) => ({
+            questionId: quizQuestions[idx].id,
+            question: quizQuestions[idx].question,
+            score,
+          })),
+          fullName: leadData.fullName,
+          email: leadData.email,
+          phone: leadData.phone,
+        }),
+      });
+      setLeadSubmitted(true);
+    } catch (err) {
+      console.error("Quiz save error:", err);
+    } finally {
+      setSubmittingLead(false);
+    }
   };
 
   const getScoreSummary = () => {
@@ -241,9 +274,56 @@ export default function WealthScoreQuiz() {
                       </span>
                       {getScoreSummary().recommendation}
                     </div>
+
+                    {/* Lead Capture Form */}
+                    <div className="mt-5 p-4 rounded-xl border border-gray-200 bg-white text-left shadow-2xs">
+                      {leadSubmitted ? (
+                        <div className="py-2 text-center text-emerald-800 text-xs font-medium">
+                          ✓ Your assessment has been saved. Our team will review your responses!
+                        </div>
+                      ) : (
+                        <form onSubmit={handleSaveAssessment} className="space-y-2.5">
+                          <p className="text-xs font-semibold text-[#1F3A2C]">
+                            Request a Personalized Portfolio Review
+                          </p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input
+                              type="text"
+                              required
+                              placeholder="Your Name"
+                              value={leadData.fullName}
+                              onChange={(e) => setLeadData({ ...leadData, fullName: e.target.value })}
+                              className="px-3 py-2 text-xs rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#1F3A2C] text-neutral-800"
+                            />
+                            <input
+                              type="tel"
+                              required
+                              placeholder="Phone Number"
+                              value={leadData.phone}
+                              onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                              className="px-3 py-2 text-xs rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#1F3A2C] text-neutral-800"
+                            />
+                          </div>
+                          <input
+                            type="email"
+                            placeholder="Email Address (optional)"
+                            value={leadData.email}
+                            onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
+                            className="w-full px-3 py-2 text-xs rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#1F3A2C] text-neutral-800"
+                          />
+                          <button
+                            type="submit"
+                            disabled={submittingLead}
+                            className="w-full py-2.5 bg-[#8fa868] hover:bg-[#7d9657] disabled:opacity-60 text-white font-medium text-xs rounded-lg transition-colors"
+                          >
+                            {submittingLead ? "Saving..." : "Submit to Adviser"}
+                          </button>
+                        </form>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="pt-6 space-y-2">
+                  <div className="pt-5 space-y-2">
                     <Link
                       href="/contact"
                       className="w-full inline-flex items-center justify-center gap-2 py-3.5 bg-[#1F3A2C] hover:bg-[#172e23] text-white rounded-full text-sm font-medium transition-colors shadow-sm"
