@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { ToastContainer, ToastMessage } from "@/components/ui/NotificationModal";
 
 export interface BlogFormData {
   id?: string;
@@ -79,6 +80,16 @@ export default function NotionEditor({
   const [showCoverModal, setShowCoverModal] = useState(false);
   const [coverUrlInput, setCoverUrlInput] = useState("");
   const [uploadingCover, setUploadingCover] = useState(false);
+
+  // In-app Toast notifications
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const addToast = (message: string, type: "success" | "error" | "info" = "info", title?: string) => {
+    const id = Date.now().toString() + Math.random().toString(36).substring(2, 6);
+    setToasts((prev) => [...prev, { id, message, type, title }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3800);
+  };
 
   // Auto-slugify title if slug wasn't manually typed
   const [slugManual, setSlugManual] = useState(Boolean(initialData?.slug));
@@ -237,12 +248,13 @@ export default function NotionEditor({
       if (res.ok && data.url) {
         setCoverImage(data.url);
         setShowCoverModal(false);
+        addToast("Cover image uploaded successfully!", "success", "Cover Updated");
       } else {
-        alert(data.error || "Failed to upload image.");
+        addToast(data.error || "Failed to upload image.", "error", "Upload Failed");
       }
     } catch (err) {
       console.error("Cover upload error:", err);
-      alert("Error uploading image.");
+      addToast("Error uploading image file.", "error", "Upload Error");
     } finally {
       setUploadingCover(false);
     }
@@ -251,7 +263,7 @@ export default function NotionEditor({
   // Save handler
   const handleSubmit = async (isPub = published) => {
     if (!title.trim()) {
-      alert("Please enter a title for the blog post.");
+      addToast("Please enter a title for your blog post before saving.", "error", "Title Required");
       return;
     }
 
@@ -843,6 +855,12 @@ export default function NotionEditor({
           </div>
         </div>
       )}
+
+      {/* Floating In-App Toast Container */}
+      <ToastContainer
+        toasts={toasts}
+        onDismiss={(id) => setToasts((prev) => prev.filter((t) => t.id !== id))}
+      />
     </div>
   );
 }
