@@ -66,3 +66,29 @@ model NewsletterSubscriber {
   @@map("newsletter_subscribers")
 }
 
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String   @db.Text
+  coverImage  String?
+  category    String   @default("Investing") // Investing, Wealth Architecture, GIFT City, Retirement, Tax Planning, Women & Wealth
+  type        String   @default("BLOG") // BLOG, ARTICLE
+  author      String   @default("Saloni Mehta")
+  authorRole  String?  @default("Founder & Wealth Architect")
+  readTime    String   @default("4 min read")
+  published   Boolean  @default(true)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([published])
+  @@index([category])
+  @@index([type])
+  @@index([createdAt])
+  @@map("blog_posts")
+}
+
+
