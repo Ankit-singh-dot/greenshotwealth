@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import NotionEditor, { BlogFormData } from "@/components/admin/NotionEditor";
 
 interface Contact {
   id: string;
@@ -64,12 +66,18 @@ export default function AdminPortalPage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [quizzes, setQuizzes] = useState<QuizLead[]>([]);
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [blogs, setBlogs] = useState<BlogFormData[]>([]);
   const [loadingData, setLoadingData] = useState(false);
 
   // UI Tabs & Filters
-  const [activeTab, setActiveTab] = useState<"contacts" | "quizzes" | "newsletters">("contacts");
+  const [activeTab, setActiveTab] = useState<"contacts" | "quizzes" | "newsletters" | "blogs">("contacts");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
+
+  // Blog Editor State
+  const [isCreatingBlog, setIsCreatingBlog] = useState(false);
+  const [editingBlog, setEditingBlog] = useState<BlogFormData | null>(null);
+  const [savingBlog, setSavingBlog] = useState(false);
 
   // Modals
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
@@ -113,18 +121,92 @@ export default function AdminPortalPage() {
   const loadData = async () => {
     setLoadingData(true);
     try {
-      const res = await fetch("/api/admin/data");
-      if (res.ok) {
-        const data = await res.json();
+      const [dataRes, blogsRes] = await Promise.all([
+        fetch("/api/admin/data"),
+        fetch("/api/admin/blogs"),
+      ]);
+
+      if (dataRes.ok) {
+        const data = await dataRes.json();
         setStats(data.stats);
         setContacts(data.contacts);
         setQuizzes(data.quizzes);
         setSubscribers(data.newsletters);
       }
+
+      if (blogsRes.ok) {
+        const bData = await blogsRes.json();
+        setBlogs(bData.posts || []);
+      }
     } catch (err) {
       console.error("Failed to load dashboard data:", err);
     } finally {
       setLoadingData(false);
+    }
+  };
+
+  // Blog Save Handler (Create or Update)
+  const handleSaveBlog = async (data: BlogFormData) => {
+    setSavingBlog(true);
+    try {
+      const url = data.id ? `/api/admin/blogs/${data.id}` : "/api/admin/blogs";
+      const method = data.id ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const resData = await res.json();
+      if (!res.ok) {
+        alert(resData.error || "Failed to save blog post.");
+        return;
+      }
+
+      setIsCreatingBlog(false);
+      setEditingBlog(null);
+      await loadData();
+      alert(data.id ? "Post updated successfully!" : "New post published successfully!");
+    } catch (err) {
+      console.error("Save blog error:", err);
+      alert("Error saving blog post.");
+    } finally {
+      setSavingBlog(false);
+    }
+  };
+
+  // Blog Delete Handler
+  const handleDeleteBlog = async (id: string, title: string) => {
+    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+
+    try {
+      const res = await fetch(`/api/admin/blogs/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setBlogs((prev) => prev.filter((b) => b.id !== id));
+      } else {
+        alert("Failed to delete blog post.");
+      }
+    } catch (err) {
+      console.error("Delete blog error:", err);
+    }
+  };
+
+  // Toggle Publish / Draft
+  const handleTogglePublish = async (blog: BlogFormData) => {
+    try {
+      const res = await fetch(`/api/admin/blogs/${blog.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ published: !blog.published }),
+      });
+      if (res.ok) {
+        setBlogs((prev) =>
+          prev.map((b) => (b.id === blog.id ? { ...b, published: !b.published } : b))
+        );
+      }
+    } catch (err) {
+      console.error("Toggle publish error:", err);
     }
   };
 
@@ -330,6 +412,19 @@ export default function AdminPortalPage() {
     return subscribers.filter((s) => !q || s.email.toLowerCase().includes(q));
   }, [subscribers, searchQuery]);
 
+  // Filtered Blogs & Articles
+  const filteredBlogs = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    return blogs.filter((b) => {
+      if (!q) return true;
+      return (
+        b.title.toLowerCase().includes(q) ||
+        b.category.toLowerCase().includes(q) ||
+        (b.excerpt && b.excerpt.toLowerCase().includes(q))
+      );
+    });
+  }, [blogs, searchQuery]);
+
   // CSV Export helpers
   const exportContactsCSV = () => {
     const headers = ["Date", "Name", "Email", "Phone", "Service", "Status", "Message", "Notes"];
@@ -487,6 +582,21 @@ export default function AdminPortalPage() {
     );
   }
 
+  // 1.5 NOTION BLOG WRITER VIEW
+  if (isCreatingBlog || editingBlog !== null) {
+    return (
+      <NotionEditor
+        initialData={editingBlog || undefined}
+        onSave={handleSaveBlog}
+        onCancel={() => {
+          setIsCreatingBlog(false);
+          setEditingBlog(null);
+        }}
+        saving={savingBlog}
+      />
+    );
+  }
+
   // 2. DASHBOARD VIEW
   return (
     <div className="min-h-screen bg-[#F5F1E8] text-[#1F3A2C] font-sans">
@@ -553,16 +663,6 @@ export default function AdminPortalPage() {
 
           <div className="bg-white rounded-2xl p-5 border border-[#e5dfd3] shadow-xs">
             <span className="text-[11px] font-semibold tracking-wider uppercase text-[#73887a]">
-              New / Unread
-            </span>
-            <div className="text-3xl font-bold font-sans text-amber-600 mt-1">
-              {stats.newContacts}
-            </div>
-            <div className="text-xs text-gray-500 mt-1">Direct inquiries</div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-5 border border-[#e5dfd3] shadow-xs">
-            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#73887a]">
               Quiz Leads
             </span>
             <div className="text-3xl font-bold font-sans text-[#1F3A2C] mt-1">
@@ -580,15 +680,27 @@ export default function AdminPortalPage() {
             </div>
             <div className="text-xs text-gray-500 mt-1">Active subscribers</div>
           </div>
+
+          <div className="bg-white rounded-2xl p-5 border border-[#e5dfd3] shadow-xs">
+            <span className="text-[11px] font-semibold tracking-wider uppercase text-[#73887a]">
+              Insights &amp; Blogs
+            </span>
+            <div className="text-3xl font-bold font-sans text-emerald-800 mt-1">
+              {blogs.length}
+            </div>
+            <div className="text-xs text-emerald-600 mt-1">
+              {blogs.filter((b) => b.published).length} published · {blogs.filter((b) => !b.published).length} drafts
+            </div>
+          </div>
         </div>
 
         {/* Tab Selection & Search Bar */}
         <div className="bg-white rounded-2xl p-4 border border-[#e5dfd3] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
           {/* Tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-[#F5F1E8] rounded-xl border border-[#e8e2d4]">
+          <div className="flex items-center gap-1.5 p-1 bg-[#F5F1E8] rounded-xl border border-[#e8e2d4] overflow-x-auto">
             <button
               onClick={() => setActiveTab("contacts")}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                 activeTab === "contacts"
                   ? "bg-[#1F3A2C] text-white shadow-xs"
                   : "text-[#5d7064] hover:text-[#1F3A2C]"
@@ -598,7 +710,7 @@ export default function AdminPortalPage() {
             </button>
             <button
               onClick={() => setActiveTab("quizzes")}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                 activeTab === "quizzes"
                   ? "bg-[#1F3A2C] text-white shadow-xs"
                   : "text-[#5d7064] hover:text-[#1F3A2C]"
@@ -608,7 +720,7 @@ export default function AdminPortalPage() {
             </button>
             <button
               onClick={() => setActiveTab("newsletters")}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                 activeTab === "newsletters"
                   ? "bg-[#1F3A2C] text-white shadow-xs"
                   : "text-[#5d7064] hover:text-[#1F3A2C]"
@@ -616,17 +728,41 @@ export default function AdminPortalPage() {
             >
               Newsletter ({subscribers.length})
             </button>
+            <button
+              onClick={() => setActiveTab("blogs")}
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                activeTab === "blogs"
+                  ? "bg-[#1F3A2C] text-white shadow-xs"
+                  : "text-[#5d7064] hover:text-[#1F3A2C]"
+              }`}
+            >
+              <span>Blogs &amp; Insights ({blogs.length})</span>
+              <span className="w-2 h-2 rounded-full bg-[#8fa868]" />
+            </button>
           </div>
 
           {/* Search & Actions */}
           <div className="flex items-center gap-2.5">
+            {activeTab === "blogs" ? (
+              <button
+                onClick={() => {
+                  setEditingBlog(null);
+                  setIsCreatingBlog(true);
+                }}
+                className="px-4 py-2 rounded-xl bg-[#1F3A2C] hover:bg-[#14281e] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap"
+              >
+                <span>+ Write New Blog</span>
+                <span className="text-[#c5a963]">📝</span>
+              </button>
+            ) : null}
+
             <div className="relative">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by name, email, phone..."
-                className="w-full sm:w-64 pl-3.5 pr-8 py-2 rounded-xl bg-[#faf8f5] border border-[#ded8cb] text-xs text-[#1F3A2C] placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#1F3A2C]"
+                placeholder="Search by title, name, email..."
+                className="w-full sm:w-60 pl-3.5 pr-8 py-2 rounded-xl bg-[#faf8f5] border border-[#ded8cb] text-xs text-[#1F3A2C] placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-[#1F3A2C]"
               />
               {searchQuery && (
                 <button
@@ -654,16 +790,18 @@ export default function AdminPortalPage() {
             )}
 
             {/* Export CSV Button */}
-            <button
-              onClick={() => {
-                if (activeTab === "contacts") exportContactsCSV();
-                else if (activeTab === "quizzes") exportQuizzesCSV();
-                else exportSubscribersCSV();
-              }}
-              className="px-3.5 py-2 rounded-xl bg-[#EEF0D9] hover:bg-[#e2e6c5] text-[#1F3A2C] text-xs font-semibold border border-[#d8deb5] transition-colors whitespace-nowrap cursor-pointer"
-            >
-              Export CSV ↓
-            </button>
+            {activeTab !== "blogs" && (
+              <button
+                onClick={() => {
+                  if (activeTab === "contacts") exportContactsCSV();
+                  else if (activeTab === "quizzes") exportQuizzesCSV();
+                  else exportSubscribersCSV();
+                }}
+                className="px-3.5 py-2 rounded-xl bg-[#EEF0D9] hover:bg-[#e2e6c5] text-[#1F3A2C] text-xs font-semibold border border-[#d8deb5] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                Export CSV ↓
+              </button>
+            )}
 
             <button
               onClick={loadData}
@@ -949,6 +1087,175 @@ export default function AdminPortalPage() {
                             className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs transition-colors"
                           >
                             Unsubscribe / Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: BLOGS & INSIGHTS (NOTION INTEGRATION) */}
+        {activeTab === "blogs" && (
+          <div className="bg-white rounded-2xl border border-[#e5dfd3] shadow-xs overflow-hidden">
+            <div className="p-4 bg-[#f8f5ee] border-b border-[#e5dfd3] flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-xs text-[#1F3A2C]">
+                  Articles, Blogs &amp; Research Publications
+                </h3>
+                <p className="text-[11px] text-gray-500">
+                  Compose, format with Notion tools, and publish directly to the live website.
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setEditingBlog(null);
+                  setIsCreatingBlog(true);
+                }}
+                className="px-4 py-2 rounded-xl bg-[#1F3A2C] hover:bg-[#14281e] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <span>+ Create Article</span>
+                <span className="text-[#c5a963]">📝</span>
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-[#f8f5ee] border-b border-[#e5dfd3] text-[#63796c] uppercase tracking-wider font-semibold">
+                  <tr>
+                    <th className="py-3.5 px-4">Cover</th>
+                    <th className="py-3.5 px-4">Title &amp; Slug</th>
+                    <th className="py-3.5 px-4">Category / Type</th>
+                    <th className="py-3.5 px-4">Author</th>
+                    <th className="py-3.5 px-4">Status</th>
+                    <th className="py-3.5 px-4">Date</th>
+                    <th className="py-3.5 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#f0ebe0]">
+                  {filteredBlogs.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="text-center py-16 text-gray-400">
+                        <div className="space-y-2">
+                          <p className="text-sm">No blogs or articles found.</p>
+                          <button
+                            onClick={() => {
+                              setEditingBlog(null);
+                              setIsCreatingBlog(true);
+                            }}
+                            className="px-3 py-1.5 bg-[#1F3A2C] text-white rounded-lg text-xs"
+                          >
+                            Write the first blog now
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredBlogs.map((b) => (
+                      <tr key={b.id} className="hover:bg-[#faf9f5] transition-colors">
+                        {/* Thumbnail */}
+                        <td className="py-3.5 px-4">
+                          <div className="relative w-14 h-10 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shrink-0">
+                            {b.coverImage ? (
+                              <Image
+                                src={b.coverImage}
+                                alt={b.title}
+                                fill
+                                className="object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400">
+                                No img
+                              </div>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Title & Slug */}
+                        <td className="py-3.5 px-4 max-w-sm">
+                          <div className="font-semibold text-sm text-[#1F3A2C] line-clamp-1">
+                            {b.title}
+                          </div>
+                          <div className="text-[11px] text-gray-400 font-mono flex items-center gap-1 mt-0.5">
+                            <span>/insights/{b.slug}</span>
+                            {b.featured && (
+                              <span className="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 text-[9px] font-semibold">
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Category & Type */}
+                        <td className="py-3.5 px-4">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#EEF0D9] text-[#1F3A2C] block w-fit mb-1">
+                            {b.category}
+                          </span>
+                          <span className="text-[10px] text-gray-400 font-medium">
+                            {b.type} · {b.readTime || "4 min"}
+                          </span>
+                        </td>
+
+                        {/* Author */}
+                        <td className="py-3.5 px-4 whitespace-nowrap">
+                          <div className="font-medium text-[#1F3A2C]">{b.author}</div>
+                          <div className="text-[10px] text-gray-400">{b.authorRole}</div>
+                        </td>
+
+                        {/* Status Toggle */}
+                        <td className="py-3.5 px-4 whitespace-nowrap">
+                          <button
+                            onClick={() => handleTogglePublish(b)}
+                            title="Click to toggle publish status"
+                            className={`px-2.5 py-1 rounded-full text-[10px] font-semibold border transition-all cursor-pointer ${
+                              b.published
+                                ? "bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100"
+                                : "bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200"
+                            }`}
+                          >
+                            {b.published ? "✓ Published" : "Draft"}
+                          </button>
+                        </td>
+
+                        {/* Date */}
+                        <td className="py-3.5 px-4 text-gray-500 whitespace-nowrap">
+                          {b.id && (
+                            <span>
+                              {new Date().toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })}
+                            </span>
+                          )}
+                        </td>
+
+                        {/* Actions */}
+                        <td className="py-3.5 px-4 text-right space-x-1.5 whitespace-nowrap">
+                          <Link
+                            href={`/insights/${b.slug}`}
+                            target="_blank"
+                            className="px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium inline-block transition-colors"
+                          >
+                            View Live ↗
+                          </Link>
+                          <button
+                            onClick={() => {
+                              setEditingBlog(b);
+                              setIsCreatingBlog(false);
+                            }}
+                            className="px-2.5 py-1 rounded-lg bg-[#1F3A2C] hover:bg-[#14281e] text-white text-xs font-medium transition-colors"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteBlog(b.id!, b.title)}
+                            className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs transition-colors"
+                          >
+                            Delete
                           </button>
                         </td>
                       </tr>
