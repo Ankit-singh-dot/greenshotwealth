@@ -144,6 +144,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               alt={post.title}
               fill
               priority
+              unoptimized={Boolean(post.coverImage.startsWith("data:") || post.coverImage.startsWith("http"))}
               className="object-cover"
             />
           </div>
@@ -240,6 +241,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         src={rel.coverImage}
                         alt={rel.title}
                         fill
+                        unoptimized={Boolean(rel.coverImage.startsWith("data:") || rel.coverImage.startsWith("http"))}
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     )}
