@@ -1248,6 +1248,7 @@ export default function AdminPortalPage() {
                                 src={b.coverImage}
                                 alt={b.title}
                                 fill
+                                unoptimized={Boolean(b.coverImage.startsWith("data:") || b.coverImage.startsWith("http"))}
                                 className="object-cover"
                               />
                             ) : (
