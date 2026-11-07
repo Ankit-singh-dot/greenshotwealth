@@ -1,42 +1,80 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
+interface PostItem {
+  id: string | number;
+  slug?: string;
+  img?: string;
+  coverImage?: string;
+  title: string;
+  desc?: string;
+  excerpt?: string;
+  date?: string;
+  createdAt?: string;
+  readTime?: string;
+  type?: string;
+  category?: string;
+}
 
 export default function InsightsPage() {
   const [activeTab, setActiveTab] = useState<"All" | "Blogs" | "Articles" | "Video">("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeVideoModal, setActiveVideoModal] = useState<string | null>(null);
+  const [dbPosts, setDbPosts] = useState<PostItem[]>([]);
 
-  // 6 user-provided images: Img_insight_1 to 3 for Blogs, Img_insight_4 to 6 for Articles
-  const blogs = [
+  // Fetch published blogs and articles from PostgreSQL
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const res = await fetch("/api/blogs");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.posts && data.posts.length > 0) {
+            setDbPosts(data.posts);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load blogs:", err);
+      }
+    }
+    loadPosts();
+  }, []);
+
+  // Fallback initial items
+  const fallbackBlogs: PostItem[] = [
     {
-      id: 1,
+      id: "seed-1",
+      slug: "discipline-behind-long-term-investing",
       img: "/img_insights_1.jpg",
       title: "The Discipline Behind Long-Term Investing",
       desc: "It's not about timing the market. It's about time in the market.",
       date: "Mar 10, 2025",
     },
     {
-      id: 2,
+      id: "seed-2",
+      slug: "understanding-asset-allocation-volatile-markets",
       img: "/img_insights_2.jpg",
-      title: "The Discipline Behind Long-Term Investing",
-      desc: "It's not about timing the market. It's about time in the market.",
+      title: "Understanding Asset Allocation in Volatile Markets",
+      desc: "Why the mathematical relationship between uncorrelated asset classes is the ultimate free lunch.",
       date: "Mar 10, 2025",
     },
     {
-      id: 3,
+      id: "seed-3",
+      slug: "gift-city-ifsc-gateway-dollar-wealth",
       img: "/img_insights_3.jpg",
-      title: "The Discipline Behind Long-Term Investing",
-      desc: "It's not about timing the market. It's about time in the market.",
+      title: "GIFT City IFSC: The Gateway to Dollar Wealth for Indians",
+      desc: "How Gujarat International Finance Tec-City opens friction-free access to USD-denominated global funds.",
       date: "Mar 10, 2025",
     },
   ];
 
-  const articles = [
+  const fallbackArticles: PostItem[] = [
     {
-      id: 1,
+      id: "seed-4",
+      slug: "how-to-build-a-more-resilient-investment-portfolio",
       img: "/img_insights_4.jpg",
       title: "How to Build a More Resilient Investment Portfolio",
       desc: "Five principles to help you build a portfolio that stays aligned with your goals.",
@@ -44,22 +82,33 @@ export default function InsightsPage() {
       date: "Mar 5, 2025",
     },
     {
-      id: 2,
+      id: "seed-5",
+      slug: "women-and-wealth-taking-ownership",
       img: "/img_insights_5.jpg",
-      title: "How to Build a More Resilient Investment Portfolio",
-      desc: "Five principles to help you build a portfolio that stays aligned with your goals.",
-      readTime: "6 min read",
+      title: "Women & Wealth: Taking Ownership of Your Financial Future",
+      desc: "Statistically, nearly 80% of women will become solely responsible for their finances. Here is how to prepare.",
+      readTime: "5 min read",
       date: "Mar 5, 2025",
     },
     {
-      id: 3,
+      id: "seed-6",
+      slug: "tax-planning-beyond-80c-wealth-preservation",
       img: "/img_insights_6.jpg",
-      title: "How to Build a More Resilient Investment Portfolio",
-      desc: "Five principles to help you build a portfolio that stays aligned with your goals.",
-      readTime: "6 min read",
+      title: "Tax Planning Beyond 80C: Strategic Wealth Preservation",
+      desc: "Tax efficiency is the silent compounder. How proactive asset placement maximizes your net wealth.",
+      readTime: "7 min read",
       date: "Mar 5, 2025",
     },
   ];
+
+  // Merge database posts if available
+  const blogPosts = dbPosts.length > 0
+    ? dbPosts.filter((p) => p.type === "BLOG" || !p.type)
+    : fallbackBlogs;
+
+  const articlePosts = dbPosts.length > 0
+    ? dbPosts.filter((p) => p.type === "ARTICLE")
+    : fallbackArticles;
 
   // Video shorts (vertical) & feature masterclasses (landscape) with rich imagery
   const shortVideos = [
@@ -157,16 +206,17 @@ export default function InsightsPage() {
               </Link>
             </div>
 
-            {/* 3 Blog Cards using user-provided Img_insight_1, 2, 3 */}
+            {/* Blog Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-              {blogs.map((item) => (
-                <div
+              {blogPosts.map((item) => (
+                <Link
                   key={item.id}
+                  href={`/insights/${item.slug || "discipline-behind-long-term-investing"}`}
                   className="bg-white rounded-3xl overflow-hidden shadow-xs border border-[#e8e2d4]/70 hover:shadow-lg transition-all duration-300 flex flex-col group cursor-pointer"
                 >
                   <div className="relative h-56 sm:h-60 w-full overflow-hidden bg-neutral-100">
                     <Image
-                      src={item.img}
+                      src={item.coverImage || item.img || "/img_insights_1.jpg"}
                       alt={item.title}
                       fill
                       priority
@@ -175,18 +225,33 @@ export default function InsightsPage() {
                   </div>
                   <div className="p-6 sm:p-7 flex flex-col justify-between flex-1 space-y-3">
                     <div className="space-y-2">
-                      <h3 className="font-sans font-semibold text-lg sm:text-xl text-[#1F3A2C] leading-snug group-hover:text-emerald-900 transition-colors">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8fa868]">
+                        {item.category || "Investing"}
+                      </span>
+                      <h3 className="font-sans font-semibold text-lg sm:text-xl text-[#1F3A2C] leading-snug group-hover:text-emerald-900 transition-colors line-clamp-2">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-[13px] text-[#5d7064] leading-relaxed font-sans">
-                        {item.desc}
+                      <p className="text-xs sm:text-[13px] text-[#5d7064] leading-relaxed font-sans line-clamp-2">
+                        {item.excerpt || item.desc}
                       </p>
                     </div>
-                    <div className="pt-2 text-[11px] text-[#8a9d90] font-sans font-medium">
-                      {item.date}
+                    <div className="pt-2 text-[11px] text-[#8a9d90] font-sans font-medium flex items-center justify-between">
+                      <span>
+                        {item.date ||
+                          (item.createdAt
+                            ? new Date(item.createdAt).toLocaleDateString("en-IN", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              })
+                            : "Mar 10, 2025")}
+                      </span>
+                      <span className="text-[#1F3A2C] font-semibold group-hover:translate-x-1 transition-transform">
+                        Read →
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -219,16 +284,17 @@ export default function InsightsPage() {
               </Link>
             </div>
 
-            {/* 3 Article Cards using user-provided Img_insight_4, 5, 6 */}
+            {/* Article Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-              {articles.map((item) => (
-                <div
+              {articlePosts.map((item) => (
+                <Link
                   key={item.id}
+                  href={`/insights/${item.slug || "how-to-build-a-more-resilient-investment-portfolio"}`}
                   className="bg-white rounded-3xl overflow-hidden shadow-xs border border-[#e8e2d4]/70 hover:shadow-lg transition-all duration-300 flex flex-col group cursor-pointer"
                 >
                   <div className="relative h-56 sm:h-60 w-full overflow-hidden bg-neutral-100">
                     <Image
-                      src={item.img}
+                      src={item.coverImage || item.img || "/img_insights_4.jpg"}
                       alt={item.title}
                       fill
                       priority
@@ -237,20 +303,37 @@ export default function InsightsPage() {
                   </div>
                   <div className="p-6 sm:p-7 flex flex-col justify-between flex-1 space-y-3">
                     <div className="space-y-2">
-                      <h3 className="font-sans font-semibold text-lg sm:text-xl text-[#1F3A2C] leading-snug group-hover:text-emerald-900 transition-colors">
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8fa868]">
+                        {item.category || "Wealth Architecture"}
+                      </span>
+                      <h3 className="font-sans font-semibold text-lg sm:text-xl text-[#1F3A2C] leading-snug group-hover:text-emerald-900 transition-colors line-clamp-2">
                         {item.title}
                       </h3>
-                      <p className="text-xs sm:text-[13px] text-[#5d7064] leading-relaxed font-sans">
-                        {item.desc}
+                      <p className="text-xs sm:text-[13px] text-[#5d7064] leading-relaxed font-sans line-clamp-2">
+                        {item.excerpt || item.desc}
                       </p>
                     </div>
-                    <div className="pt-2 text-[11px] text-[#8a9d90] font-sans font-medium flex items-center gap-2">
-                      <span>{item.readTime}</span>
-                      <span>|</span>
-                      <span>{item.date}</span>
+                    <div className="pt-2 text-[11px] text-[#8a9d90] font-sans font-medium flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span>{item.readTime || "5 min read"}</span>
+                        <span>|</span>
+                        <span>
+                          {item.date ||
+                            (item.createdAt
+                              ? new Date(item.createdAt).toLocaleDateString("en-IN", {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                })
+                              : "Mar 5, 2025")}
+                        </span>
+                      </div>
+                      <span className="text-[#1F3A2C] font-semibold group-hover:translate-x-1 transition-transform">
+                        Read →
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -365,23 +448,39 @@ export default function InsightsPage() {
               Search results for &ldquo;{searchQuery}&rdquo;:
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[...blogs, ...articles]
+              {[...blogPosts, ...articlePosts]
                 .filter(
                   (item) =>
                     item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    item.desc.toLowerCase().includes(searchQuery.toLowerCase())
+                    (item.excerpt && item.excerpt.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                    (item.desc && item.desc.toLowerCase().includes(searchQuery.toLowerCase()))
                 )
-                .map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-3xl overflow-hidden shadow-xs border border-[#e8e2d4]/70 p-6 space-y-3"
+                .map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/insights/${item.slug || "discipline-behind-long-term-investing"}`}
+                    className="bg-white rounded-3xl overflow-hidden shadow-xs border border-[#e8e2d4]/70 p-6 space-y-3 hover:shadow-md transition-shadow block group"
                   >
-                    <h4 className="font-sans font-semibold text-lg text-[#1F3A2C]">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8fa868]">
+                      {item.category || item.type || "Insight"}
+                    </span>
+                    <h4 className="font-sans font-semibold text-lg text-[#1F3A2C] group-hover:text-[#8fa868] transition-colors">
                       {item.title}
                     </h4>
-                    <p className="text-xs text-[#5d7064]">{item.desc}</p>
-                    <div className="text-[11px] text-[#8a9d90]">{item.date}</div>
-                  </div>
+                    <p className="text-xs text-[#5d7064] line-clamp-2">
+                      {item.excerpt || item.desc}
+                    </p>
+                    <div className="text-[11px] text-[#8a9d90] pt-1">
+                      {item.date ||
+                        (item.createdAt
+                          ? new Date(item.createdAt).toLocaleDateString("en-IN", {
+                              month: "short",
+                              day: "numeric",
+                              year: "numeric",
+                            })
+                          : "Mar 10, 2025")}
+                    </div>
+                  </Link>
                 ))}
             </div>
           </div>
