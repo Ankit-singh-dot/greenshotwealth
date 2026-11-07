@@ -220,6 +220,7 @@ export default function InsightsPage() {
                       alt={item.title}
                       fill
                       priority
+                      unoptimized={Boolean((item.coverImage || item.img)?.startsWith("data:") || (item.coverImage || item.img)?.startsWith("http"))}
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
@@ -298,6 +299,7 @@ export default function InsightsPage() {
                       alt={item.title}
                       fill
                       priority
+                      unoptimized={Boolean((item.coverImage || item.img)?.startsWith("data:") || (item.coverImage || item.img)?.startsWith("http"))}
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
