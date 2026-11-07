@@ -93,6 +93,16 @@ body {
 .stage-in { animation: stageIn 0.5s ease-out; }
 @media (prefers-reduced-motion: reduce) { .stage-in { animation: none; } }
 
+/* Luxury Toast & Modal Animations */
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* Notion-style Document Canvas & Reader Typography */
 .notion-editor-canvas:empty:before {
   content: "Type '/' for commands or write your thought here...";
