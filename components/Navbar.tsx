@@ -218,8 +218,11 @@ export default function Navbar() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                alert("Welcome! Demo client session initialized.");
-                setLoginModalOpen(false);
+                const btn = e.currentTarget.querySelector("button[type='submit']") as HTMLButtonElement | null;
+                if (btn) btn.innerText = "Connecting...";
+                setTimeout(() => {
+                  setLoginModalOpen(false);
+                }, 800);
               }}
               className="space-y-4 text-left"
             >
