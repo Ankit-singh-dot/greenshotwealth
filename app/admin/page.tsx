@@ -4,6 +4,11 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import NotionEditor, { BlogFormData } from "@/components/admin/NotionEditor";
+import {
+  ToastContainer,
+  ConfirmModal,
+  ToastMessage,
+} from "@/components/ui/NotificationModal";
 
 interface Contact {
   id: string;
@@ -78,6 +83,36 @@ export default function AdminPortalPage() {
   const [isCreatingBlog, setIsCreatingBlog] = useState(false);
   const [editingBlog, setEditingBlog] = useState<BlogFormData | null>(null);
   const [savingBlog, setSavingBlog] = useState(false);
+
+  // In-App Toast Notifications
+  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const addToast = (message: string, type: "success" | "error" | "info" = "info", title?: string) => {
+    const id = Date.now().toString() + Math.random().toString(36).substring(2, 6);
+    setToasts((prev) => [...prev, { id, message, type, title }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  // Custom Luxury Confirmation Modal
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    confirmText?: string;
+    cancelText?: string;
+    isDestructive?: boolean;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+
+  const closeConfirm = () => {
+    setConfirmDialog((prev) => ({ ...prev, isOpen: false }));
+  };
 
   // Modals
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
@@ -160,36 +195,52 @@ export default function AdminPortalPage() {
 
       const resData = await res.json();
       if (!res.ok) {
-        alert(resData.error || "Failed to save blog post.");
+        addToast(resData.error || "Failed to save blog post.", "error", "Save Failed");
         return;
       }
 
       setIsCreatingBlog(false);
       setEditingBlog(null);
       await loadData();
-      alert(data.id ? "Post updated successfully!" : "New post published successfully!");
+      addToast(
+        data.id
+          ? `"${data.title}" has been updated.`
+          : `"${data.title}" has been published to live insights.`,
+        "success",
+        data.id ? "Post Updated" : "Published Successfully"
+      );
     } catch (err) {
       console.error("Save blog error:", err);
-      alert("Error saving blog post.");
+      addToast("Error communicating with server while saving post.", "error", "Save Error");
     } finally {
       setSavingBlog(false);
     }
   };
 
   // Blog Delete Handler
-  const handleDeleteBlog = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
-
-    try {
-      const res = await fetch(`/api/admin/blogs/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setBlogs((prev) => prev.filter((b) => b.id !== id));
-      } else {
-        alert("Failed to delete blog post.");
-      }
-    } catch (err) {
-      console.error("Delete blog error:", err);
-    }
+  const handleDeleteBlog = (id: string, title: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: "Delete Article",
+      message: `Are you sure you want to delete "${title}"? This will permanently remove it from the live website.`,
+      confirmText: "Delete Article",
+      isDestructive: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          const res = await fetch(`/api/admin/blogs/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            setBlogs((prev) => prev.filter((b) => b.id !== id));
+            addToast(`"${title}" has been deleted.`, "info", "Article Deleted");
+          } else {
+            addToast("Failed to delete blog post.", "error", "Delete Failed");
+          }
+        } catch (err) {
+          console.error("Delete blog error:", err);
+          addToast("Error deleting blog post.", "error", "Delete Error");
+        }
+      },
+    });
   };
 
   // Toggle Publish / Draft
@@ -274,17 +325,28 @@ export default function AdminPortalPage() {
   };
 
   // Delete Contact
-  const handleDeleteContact = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this contact submission?")) return;
-    try {
-      const res = await fetch(`/api/admin/contacts/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setContacts((prev) => prev.filter((c) => c.id !== id));
-        if (selectedContact?.id === id) setSelectedContact(null);
-      }
-    } catch (err) {
-      console.error("Failed to delete contact:", err);
-    }
+  const handleDeleteContact = (id: string, name?: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: "Delete Contact Submission",
+      message: `Are you sure you want to delete the submission from ${name ? `"${name}"` : "this client"}? This cannot be undone.`,
+      confirmText: "Delete Submission",
+      isDestructive: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          const res = await fetch(`/api/admin/contacts/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            setContacts((prev) => prev.filter((c) => c.id !== id));
+            if (selectedContact?.id === id) setSelectedContact(null);
+            addToast("Contact submission deleted.", "info");
+          }
+        } catch (err) {
+          console.error("Failed to delete contact:", err);
+          addToast("Failed to delete contact submission.", "error");
+        }
+      },
+    });
   };
 
   // Update Quiz Status or Note
@@ -309,30 +371,52 @@ export default function AdminPortalPage() {
   };
 
   // Delete Quiz
-  const handleDeleteQuiz = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this quiz record?")) return;
-    try {
-      const res = await fetch(`/api/admin/quiz/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setQuizzes((prev) => prev.filter((q) => q.id !== id));
-        if (selectedQuiz?.id === id) setSelectedQuiz(null);
-      }
-    } catch (err) {
-      console.error("Failed to delete quiz:", err);
-    }
+  const handleDeleteQuiz = (id: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: "Delete Assessment Lead",
+      message: "Are you sure you want to permanently delete this wealth score quiz record?",
+      confirmText: "Delete Record",
+      isDestructive: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          const res = await fetch(`/api/admin/quiz/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            setQuizzes((prev) => prev.filter((q) => q.id !== id));
+            if (selectedQuiz?.id === id) setSelectedQuiz(null);
+            addToast("Quiz record removed.", "info");
+          }
+        } catch (err) {
+          console.error("Failed to delete quiz:", err);
+          addToast("Failed to delete quiz record.", "error");
+        }
+      },
+    });
   };
 
   // Delete Subscriber
-  const handleDeleteSubscriber = async (id: string) => {
-    if (!confirm("Remove this email from the subscriber list?")) return;
-    try {
-      const res = await fetch(`/api/admin/newsletter/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setSubscribers((prev) => prev.filter((s) => s.id !== id));
-      }
-    } catch (err) {
-      console.error("Failed to delete subscriber:", err);
-    }
+  const handleDeleteSubscriber = (id: string, email?: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      title: "Remove Subscriber",
+      message: `Remove ${email ? `"${email}"` : "this subscriber"} from the newsletter list?`,
+      confirmText: "Remove",
+      isDestructive: true,
+      onConfirm: async () => {
+        closeConfirm();
+        try {
+          const res = await fetch(`/api/admin/newsletter/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            setSubscribers((prev) => prev.filter((s) => s.id !== id));
+            addToast("Subscriber removed from list.", "info");
+          }
+        } catch (err) {
+          console.error("Failed to delete subscriber:", err);
+          addToast("Failed to delete subscriber.", "error");
+        }
+      },
+    });
   };
 
   // Change Password
@@ -1035,7 +1119,7 @@ export default function AdminPortalPage() {
                 onClick={() => {
                   const emails = filteredSubscribers.map((s) => s.email).join(", ");
                   navigator.clipboard.writeText(emails);
-                  alert("Copied all subscriber emails to clipboard!");
+                  addToast(`${filteredSubscribers.length} subscriber emails copied to clipboard!`, "success", "Emails Copied");
                 }}
                 className="text-xs px-3 py-1 rounded-lg bg-white border border-[#ded8cb] hover:bg-gray-50 text-[#1F3A2C] font-medium"
               >
@@ -1575,6 +1659,24 @@ export default function AdminPortalPage() {
           </div>
         </div>
       )}
+
+      {/* Floating In-App Toast Container */}
+      <ToastContainer
+        toasts={toasts}
+        onDismiss={(id) => setToasts((prev) => prev.filter((t) => t.id !== id))}
+      />
+
+      {/* Custom Confirmation Modal */}
+      <ConfirmModal
+        isOpen={confirmDialog.isOpen}
+        title={confirmDialog.title}
+        message={confirmDialog.message}
+        confirmText={confirmDialog.confirmText}
+        cancelText={confirmDialog.cancelText}
+        isDestructive={confirmDialog.isDestructive}
+        onConfirm={confirmDialog.onConfirm}
+        onCancel={closeConfirm}
+      />
     </div>
   );
 }
