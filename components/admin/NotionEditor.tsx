@@ -229,6 +229,39 @@ export default function NotionEditor({
     setLinkText("");
   };
 
+  // Client-side image compressor (browser canvas - zero server disk dependence)
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = document.createElement("img");
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const maxWidth = 1600;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            resolve(event.target?.result as string);
+            return;
+          }
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg", 0.85));
+        };
+        img.onerror = () => resolve(event.target?.result as string);
+      };
+      reader.onerror = () => resolve("");
+      reader.readAsDataURL(file);
+    });
+  };
+
   // Handle Cover Image Upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -236,25 +269,34 @@ export default function NotionEditor({
 
     setUploadingCover(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/admin/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (res.ok && data.url) {
-        setCoverImage(data.url);
+      // 1. Immediately compress client-side
+      const compressedDataUrl = await compressImage(file);
+      if (compressedDataUrl) {
+        setCoverImage(compressedDataUrl);
         setShowCoverModal(false);
-        addToast("Cover image uploaded successfully!", "success", "Cover Updated");
+        addToast("Cover image processed and attached!", "success", "Cover Ready");
       } else {
-        addToast(data.error || "Failed to upload image.", "error", "Upload Failed");
+        // Fallback to API upload
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const res = await fetch("/api/admin/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await res.json();
+        if (res.ok && data.url) {
+          setCoverImage(data.url);
+          setShowCoverModal(false);
+          addToast("Cover image attached successfully!", "success", "Cover Updated");
+        } else {
+          addToast(data.error || "Failed to process image.", "error", "Upload Failed");
+        }
       }
     } catch (err) {
       console.error("Cover upload error:", err);
-      addToast("Error uploading image file.", "error", "Upload Error");
+      addToast("Error processing image file.", "error", "Upload Error");
     } finally {
       setUploadingCover(false);
     }
@@ -525,6 +567,7 @@ export default function NotionEditor({
                     src={coverImage}
                     alt="Cover"
                     fill
+                    unoptimized={Boolean(coverImage?.startsWith("data:") || coverImage?.startsWith("http"))}
                     className="object-cover"
                   />
                 ) : (
@@ -673,6 +716,7 @@ export default function NotionEditor({
                     src={coverImage}
                     alt={title}
                     fill
+                    unoptimized={Boolean(coverImage?.startsWith("data:") || coverImage?.startsWith("http"))}
                     className="object-cover"
                   />
                 </div>
