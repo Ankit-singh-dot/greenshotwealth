@@ -93,6 +93,99 @@ body {
 .stage-in { animation: stageIn 0.5s ease-out; }
 @media (prefers-reduced-motion: reduce) { .stage-in { animation: none; } }
 
+/* Notion-style Document Canvas & Reader Typography */
+.notion-editor-canvas:empty:before {
+  content: "Type '/' for commands or write your thought here...";
+  color: #9ca3af;
+  pointer-events: none;
+}
+.notion-editor-canvas h1, .notion-rendered-content h1 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2.25rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #1F3A2C;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.notion-editor-canvas h2, .notion-rendered-content h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #1F3A2C;
+  margin-top: 1.75rem;
+  margin-bottom: 0.65rem;
+}
+.notion-editor-canvas h3, .notion-rendered-content h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #1F3A2C;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.notion-editor-canvas p, .notion-rendered-content p {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #2c4236;
+  margin-bottom: 1rem;
+}
+.notion-editor-canvas ul, .notion-rendered-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.notion-editor-canvas ol, .notion-rendered-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.notion-editor-canvas li, .notion-rendered-content li {
+  margin-bottom: 0.35rem;
+  line-height: 1.6;
+}
+.notion-editor-canvas a, .notion-rendered-content a {
+  color: #1F3A2C;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+.notion-editor-canvas a:hover, .notion-rendered-content a:hover {
+  color: #8fa868;
+}
+.notion-callout {
+  background-color: #f2f5ee;
+  border-left: 4px solid #8fa868;
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #1F3A2C;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.notion-editor-canvas blockquote, .notion-rendered-content blockquote {
+  border-left: 4px solid #c7af75;
+  background-color: rgba(245, 241, 232, 0.6);
+  border-radius: 0 0.75rem 0.75rem 0;
+  padding: 1rem 1.5rem;
+  margin: 1.75rem 0;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  color: #1F3A2C;
+}
+.notion-hr {
+  border: none;
+  border-top: 1px solid #e0dad0;
+  margin: 2.25rem 0;
+}
+
+
 `;
 
   const built = res.build(candidates);
