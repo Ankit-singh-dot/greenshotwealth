@@ -195,6 +195,110 @@ body {
   margin: 2.25rem 0;
 }
 
+/* Green Shoots Wealth Brand Micro-Animations */
+@keyframes sproutPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px rgba(197, 169, 99, 0));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(197, 169, 99, 0.45));
+    transform: scale(1.03);
+  }
+}
+
+@keyframes brandShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.gs-sprout-animated {
+  animation: sproutPulse 4.5s ease-in-out infinite;
+}
+
+.gs-brand-shimmer {
+  background: linear-gradient(
+    90deg,
+    currentColor 0%,
+    currentColor 35%,
+    #c5a963 50%,
+    currentColor 65%,
+    currentColor 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: brandShimmer 7s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* Isometric Pipeline & Architectural Motion (GSW App Showcase) */
+@keyframes isometricPulse {
+  0% {
+    stroke-dashoffset: 48;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.isometric-conduit {
+  stroke-dasharray: 6 12;
+  animation: isometricPulse 2.4s linear infinite;
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.gs-float-slow {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+.gs-float-slow-delay {
+  animation: floatGentle 6s ease-in-out 1.5s infinite;
+}
+
+/* Nova-Style Vertical Testimonial Marquees */
+@keyframes marqueeUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marqueeDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.animate-marquee-up {
+  animation: marqueeUp 38s linear infinite;
+}
+
+.animate-marquee-down {
+  animation: marqueeDown 44s linear infinite;
+}
+
+.animate-marquee-up-slow {
+  animation: marqueeUp 48s linear infinite;
+}
+
+.marquee-pause:hover .animate-marquee-up,
+.marquee-pause:hover .animate-marquee-down,
+.marquee-pause:hover .animate-marquee-up-slow {
+  animation-play-state: paused;
+}
+
+
+
 
 `;
 

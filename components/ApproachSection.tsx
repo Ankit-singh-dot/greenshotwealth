@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Reveal, RevealLines } from "./motion/primitives";
 
 const STEPS = [
   { key: "Seed", verb: "Understand", desc: "Your goals, your worries, your starting point." },
@@ -116,19 +117,14 @@ export default function ApproachSection() {
   }, []);
 
   return (
-    <section className="w-full bg-[#F5F1E8] py-20 border-b border-[#e8e2d4]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full bg-[#F5F1E8] py-28 sm:py-36 border-b border-[#e8e2d4]">
+      <div className="gs-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Content */}
           <div className="lg:col-span-7 space-y-6">
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#bda15f]">
-              OUR APPROACH
-            </span>
-            <h2 className="font-editorial-heading text-[#1F3A2C]">
-              <span>Wealth grows </span>
-              <span className="text-[#8fa868]">like a tree.</span>
-            </h2>
-            <p className="text-sm sm:text-base text-[#5d7064] font-sans leading-relaxed max-w-lg">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#bda15f]">Our approach</span></Reveal>
+            <RevealLines as="h2" className="gs-h1 text-[#1F3A2C]" lines={[<>Wealth grows</>, <em key="b" className="text-[#8fa868]">like a tree.</em>]} />
+            <p className="gs-lead text-[#5d7064] max-w-lg">
               We start with where you are, learn where you&apos;re going and grow from there.
             </p>
 
@@ -157,7 +153,7 @@ export default function ApproachSection() {
                       />
                     </div>
                     <div>
-                      <h4 className="font-serif text-xl font-semibold text-[#1F3A2C]">
+                      <h4 className="font-cormorant text-[1.6rem] leading-tight text-[#1F3A2C]">
                         {item.key} {item.verb}
                       </h4>
                       <p className="text-xs sm:text-sm text-[#5d7064] font-sans mt-0.5">{item.desc}</p>
@@ -172,7 +168,7 @@ export default function ApproachSection() {
           <div className="lg:col-span-5 flex justify-center">
             <div
               ref={cardRef}
-              className="relative w-72 h-80 sm:w-88 sm:h-96 rounded-3xl bg-[#1F3A2C] shadow-sm overflow-hidden"
+              className="relative w-72 h-80 sm:w-[26rem] sm:h-[30rem] rounded-[32px] bg-[#1F3A2C] shadow-sm overflow-hidden"
             >
               <div className="absolute inset-x-10 top-10 sm:inset-x-12 sm:top-12">
                 <div className="relative w-full" style={{ aspectRatio: "403 / 369" }}>
@@ -189,7 +185,7 @@ export default function ApproachSection() {
                   <img
                     ref={treeRef}
                     src="/logo_tree.png"
-                    alt="Green Shoot Wealth tree emblem"
+                    alt="Green Shoots Wealth tree emblem"
                     className="absolute inset-0 w-full h-full select-none will-change-transform"
                     style={{ transformOrigin: `${ROOT_X}% ${ROOT_Y}%` }}
                     draggable={false}

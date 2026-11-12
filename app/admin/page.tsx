@@ -602,7 +602,7 @@ export default function AdminPortalPage() {
                 />
               </div>
               <h1 className="brand-logo-text text-white text-lg tracking-wide pt-2">
-                Green Shoot Wealth
+                Green Shoots Wealth
               </h1>
               <p className="text-xs text-[#a9beaf]">
                 Secure Administrative Portal · Internal Access Only
@@ -697,7 +697,7 @@ export default function AdminPortalPage() {
             />
             <div className="flex items-baseline gap-2">
               <span className="brand-logo-text text-white text-sm">
-                Green Shoot Wealth
+                Green Shoots Wealth
               </span>
               <span className="text-[11px] uppercase tracking-wider text-[#c5a963] font-semibold bg-white/10 px-2 py-0.5 rounded-full">
                 Admin

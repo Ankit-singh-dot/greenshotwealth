@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { StarOutlineIcon, ArrowRightIcon } from "./Icons";
 import Link from "next/link";
+import { Reveal, RevealLines } from "./motion/primitives";
 
 interface Question {
   id: number;
@@ -149,21 +150,24 @@ export default function WealthScoreQuiz() {
   };
 
   return (
-    <section className="w-full bg-[#1F3A2C] text-white py-20 lg:py-24 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="w-full bg-[#1F3A2C] text-white py-28 sm:py-36 relative overflow-hidden">
+      <div aria-hidden className="absolute -left-40 top-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full border border-white/[0.06]" />
+      <div aria-hidden className="absolute -left-20 top-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full border border-white/[0.06]" />
+      <div className="gs-container relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-          {/* Left Column: Heading & Tools matching Figma Image 2 */}
+          {/* Left Column: Heading & Tools */}
           <div className="lg:col-span-6 space-y-6">
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#c5a963] font-sans block">
-              WEALTH SCORE
-            </span>
-            <h2 className="font-editorial-heading text-white">
-              <span>What&apos;s your</span> <br />
-              <span className="text-[#8fa868]">Wealth Score?</span>
-            </h2>
-            <p className="text-sm sm:text-base text-white/80 font-sans leading-relaxed max-w-lg font-normal">
-              Two minutes. No email needed. Get an honest picture of your savings, investments, protection &amp; readiness for surprises.
-            </p>
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#c5a963]">Wealth score</span></Reveal>
+            <RevealLines
+              as="h2"
+              className="gs-h1 text-white mt-2"
+              lines={[<>What&apos;s your</>, <em key="b" className="text-[#8fa868]">wealth score?</em>]}
+            />
+            <Reveal delay={150}>
+              <p className="gs-lead text-white/75 max-w-lg">
+                Two minutes. No email needed. An honest picture of your savings, investments, protection &amp; readiness for surprises.
+              </p>
+            </Reveal>
 
             {/* 4 Tool Badges / Pills: Solid White Pills matching Figma Image 2 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-4 max-w-lg">

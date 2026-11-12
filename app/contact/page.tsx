@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRightIcon,
   ChevronDownIcon,
@@ -19,6 +19,16 @@ export default function ContactPage() {
     service: "",
     message: "",
   });
+
+  // Arriving from a "Ask us about this" link: start the message for them.
+  useEffect(() => {
+    const topic = new URLSearchParams(window.location.search).get("topic");
+    if (!topic) return;
+    const id = requestAnimationFrame(() =>
+      setFormData((f) => (f.message ? f : { ...f, message: `I'd like to know more about: ${topic.slice(0, 120)}` }))
+    );
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);

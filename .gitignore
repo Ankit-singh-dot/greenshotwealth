@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Large raw video assets (web-optimized videos in /public/videos/web/ are tracked)
+public/videos/*.mp4
+!public/videos/web/*.mp4
+

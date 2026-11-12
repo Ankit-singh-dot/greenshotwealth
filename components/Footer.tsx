@@ -4,6 +4,81 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon, LinkedinIcon, YoutubeIcon, TwitterXIcon } from "./Icons";
+import { IconArrow } from "./LineIcons";
+import { scrollToTarget } from "./motion/scroll";
+import { useInView } from "./motion/primitives";
+
+const COLS = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Our Approach", href: "/our-approach" },
+      { label: "Women & Wealth", href: "/women-and-wealth" },
+      { label: "Team", href: "/team" },
+      { label: "Insights", href: "/insights" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Invest",
+    links: [
+      { label: "India Investing", href: "/indian-investing" },
+      { label: "Global Investing", href: "/global-investing" },
+      { label: "GIFT City (IFSC)", href: "/gift-city" },
+      { label: "Wealth score", href: "/#wealth-score" },
+    ],
+  },
+  {
+    title: "Offices",
+    links: [
+      { label: "Mumbai · HQ", href: "" },
+      { label: "Ahmedabad", href: "" },
+      { label: "Valsad", href: "" },
+    ],
+  },
+  {
+    title: "Compliance",
+    links: [
+      { label: "AMFI ARN 321729", href: "" },
+      { label: "Privacy Policy", href: "#privacy" },
+      { label: "Disclaimer", href: "#disclaimer" },
+      { label: "Grievance Redressal", href: "#grievance" },
+    ],
+  },
+];
+
+const SOCIALS = [
+  { label: "Instagram", href: "https://instagram.com", Icon: InstagramIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/greenshootswealth/", Icon: LinkedinIcon },
+  { label: "YouTube", href: "https://youtube.com", Icon: YoutubeIcon },
+  { label: "X (Twitter)", href: "https://twitter.com", Icon: TwitterXIcon },
+];
+
+/**
+ * The closing line, set huge. Letters rise from below the edge when the
+ * footer arrives; each lifts and turns gold under the pointer.
+ */
+function Wordmark() {
+  const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.35 });
+  const words: { text: string; italic?: boolean }[] = [{ text: "Beyond" }, { text: "wealth" }, { text: "management.", italic: true }];
+  let n = 0;
+  return (
+    <div ref={ref} className={`gs-wm ${inView ? "is-in" : ""}`} aria-label="Beyond wealth management.">
+      {words.map((w, wi) => (
+        <span key={w.text} className={`gs-wm-word ${w.italic ? "is-italic" : ""} ${wi === 1 ? "md:mr-[0.22em]" : ""}`} aria-hidden>
+          {w.text.split("").map((ch) => {
+            const i = n++;
+            return (
+              <span key={i} className="gs-wm-ch" style={{ ["--i" as string]: i }}>
+                {ch}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -13,7 +88,6 @@ export default function Footer() {
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-
     setLoading(true);
     try {
       const res = await fetch("/api/newsletter", {
@@ -33,244 +107,112 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#1F3A2C] text-white pt-16 sm:pt-20 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Newsletter Section - Exact Figma Properties */}
-        <div className="pb-16 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="max-w-xl space-y-2">
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#c5a963] block font-sans">
-              NEWSLETTER
-            </span>
-            {/* Heading matching Figma: Cormorant Garamond 600 Italic 48px / 63px */}
-            <h2 className="font-cormorant italic font-semibold text-[36px] sm:text-[44px] lg:text-[48px] leading-[1.18] sm:leading-[63px] text-white tracking-normal">
-              <span>Stay informed. </span>
-              <span className="text-[#8fa868]">Stay ahead.</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#cfded5] font-sans leading-relaxed pt-1">
-              Get our latest insights on investing, planning and financial wellbeing.
-            </p>
-          </div>
-
-          <div className="w-full lg:w-auto">
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-2 max-w-md">
-              <div className="relative flex items-center bg-white rounded-full p-1.5 pl-6 shadow-sm w-full sm:w-[440px]">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="w-full bg-transparent text-[#1F3A2C] placeholder:text-gray-400 text-xs sm:text-sm focus:outline-none pr-3 font-sans"
-                />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="px-6 py-2.5 rounded-full bg-[#1F3A2C] hover:bg-[#12281c] disabled:opacity-70 text-white text-xs font-semibold tracking-wide transition-all shrink-0 cursor-pointer font-sans"
-                >
-                  {loading ? "Saving..." : subscribed ? "Subscribed! ✓" : "Subscribe"}
-                </button>
-              </div>
-            </form>
-            <p className="text-xs text-[#a5b8aa] mt-2.5 font-sans">
-              No spam. Just thoughtful updates, every now and then.
-            </p>
-          </div>
-        </div>
-
-        {/* Links & Brand Columns - Seamless flow with no intermediate border */}
-        <div className="pt-2 pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          {/* Brand Info Column - Vertically stacked emblem, brand, gold rule, motto, location, socials */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex flex-col items-start">
-              {/* White circular tree emblem */}
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 mb-2">
-                <Image
-                  src="/footer_logo.png"
-                  alt="Green Shoots Wealth Emblem"
-                  width={56}
-                  height={56}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              {/* Brand Title */}
-              <div className="brand-logo-text text-white text-base sm:text-[17px] leading-none">
-                Green Shoot Wealth
-              </div>
-
-              {/* Gold rules + FINTECH LLP */}
-              <div className="flex items-center gap-2 mt-1">
-                <div className="w-6 h-[1px] bg-[#ba9749]" />
-                <span className="text-[10px] tracking-[0.22em] text-[#ba9749] uppercase font-sans font-medium">
-                  FINTECH LLP
-                </span>
-                <div className="w-6 h-[1px] bg-[#ba9749]" />
-              </div>
-            </div>
-
-            {/* Tagline: Strong roots. Enduring wealth. (Cormorant Garamond SemiBold Italic) */}
-            <p className="font-cormorant italic font-semibold text-2xl sm:text-3xl text-white pt-2 leading-tight">
-              <span>Strong roots. </span>
-              <span className="text-[#8fa868]">Enduring wealth.</span>
-            </p>
-
-            <p className="text-xs text-[#cfded5]/80 font-sans">
-              Green Shoots Wealth Fintech LLP. Mumbai, India.
-            </p>
-
-            {/* Outlined Social Icons */}
-            <div className="flex items-center gap-2.5 pt-2">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[#3b5f4c] flex items-center justify-center text-[#cfded5] hover:text-[#c5a963] hover:border-[#c5a963] transition-colors"
-                aria-label="Instagram"
-              >
-                <InstagramIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/the-saloni-mehta/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[#3b5f4c] flex items-center justify-center text-[#cfded5] hover:text-[#c5a963] hover:border-[#c5a963] transition-colors"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[#3b5f4c] flex items-center justify-center text-[#cfded5] hover:text-[#c5a963] hover:border-[#c5a963] transition-colors"
-                aria-label="YouTube"
-              >
-                <YoutubeIcon className="w-4 h-4" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-[#3b5f4c] flex items-center justify-center text-[#cfded5] hover:text-[#c5a963] hover:border-[#c5a963] transition-colors"
-                aria-label="X (Twitter)"
-              >
-                <TwitterXIcon className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          {/* Column 2: Explore (Heading in Cormorant Garamond Italic Gold) */}
-          <div>
-            <h4 className="font-cormorant italic text-xl text-[#c5a963] mb-4 font-normal">
-              Explore
-            </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-[#cfded5]/90 font-sans">
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/our-approach" className="hover:text-white transition-colors">
-                  Our Approach
-                </Link>
-              </li>
-              <li>
-                <Link href="/indian-investing" className="hover:text-white transition-colors">
-                  India Investing
-                </Link>
-              </li>
-              <li>
-                <Link href="/global-investing" className="hover:text-white transition-colors">
-                  Global Investing
-                </Link>
-              </li>
-              <li>
-                <Link href="/gift-city" className="hover:text-white transition-colors">
-                  GIFT City
-                </Link>
-              </li>
-              <li>
-                <Link href="/team" className="hover:text-white transition-colors">
-                  Team
-                </Link>
-              </li>
-              <li>
-                <Link href="/insights" className="hover:text-white transition-colors">
-                  Insights
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Services (Heading in Cormorant Garamond Italic Gold) */}
-          <div>
-            <h4 className="font-cormorant italic text-xl text-[#c5a963] mb-4 font-normal">
-              Services
-            </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-[#cfded5]/90 font-sans">
-              <li>
-                <Link href="/#what-we-do" className="hover:text-white transition-colors">
-                  Investing
-                </Link>
-              </li>
-              <li>
-                <Link href="/#what-we-do" className="hover:text-white transition-colors">
-                  Insurance
-                </Link>
-              </li>
-              <li>
-                <Link href="/#what-we-do" className="hover:text-white transition-colors">
-                  Financial Planning
-                </Link>
-              </li>
-              <li>
-                <Link href="/#what-we-do" className="hover:text-white transition-colors">
-                  Portfolio Review
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Compliance (Heading in Cormorant Garamond Italic Gold) */}
-          <div>
-            <h4 className="font-cormorant italic text-xl text-[#c5a963] mb-4 font-normal">
-              Compliance
-            </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-[#cfded5]/90 font-sans">
-              <li className="text-[#cfded5]/90 font-medium">AMFI ARN — 321729</li>
-              <li>
-                <a href="#privacy" className="hover:text-white transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#disclaimer" className="hover:text-white transition-colors">
-                  Disclaimer
-                </a>
-              </li>
-              <li>
-                <a href="#grievance" className="hover:text-white transition-colors">
-                  Grievance Redressal
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Disclaimer & Copyright Bottom Row with delicate gold divider */}
-        <div className="pt-8 border-t border-[#c5a963]/35 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#cfded5]/70 font-sans">
-          <p>© 2026 Green Shoots Wealth Fintech LLP. All rights reserved.</p>
-          <p className="text-center md:text-right max-w-xl">
-            Mutual fund investments are subject to market risks. Read all scheme related documents carefully.
+    <footer className="gs-footer relative w-full bg-[#0f2219] text-[#F5F1E8] overflow-hidden">
+      {/* the close */}
+      <div className="gs-container pt-20 sm:pt-24 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end border-b border-white/10">
+        <h2 className="lg:col-span-8 font-cormorant font-normal text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em]">
+          Every forest started
+          <br />
+          <em className="text-[#c9d7b3]">as a conversation.</em>
+        </h2>
+        <div className="lg:col-span-4 lg:justify-self-end flex flex-col items-start lg:items-end gap-5">
+          <Link href="/contact" className="gs-btn gs-btn-light !pr-2.5">
+            <span>Book a consultation</span>
+            <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+          </Link>
+          <p className="text-[14px] text-white/70 flex flex-wrap gap-x-5 gap-y-1">
+            <a href="tel:+919819773888" className="gs-foot-link hover:text-white">+91 98197 73888</a>
+            <a href="mailto:contact@greenshootswealth.com" className="gs-foot-link hover:text-white">contact@greenshootswealth.com</a>
           </p>
         </div>
       </div>
+
+      {/* newsletter + links */}
+      <div className="gs-container py-14 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="lg:col-span-4">
+          <p className="font-cormorant text-[1.7rem] leading-tight">
+            Letters, <em className="text-[#c9d7b3]">not noise.</em>
+          </p>
+          <p className="text-[13.5px] text-white/60 mt-3 max-w-xs leading-relaxed">Occasional notes on investing, planning and money in plain words. No spam.</p>
+          <form onSubmit={handleSubscribe} className="relative max-w-sm mt-6">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your email address"
+              aria-label="Email address"
+              className="w-full bg-transparent border-b border-white/25 focus:border-[#c5a963] py-3 pr-28 text-[14px] placeholder:text-white/35 outline-none transition-colors"
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="absolute right-0 bottom-2 px-4 py-1.5 rounded-full bg-[#c5a963] text-[#132a1f] text-[12px] font-semibold disabled:opacity-60 hover:bg-[#F5F1E8] transition-colors"
+            >
+              {loading ? "Saving…" : subscribed ? "Subscribed" : "Subscribe"}
+            </button>
+          </form>
+        </div>
+
+        <nav aria-label="Footer" className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
+          {COLS.map((col) => (
+            <div key={col.title}>
+              <p className="text-[11px] tracking-[0.18em] uppercase text-[#c5a963]">{col.title}</p>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-white/70">
+                {col.links.map((l) =>
+                  l.href ? (
+                    <li key={l.label}>
+                      <Link href={l.href} className="gs-foot-link hover:text-white transition-colors">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li key={l.label} className="text-white/85">{l.label}</li>
+                  )
+                )}
+              </ul>
+            </div>
+          ))}
+        </nav>
+      </div>
+
+      {/* rail */}
+      <div className="gs-container py-5 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div className="flex items-center gap-3">
+          <Image src="/footer_logo.png" alt="" width={40} height={37} className="w-9 h-auto" />
+          <span className="text-[12px] text-white/55">© {new Date().getFullYear()} Green Shoots Wealth Fintech LLP</span>
+        </div>
+        <div className="flex items-center gap-2">
+          {SOCIALS.map(({ label, href, Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="w-9 h-9 rounded-full border border-white/15 grid place-items-center text-white/70 hover:text-[#132a1f] hover:bg-[#c5a963] hover:border-[#c5a963] transition-colors"
+            >
+              <Icon className="w-3.5 h-3.5" />
+            </a>
+          ))}
+          <button
+            onClick={() => scrollToTarget(0, 0)}
+            className="ml-2 h-9 pl-4 pr-3 rounded-full border border-white/15 inline-flex items-center gap-2 text-[12px] text-white/70 hover:text-white hover:border-white/50 transition-colors"
+            aria-label="Back to top"
+          >
+            Top <IconArrow className="w-3.5 h-3.5 -rotate-90" />
+          </button>
+        </div>
+      </div>
+
+      {/* the wordmark, rising from the bottom edge */}
+      <div className="gs-container pt-4">
+        <Wordmark />
+      </div>
+
+      <p className="gs-container pb-6 pt-2 text-[11px] text-white/40 leading-relaxed">
+        Mutual fund investments are subject to market risks. Read all scheme-related documents carefully.
+      </p>
     </footer>
   );
 }
