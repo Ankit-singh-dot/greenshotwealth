@@ -658,8 +658,24 @@ body {
 
 /* Footer: revealed beneath the page, wordmark rising from the edge */
 .gs-main { position: relative; z-index: 1; background: var(--gs-cream); }
+body { overflow-x: clip; }
 @media (min-width: 1024px) and (min-height: 760px) {
-  .gs-main { border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; overflow: clip; box-shadow: 0 30px 60px -30px rgba(13, 31, 22, 0.5); }
+  /* No overflow clip here: a rounded clip on a page-tall element forces Chrome
+     to build a mask over every composited child, which drops tiles mid-scroll
+     and lets the footer show through. The corners are painted instead. */
+  .gs-main { border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 30px 60px -30px rgba(13, 31, 22, 0.5); }
+  .gs-main::before,
+  .gs-main::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .gs-main::before { left: 0; background: radial-gradient(circle at 100% 0, transparent 39.5px, #0f2219 40px); }
+  .gs-main::after { right: 0; background: radial-gradient(circle at 0 0, transparent 39.5px, #0f2219 40px); }
   .gs-footer { position: sticky; bottom: 0; z-index: 0; margin-top: -40px; padding-top: 40px; }
 }
 .gs-foot-link { background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 0.4s var(--ease-out-expo), color 0.3s; }
@@ -811,3 +827,19 @@ body {
 }
 
 .gs-no-intro .gs-intro { display: none; }
+
+/* Team page -------------------------------------------------------------- */
+.tm-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(31, 58, 44, 0.16);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tm-ping { animation: none; }
+}
+
+.tm-ping { animation: tmPing 2.4s var(--ease-out-expo) infinite; }
+@keyframes tmPing {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .tm-ping { animation: none; } }
