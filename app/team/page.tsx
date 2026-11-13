@@ -629,7 +629,7 @@ function Close() {
           <RevealLines
             as="h2"
             className="gs-h1"
-            lines={["Come and meet us.", <em key="e" className="text-[#52704e]">The chai&apos;s on us.</em>]}
+            lines={["Come and meet us.", <em key="e" className="text-[#52704e]">Bring your questions.</em>]}
           />
           <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5 w-fit">
             <span>Book a consultation</span>
