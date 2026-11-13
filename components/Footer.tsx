@@ -48,9 +48,9 @@ const COLS = [
 ];
 
 const SOCIALS = [
-  { label: "Instagram", href: "https://instagram.com", Icon: InstagramIcon },
+  { label: "Instagram", href: "https://www.instagram.com/wealthwithsaloni/", Icon: InstagramIcon },
   { label: "LinkedIn", href: "https://www.linkedin.com/company/greenshootswealth/", Icon: LinkedinIcon },
-  { label: "YouTube", href: "https://youtube.com", Icon: YoutubeIcon },
+  { label: "YouTube", href: "https://www.youtube.com/@salonimehtaofficial", Icon: YoutubeIcon },
   { label: "X (Twitter)", href: "https://twitter.com", Icon: TwitterXIcon },
 ];
 
