@@ -262,6 +262,20 @@ function Founder() {
               <span>LinkedIn profile</span>
             </a>
           </Reveal>
+
+          <Reveal delay={550} className="mt-10 pt-8 border-t border-[#1F3A2C]/12 max-w-xl">
+            <Link href="/team" className="group flex items-center justify-between gap-6">
+              <span>
+                <span className="gs-index text-[#52704e] uppercase">The people behind the plan</span>
+                <span className="block font-cormorant text-[1.7rem] sm:text-[2rem] leading-tight text-[#1F3A2C] mt-1">
+                  Meet the <em className="text-[#52704e]">Green Shoots</em> team
+                </span>
+              </span>
+              <span className="grid place-items-center w-12 h-12 shrink-0 rounded-full border border-[#1F3A2C]/25 text-[#1F3A2C] transition-all duration-500 group-hover:bg-[#1F3A2C] group-hover:text-[#F5F1E8] group-hover:border-[#1F3A2C]">
+                <IconArrow className="w-4 h-4 transition-transform duration-500 group-hover:-rotate-45" />
+              </span>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
