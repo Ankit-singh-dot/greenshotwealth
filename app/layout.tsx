@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: "Green Shoots Wealth | Beyond Wealth Management",
   description:
     "India's First Wealth Experience Platform. Advice that starts with a conversation. Strong roots. Enduring wealth.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico?v=2" },
+      { url: "/icon.png?v=2", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png?v=2", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico?v=2",
+  },
 };
 
 export default function RootLayout({
@@ -17,6 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+        <link rel="icon" href="/icon.png?v=2" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=2" />
         {/* Hide the intro curtain before first paint for returning sessions / reduced motion */}
         <script
           dangerouslySetInnerHTML={{

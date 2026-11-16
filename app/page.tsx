@@ -136,7 +136,7 @@ function VideoHero() {
     const v = videoRef.current;
     if (!v) return;
     if (v.paused) {
-      v.play().catch(() => {});
+      v.play().catch(() => { });
       setPlaying(true);
     } else {
       v.pause();
@@ -171,7 +171,7 @@ function VideoHero() {
 
       <div ref={copyRef} className="relative h-full gs-container flex flex-col justify-end pt-[calc(var(--nav-h)+2rem)] pb-24 sm:pb-20 will-change-transform">
         <p className={`text-[11px] sm:text-[12px] tracking-[0.22em] uppercase text-[#e6cf8f] rv rv-fade ${on}`}>
-          Wealth advisory · Mumbai
+          Wealth advisory
         </p>
 
         <RevealLines
