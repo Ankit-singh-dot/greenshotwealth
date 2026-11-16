@@ -6,12 +6,12 @@ import { Reveal, RevealLines } from "../motion/primitives";
 import { IconSunset, IconCap, IconHome, IconUmbrella, IconStream, IconLayers, IconPlane, IconArrow } from "../LineIcons";
 
 const GOALS = [
-  { title: "Retirement", desc: "Build long-term financial security, so the later years are yours to choose.", Icon: IconSunset },
-  { title: "Child Education", desc: "Prepare for future education expenses without derailing everything else.", Icon: IconCap },
-  { title: "Buying a Home", desc: "Plan for the down payment today and the EMIs that follow.", Icon: IconHome },
   { title: "Emergency Fund", desc: "Financial stability for the unexpected — the base every plan stands on.", Icon: IconUmbrella },
-  { title: "Passive Income", desc: "A structured approach to income that doesn't depend on your next pay cheque.", Icon: IconStream },
   { title: "Wealth Creation", desc: "Long-term wealth through disciplined, patient investing.", Icon: IconLayers },
+  { title: "Buying a Home", desc: "Plan for the down payment today and the EMIs that follow.", Icon: IconHome },
+  { title: "Child Education", desc: "Prepare for future education expenses without derailing everything else.", Icon: IconCap },
+  { title: "Retirement", desc: "Build long-term financial security, so the later years are yours to choose.", Icon: IconSunset },
+  { title: "Passive Income", desc: "A structured approach to income that doesn't depend on your next pay cheque.", Icon: IconStream },
   { title: "Investing from abroad", desc: "India investment solutions for NRIs — suitable opportunities while living overseas.", Icon: IconPlane },
 ];
 
