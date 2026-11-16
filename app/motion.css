@@ -344,16 +344,29 @@ body {
 }
 .gs-nav.is-condensed .gs-island { height: 46px; }
 .gs-nav.is-open .gs-island { background: #fbf8f1; }
+/* The emblem + a quiet two-line wordmark ("Green Shoots" / WEALTH). */
 .gs-island-logo {
-  width: 52px; flex: none; justify-content: center; padding-left: 0; overflow: hidden; white-space: nowrap;
+  flex: none; justify-content: flex-start; gap: 10px; padding: 0 18px 0 9px; overflow: hidden; white-space: nowrap;
   background: var(--gs-forest); border-color: rgba(245, 241, 232, 0.28); color: var(--gs-cream);
-  transition: width 0.6s var(--ease-out-expo), height 0.5s var(--ease-out-expo);
+  transition: height 0.5s var(--ease-out-expo), padding 0.5s var(--ease-out-expo);
 }
-.gs-logo-name { margin-left: 12px; font-family: "Cormorant Garamond", serif; font-size: 1.2rem; letter-spacing: -0.01em; opacity: 0; transform: translateX(-6px); transition: opacity 0.35s ease, transform 0.6s var(--ease-out-expo); }
-.gs-logo-name em { color: #c9d7b3; }
-.gs-island-logo:hover .gs-logo-name, .gs-island-logo:focus-visible .gs-logo-name { opacity: 1; transform: none; transition-delay: 0.12s; }
+.gs-island-logo .gs-logo-mark { flex: none; transition: width 0.5s var(--ease-out-expo), transform 0.7s var(--ease-out-expo); }
+.gs-logo-name { display: flex; flex-direction: column; justify-content: center; line-height: 1; }
+.gs-logo-name b {
+  font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 1.12rem; letter-spacing: -0.005em;
+  color: var(--gs-cream);
+}
+.gs-logo-name small {
+  margin-top: 4px; font-family: "Plus Jakarta Sans", sans-serif; font-size: 0.52rem; font-weight: 600;
+  letter-spacing: 0.42em; text-transform: uppercase; color: #c9d7b3; opacity: 0.85;
+}
 .gs-nav.is-open .gs-island-logo { background: var(--gs-forest); }
-.gs-nav.is-condensed .gs-island-logo { width: 46px; }
+.gs-nav.is-condensed .gs-island-logo { padding: 0 16px 0 8px; }
+.gs-nav.is-condensed .gs-island-logo .gs-logo-mark { width: 30px; }
+@media (max-width: 380px) {
+  .gs-logo-name b { font-size: 1rem; }
+  .gs-island-logo { padding-right: 14px; }
+}
 .gs-island-links {
   position: absolute;
   left: 50%;
