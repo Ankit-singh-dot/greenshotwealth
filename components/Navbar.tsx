@@ -39,8 +39,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { name: "Our Approach", href: "/our-approach", Icon: IconSprout, menu: "approach" },
-  { name: "Invest", href: "/indian-investing", Icon: IconGrowth, menu: "invest", match: ["/indian-investing", "/global-investing", "/gift-city", "/invest"] },
-  { name: "Women & Wealth", href: "/women-and-wealth", Icon: IconVenus },
+  { name: "Invest", href: "/indian-investing", Icon: IconGrowth, menu: "invest", match: ["/indian-investing", "/global-investing", "/gift-city", "/invest", "/women-and-wealth"] },
   { name: "Insights", href: "/insights", Icon: IconBook, menu: "insights" },
   { name: "Team", href: "/team", Icon: IconPeople },
   { name: "Contact", href: "/contact", Icon: IconChat },
@@ -59,6 +58,7 @@ const INVEST_ITEMS = [
   { title: "India Investing", desc: "Mutual funds, goal-linked SIPs, tax-aware portfolios.", href: "/indian-investing", Icon: IconRupee, img: "/indian_investing_image.jpg", tag: "Bharat's markets" },
   { title: "Global Investing", desc: "USD accounts and international funds.", href: "/global-investing", Icon: IconGlobe, img: "/global_investing_image.jpg", tag: "Beyond borders" },
   { title: "GIFT City (IFSC)", desc: "India's international gateway for cross-border wealth.", href: "/gift-city", Icon: IconTowers, img: "/city.png", tag: "The gateway" },
+  { title: "Women & Wealth", desc: "Planning for the years she may manage alone.", href: "/women-and-wealth", Icon: IconVenus, img: "/images/women_hero_authentic.jpg", tag: "Her plan, her terms" },
 ];
 
 type Post = { id: string; title: string; slug: string; category: string; readTime: string; coverImage?: string | null };
@@ -201,7 +201,11 @@ export default function Navbar() {
         <div className="gs-nav-row">
           {/* 1 — the mark, alone */}
           <Link href="/" className="gs-island gs-island-logo flex group" aria-label="Green Shoots Wealth — home" onMouseEnter={() => setMenu(null)}>
-            <Image src="/footer_logo.png" alt="" width={80} height={73} priority className="w-[34px] h-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-10deg] group-hover:scale-110" />
+            <Image src="/footer_logo.png" alt="" width={80} height={73} priority className="gs-logo-mark w-[34px] h-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-10deg] group-hover:scale-110" />
+            <span className="gs-logo-name" aria-hidden>
+              <b>Green Shoots</b>
+              <small>Wealth</small>
+            </span>
           </Link>
 
           {/* 2 — the pages */}
@@ -372,7 +376,7 @@ export default function Navbar() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f16]/90 via-[#0d1f16]/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <span key={investHover} className="block gs-swap">
-                    <span className="gs-index text-[#c5a963]">0{investHover + 1} / 03</span>
+                    <span className="gs-index text-[#c5a963]">0{investHover + 1} / {String(INVEST_ITEMS.length).padStart(2, "0")}</span>
                     <span className="block font-cormorant italic text-3xl mt-1">{INVEST_ITEMS[investHover].tag}</span>
                   </span>
                 </div>
