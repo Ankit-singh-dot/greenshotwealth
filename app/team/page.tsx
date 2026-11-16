@@ -35,17 +35,10 @@ const FOUNDERS = [
   },
 ];
 
-/**
- * PLACEHOLDER TEAM — these names and photos came from the previous design
- * ("dummy names & profiles") and are not real people. Replace each entry with
- * a real team member before publishing.
- */
 const TEAM = [
-  { topic: "Equity & mutual funds", name: "Rohan Mehta", role: "Head of Equity Research", photo: "/images/advisor_1.jpg", tint: "#F8F4EA" },
-  { topic: "Family & goal plans", name: "Priya Varma", role: "Senior Wealth Architect", photo: "/images/advisor_2.jpg", tint: "#F1E7D2" },
-  { topic: "Debt & fixed income", name: "Amit Sen", role: "Debt & Treasury Lead", photo: "/images/advisor_3.jpg", tint: "#E4ECDF" },
-  { topic: "Insurance & protection", name: "Neha Deshmukh", role: "Risk & Protection Lead", photo: "/images/advisor_4.jpg", tint: "#F3EBDD" },
-  { topic: "Global & GIFT City", name: "Siddharth Iyer", role: "Global & GIFT City Lead", photo: "/images/advisor_5.jpg", tint: "#E8EEDB" },
+  { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/sameer_shinde.jpg", tint: "#F8F4EA" },
+  { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/rama_wagmare.jpg", tint: "#F1E7D2" },
+  { topic: "Research & investment analysis", name: "Vedant", role: "Portfolio & Research Analyst", photo: "/team/vedant.jpg", tint: "#E4ECDF" },
 ];
 
 const VALUES = [
@@ -59,11 +52,9 @@ const VALUES = [
 const CLOUD = [
   { src: FOUNDERS[0].photo, alt: FOUNDERS[0].name, x: 6, y: 14, w: 15, depth: 0.35, r: -4 },
   { src: FOUNDERS[1].photo, alt: FOUNDERS[1].name, x: 80, y: 10, w: 15, depth: 0.55, r: 3 },
-  { src: TEAM[0].photo, alt: TEAM[0].name, x: 70, y: 58, w: 11, depth: 0.85, r: -2 },
-  { src: TEAM[1].photo, alt: TEAM[1].name, x: 16, y: 62, w: 10, depth: 0.7, r: 5 },
-  { src: TEAM[2].photo, alt: TEAM[2].name, x: 88, y: 40, w: 8, depth: 1.1, r: 6 },
-  { src: TEAM[3].photo, alt: TEAM[3].name, x: 42, y: 78, w: 9, depth: 0.95, r: -5 },
-  { src: TEAM[4].photo, alt: TEAM[4].name, x: 0, y: 44, w: 7, depth: 1.25, r: 2 },
+  { src: TEAM[0].photo, alt: TEAM[0].name, x: 70, y: 58, w: 12, depth: 0.85, r: -2 },
+  { src: TEAM[1].photo, alt: TEAM[1].name, x: 16, y: 62, w: 11, depth: 0.7, r: 5 },
+  { src: TEAM[2].photo, alt: TEAM[2].name, x: 44, y: 76, w: 11, depth: 0.95, r: -4 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -178,7 +169,7 @@ function Hero() {
             style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}vw`, transform: `rotate(${c.r}deg)` }}
           >
             <div className="relative aspect-[3/4] rounded-[22px] overflow-hidden shadow-[0_30px_60px_-30px_rgba(31,58,44,0.45)] ring-1 ring-white/60">
-              <Image src={c.src} alt="" fill sizes="16vw" className="object-cover object-top" priority={i < 2} />
+              <Image src={c.src} alt="" fill sizes="16vw" className="object-cover object-center" priority={i < 2} />
             </div>
           </div>
         ))}
@@ -470,7 +461,7 @@ function Specialists() {
         if (!img) return;
         const cr = img.parentElement!.getBoundingClientRect();
         const off = (cr.left + cr.width / 2 - vw / 2) / vw;
-        img.style.transform = `translate3d(${(off * -18).toFixed(2)}%, 0, 0) scale(1.25)`;
+        img.style.transform = `translate3d(${(off * -10).toFixed(2)}%, 0, 0) scale(1.04)`;
       });
     },
     [desktop]
@@ -514,9 +505,9 @@ function Specialists() {
                       cardImgs.current[i] = n;
                     }}
                     className="absolute inset-0"
-                    style={{ transform: "scale(1.25)" }}
+                    style={{ transform: "scale(1.04)" }}
                   >
-                    <Image src={t.photo} alt={`${t.name}, ${t.role}`} fill sizes="(min-width:1024px) 30vw, 78vw" className="object-cover object-top" />
+                    <Image src={t.photo} alt={`${t.name}, ${t.role}`} fill sizes="(min-width:1024px) 30vw, 78vw" className="object-cover object-center" />
                   </div>
                   <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#F5F1E8] text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1F3A2C]">
                     {t.topic}
