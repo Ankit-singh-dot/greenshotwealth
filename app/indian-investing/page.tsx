@@ -23,9 +23,9 @@ const content: InvestContent = {
     { title: "Debt & Fixed Income", desc: "Add stability and income to your portfolio." },
     { title: "Hybrid & Multi-Asset", desc: "Balance growth and diversification across asset classes." },
     { title: "SIF", desc: "Explore specialized investment strategies for eligible investors." },
+    { title: "Insurance Planning", desc: "Protect your family, income, and financial goals." },
     { title: "Retirement Planning", desc: "Plan today for financial independence tomorrow." },
     { title: "Estate Planning", desc: "Plan, protect, and pass on your wealth." },
-    { title: "Insurance Planning", desc: "Protect your family, income, and financial goals." },
   ],
   spread: [
     { src: "/new_images/pexels-ravi-roshan-2875998-14907339.jpg", alt: "Indian rupee notes and coins", caption: "Every rupee, with a reason." },
