@@ -22,10 +22,10 @@ const MODES = {
     items: [
       { title: "Mutual Funds", desc: "Curated, goal-mapped selections." },
       { title: "SIP Solutions", desc: "Systematic, disciplined wealth building." },
+      { title: "SIF", desc: "Specialised Investment Funds." },
+      { title: "Insurance Planning", desc: "Life, health, term optimisation." },
       { title: "Retirement Planning", desc: "NPS, EPF, and beyond." },
       { title: "Estate Planning", desc: "Wills, trusts, and succession." },
-      { title: "Insurance Planning", desc: "Life, health, term optimisation." },
-      { title: "SIF", desc: "Specialised Investment Funds." },
     ],
   },
   global: {
