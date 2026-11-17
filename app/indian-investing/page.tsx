@@ -12,8 +12,8 @@ const content: InvestContent = {
     title: ["India has opportunities.", "Choosing well is the hard part."],
     body: "There are thousands of schemes, and new ones every month. We narrow it down to the few that fit your goals, your timeline and the amount of risk you can live with.",
     points: ["Linked to your goals, not to trends", "Tax-aware from the start", "Reviewed, never forgotten"],
-    image: "/images/indian_wealth_luxury.jpg",
-    imageAlt: "A quiet advisory office overlooking the city",
+    image: "/office/office_consultation_portrait.webp",
+    imageAlt: "The Green Shoots advisory consultation desk overlooking the city in Mumbai",
   },
   solutionsTitle: ["What we can", "help you build."],
   solutions: [
@@ -29,7 +29,7 @@ const content: InvestContent = {
   ],
   spread: [
     { src: "/new_images/pexels-ravi-roshan-2875998-14907339.jpg", alt: "Indian rupee notes and coins", caption: "Every rupee, with a reason." },
-    { src: "/images/financial_planning_clarity.jpg", alt: "A written financial plan beside a tablet", caption: "A plan you can actually read." },
+    { src: "/office/office_plaque_4x5.webp", alt: "The official Green Shoots Wealth emblem at our Mumbai headquarters", caption: "Strong roots. Built for the long view." },
   ],
   faqs: [
     { q: "What is the minimum amount required to start investing?", a: "The minimum depends on the investment product and platform. We'll help you identify suitable options based on your goals and circumstances." },

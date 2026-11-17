@@ -12,8 +12,8 @@ const content: InvestContent = {
     title: ["Global access,", "from home ground."],
     body: "GIFT City IFSC is India's international financial centre, designed to facilitate global financial services and cross-border investments. Eligible residents and NRIs can use permitted structures to invest internationally.",
     points: ["Regulated by IFSCA", "USD-denominated structures", "For residents and NRIs, subject to eligibility"],
-    image: "/images/generational_growth_luxury.jpg",
-    imageAlt: "A calm, light-filled room opening onto a garden",
+    image: "/office/office_plaque.webp",
+    imageAlt: "The Green Shoots Wealth emblem at our Mumbai headquarters",
   },
   solutionsTitle: ["What GIFT City", "can open up."],
   solutions: [
@@ -24,7 +24,7 @@ const content: InvestContent = {
   ],
   spread: [
     { src: "/new_images/pexels-karola-g-4386469.jpg", alt: "US dollar notes", caption: "Dollar-based, India-regulated." },
-    { src: "/images/global_investing_luxury.jpg", alt: "A boardroom overlooking a city skyline at dusk", caption: "Built for the long view." },
+    { src: "/office/office_consultation_4x3.webp", alt: "The Green Shoots advisory consultation suite in Mumbai", caption: "Grounded in Mumbai. Connected globally." },
   ],
   audiences: {
     heading: ["Who it's", "designed for."],
@@ -49,7 +49,7 @@ const content: InvestContent = {
   close: {
     title: ["Is GIFT City right for you?", "Let's find out together."],
     body: "It depends on your residency, your goals and what you already hold. One conversation is usually enough to tell.",
-    image: "/images/indian_wealth_luxury.jpg",
+    image: "/images/generational_growth_luxury.jpg",
   },
   disclaimer: "Investments through GIFT City IFSC are subject to market and currency risks, and to eligibility under applicable IFSCA, RBI and FEMA regulations. Tax treatment depends on individual circumstances. Green Shoots Wealth Fintech LLP · AMFI ARN 321729.",
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkedinIcon, InstagramIcon, YoutubeIcon } from "@/components/Icons";
-import { IconArrow } from "@/components/LineIcons";
+import { IconArrow, IconArrowUpRight } from "@/components/LineIcons";
 import { RevealLines, Reveal, Marquee } from "@/components/motion/primitives";
 import { onScrollFrame, clamp, prefersReducedMotion } from "@/components/motion/scroll";
 
@@ -630,19 +630,51 @@ function Values() {
 function Close() {
   return (
     <section className="bg-[#F5F1E8] px-3 sm:px-5 pb-5" aria-label="Meet us">
-      <div className="rounded-[36px] bg-[#EEF0D9] py-20 sm:py-28">
-        <div className="gs-container flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-          <RevealLines
-            as="h2"
-            className="gs-h1"
-            lines={["Come and meet us.", <em key="e" className="text-[#52704e]">Bring your questions.</em>]}
-          />
-          <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5 w-fit">
-            <span>Book a consultation</span>
-            <span className="gs-btn-arrow">
-              <IconArrow className="w-3.5 h-3.5" />
-            </span>
-          </Link>
+      <div className="rounded-[36px] bg-[#EEF0D9] p-8 sm:p-14 lg:p-20 overflow-hidden relative">
+        <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6">
+            <p className="gs-eyebrow text-[#52704e]">Our headquarters</p>
+            <RevealLines
+              as="h2"
+              className="gs-h1 mt-3"
+              lines={["Come and meet us.", <em key="e" className="text-[#52704e]">Bring your questions.</em>]}
+            />
+            <p className="text-[16px] text-[#4a5f51] mt-6 max-w-lg leading-relaxed">
+              Step into our consultation suite at Sai Fortune Business Centre in Ghatkopar East, Mumbai. Advice that starts in person, around an unhurried table, with people who listen first.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5">
+                <span>Book a consultation</span>
+                <span className="gs-btn-arrow">
+                  <IconArrow className="w-3.5 h-3.5" />
+                </span>
+              </Link>
+              <a
+                href="https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[14px] font-medium text-[#1F3A2C] underline underline-offset-4 hover:text-[#52704e] transition-colors"
+              >
+                <span>Get directions on Google Maps</span>
+                <IconArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+          <div className="lg:col-span-6 relative">
+            <div className="relative aspect-[16/10] rounded-[28px] overflow-hidden shadow-2xl border border-[#1F3A2C]/10 bg-white">
+              <Image
+                src="/office/office_consultation_4x3.webp"
+                alt="Green Shoots Wealth consultation suite in Mumbai"
+                fill
+                sizes="(min-width:1024px) 45vw, 100vw"
+                className="object-cover"
+              />
+              <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-2 text-[12px] font-medium text-[#1F3A2C] shadow-md border border-[#1F3A2C]/10 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#8fa868]" />
+                <span>Sai Fortune Business Centre · Ghatkopar East, Mumbai</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

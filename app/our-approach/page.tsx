@@ -13,8 +13,8 @@ const STEPS = [
     title: "We start with a conversation, not a product.",
     body: "Your goals, your worries, what you already own and what you owe. We listen before we suggest anything.",
     points: ["Your goals, in your words", "What you own, and what you owe", "How much risk still lets you sleep"],
-    image: "/images/framework_understand.jpg",
-    alt: "Hands fitting puzzle pieces together around a table",
+    image: "/office/office_consultation_4x3.webp",
+    alt: "The Green Shoots advisory consultation desk at Sai Fortune, Mumbai",
   },
   {
     season: "Roots",
@@ -23,7 +23,7 @@ const STEPS = [
     body: "We turn what you've told us into an allocation, with tax, insurance and an emergency fund built in from the start.",
     points: ["Asset allocation for each goal", "Tax efficiency", "Emergency reserve and cover"],
     image: "/images/financial_planning_clarity.jpg",
-    alt: "A handwritten financial plan in a notebook",
+    alt: "A handwritten financial plan with goals and asset allocation",
   },
   {
     season: "Growth",
@@ -32,7 +32,7 @@ const STEPS = [
     body: "We put the plan to work across mutual funds, SIPs, debt and global funds, chosen for your timeline rather than last year's returns.",
     points: ["Goal-linked SIPs", "India and global funds", "Patience over timing"],
     image: "/images/framework_invest.jpg",
-    alt: "Coins stacked in rising columns on a desk",
+    alt: "Disciplined investment growth step by step",
   },
   {
     season: "Forest",
@@ -41,7 +41,7 @@ const STEPS = [
     body: "Markets move and lives change: a marriage, a new job, children, retirement. We review regularly and adjust, with the same adviser each time.",
     points: ["Regular reviews and rebalancing", "Plans that follow your life", "Passing it on, when it's time"],
     image: "/images/plan_ahead_card.jpg",
-    alt: "An older woman at ease with a cup of tea in her garden",
+    alt: "A peaceful life enjoying long-term generational wealth",
   },
 ];
 
