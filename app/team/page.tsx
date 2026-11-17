@@ -18,24 +18,30 @@ const FOUNDERS = [
     first: "Saloni",
     role: "Founder",
     title: "Financial therapist & wealth architect",
-    line: "Started Green Shoots so advice would begin with the person, not the product.",
+    line: "Started Green Shoots so advice would begin with the person, not the product. Contact Saloni for comprehensive financial advisory, goal mapping, and wealth architecture.",
     quote: "Money is never just money. It's the school fees, the parents' care, the year off you've been promising yourself.",
     photo: "/saloni_mehta.jpeg",
     linkedin: "https://www.linkedin.com/in/the-saloni-mehta/",
+    contactTopic: "Financial Advisory (Saloni Mehta)",
+    contactCta: "Contact for Financial Advisory",
   },
   {
     name: "Kaushal Kapasi",
     first: "Kaushal",
     role: "Co-founder",
-    title: "Chartered Accountant",
-    line: "Brings a CA's eye to every plan: the numbers, the tax and the fine print.",
+    title: "Chartered Accountant & Tax Advisor",
+    line: "Brings a CA's eye to every plan: the numbers, tax optimisation, capital gains strategy, and the fine print. Contact Kaushal for tax advisory and structuring.",
     quote: "A good plan should survive a bad year. I read the fine print so you never have to be surprised by it.",
     photo: "/images/team/kaushal_kapasi.jpg",
     linkedin: "https://www.linkedin.com/in/ca-kaushal-kapasi-bbb1b150/",
+    contactTopic: "Tax Advisory (Kaushal Kapasi)",
+    contactCta: "Contact for Tax Advisory",
   },
 ];
 
 const TEAM = [
+  { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/saloni_mehta.jpeg", tint: "#F5F1E8" },
+  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/images/team/kaushal_kapasi.jpg", tint: "#EEF0D9" },
   { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/other_boy.jpg", tint: "#F8F4EA" },
   { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
   { topic: "Research & investment analysis", name: "Vedant", role: "Portfolio & Research Analyst", photo: "/team/vedant.jpg", tint: "#E4ECDF" },
@@ -52,9 +58,9 @@ const VALUES = [
 const CLOUD = [
   { src: FOUNDERS[0].photo, alt: FOUNDERS[0].name, x: 6, y: 14, w: 15, depth: 0.35, r: -4 },
   { src: FOUNDERS[1].photo, alt: FOUNDERS[1].name, x: 80, y: 10, w: 15, depth: 0.55, r: 3 },
-  { src: TEAM[0].photo, alt: TEAM[0].name, x: 70, y: 58, w: 12, depth: 0.85, r: -2 },
-  { src: TEAM[1].photo, alt: TEAM[1].name, x: 16, y: 62, w: 11, depth: 0.7, r: 5 },
-  { src: TEAM[2].photo, alt: TEAM[2].name, x: 44, y: 76, w: 11, depth: 0.95, r: -4 },
+  { src: TEAM[2].photo, alt: TEAM[2].name, x: 70, y: 58, w: 12, depth: 0.85, r: -2 },
+  { src: TEAM[3].photo, alt: TEAM[3].name, x: 16, y: 62, w: 11, depth: 0.7, r: 5 },
+  { src: TEAM[4].photo, alt: TEAM[4].name, x: 44, y: 76, w: 11, depth: 0.95, r: -4 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -272,17 +278,26 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
             <p className="font-cormorant italic text-[1.5rem] text-[#52704e] mt-5">{f.title}</p>
             <p className="text-[16px] leading-relaxed text-[#4a5f51] mt-5 max-w-md">{f.line}</p>
             <p className="sm:hidden font-cormorant italic text-[1.25rem] leading-snug mt-6 border-l-2 border-[#c5a963] pl-4">{f.quote}</p>
-            <a
-              href={f.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-3 rounded-full border border-[#1F3A2C]/20 pl-2 pr-5 py-2 text-[14px] font-medium hover:bg-[#1F3A2C] hover:text-[#F5F1E8] transition-colors"
-            >
-              <span className="w-9 h-9 rounded-full bg-[#1F3A2C] text-[#F5F1E8] grid place-items-center">
-                <LinkedinIcon className="w-3.5 h-3.5" />
-              </span>
-              Connect with {f.first}
-            </a>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link
+                href={`/contact?topic=${encodeURIComponent(f.contactTopic)}`}
+                className="gs-btn gs-btn-dark !pr-3.5 inline-flex"
+              >
+                <span>{f.contactCta}</span>
+                <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+              </Link>
+              <a
+                href={f.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 rounded-full border border-[#1F3A2C]/20 pl-2 pr-4 py-2 text-[13.5px] font-medium hover:bg-[#1F3A2C] hover:text-[#F5F1E8] transition-colors"
+              >
+                <span className="w-7 h-7 rounded-full bg-[#1F3A2C] text-[#F5F1E8] grid place-items-center">
+                  <LinkedinIcon className="w-3 h-3" />
+                </span>
+                <span>LinkedIn</span>
+              </a>
+            </div>
           </Reveal>
         </div>
       </div>

@@ -2421,6 +2421,9 @@
   .\!pr-2\.5 {
     padding-right: calc(var(--spacing) * 2.5) !important;
   }
+  .\!pr-3\.5 {
+    padding-right: calc(var(--spacing) * 3.5) !important;
+  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
   }
@@ -2429,9 +2432,6 @@
   }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
-  }
-  .pr-5 {
-    padding-right: calc(var(--spacing) * 5);
   }
   .pr-6 {
     padding-right: calc(var(--spacing) * 6);

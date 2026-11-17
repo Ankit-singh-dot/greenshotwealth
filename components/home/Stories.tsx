@@ -171,6 +171,8 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 }
 
 export default function Stories() {
+  const [hoveredCol, setHoveredCol] = React.useState<number | null>(null);
+
   return (
     <section
       className="relative w-full bg-[#F5F1E8] py-24 sm:py-32 overflow-hidden border-t border-[#1F3A2C]/10"
@@ -202,7 +204,7 @@ export default function Stories() {
 
         {/* 3-Column Flowing Marquee Container with Top/Bottom Gradient Mask (Nova Reference) */}
         <div
-          className="relative max-h-[640px] sm:max-h-[720px] overflow-hidden marquee-pause"
+          className="relative max-h-[640px] sm:max-h-[720px] overflow-hidden"
           style={{
             maskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
@@ -210,21 +212,48 @@ export default function Stories() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Column 1 (Moves Upwards) */}
-            <div className="animate-marquee-up flex flex-col">
+            <div
+              className={`animate-marquee-up flex flex-col transition-opacity duration-300 ${
+                hoveredCol !== null && hoveredCol !== 0 ? "opacity-75" : "opacity-100"
+              }`}
+              style={{
+                animationPlayState: hoveredCol === 0 ? "paused" : "running",
+              }}
+              onMouseEnter={() => setHoveredCol(0)}
+              onMouseLeave={() => setHoveredCol(null)}
+            >
               {[...COLUMN_1, ...COLUMN_1].map((item, idx) => (
                 <TestimonialCard key={`col1-${idx}`} item={item} />
               ))}
             </div>
 
             {/* Column 2 (Moves Downwards for contrast) */}
-            <div className="animate-marquee-down hidden md:flex flex-col">
+            <div
+              className={`animate-marquee-down hidden md:flex flex-col transition-opacity duration-300 ${
+                hoveredCol !== null && hoveredCol !== 1 ? "opacity-75" : "opacity-100"
+              }`}
+              style={{
+                animationPlayState: hoveredCol === 1 ? "paused" : "running",
+              }}
+              onMouseEnter={() => setHoveredCol(1)}
+              onMouseLeave={() => setHoveredCol(null)}
+            >
               {[...COLUMN_2, ...COLUMN_2].map((item, idx) => (
                 <TestimonialCard key={`col2-${idx}`} item={item} />
               ))}
             </div>
 
             {/* Column 3 (Moves Upwards Slow) */}
-            <div className="animate-marquee-up-slow hidden lg:flex flex-col">
+            <div
+              className={`animate-marquee-up-slow hidden lg:flex flex-col transition-opacity duration-300 ${
+                hoveredCol !== null && hoveredCol !== 2 ? "opacity-75" : "opacity-100"
+              }`}
+              style={{
+                animationPlayState: hoveredCol === 2 ? "paused" : "running",
+              }}
+              onMouseEnter={() => setHoveredCol(2)}
+              onMouseLeave={() => setHoveredCol(null)}
+            >
               {[...COLUMN_3, ...COLUMN_3].map((item, idx) => (
                 <TestimonialCard key={`col3-${idx}`} item={item} />
               ))}

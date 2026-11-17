@@ -24,8 +24,32 @@ export default function ContactPage() {
   useEffect(() => {
     const topic = new URLSearchParams(window.location.search).get("topic");
     if (!topic) return;
+    const lower = topic.toLowerCase();
+    let matchedService = "";
+    if (lower.includes("financial") || lower.includes("saloni")) {
+      matchedService = "financial_advisory";
+    } else if (lower.includes("tax") || lower.includes("kaushal")) {
+      matchedService = "tax_advisory";
+    } else if (lower.includes("mutual") || lower.includes("equity") || lower.includes("sameer")) {
+      matchedService = "mutual_funds";
+    } else if (lower.includes("women")) {
+      matchedService = "women_wealth";
+    } else if (lower.includes("gift") || lower.includes("global")) {
+      matchedService = "gift_city";
+    } else if (lower.includes("retirement")) {
+      matchedService = "retirement";
+    } else if (lower.includes("insurance")) {
+      matchedService = "insurance";
+    } else if (lower.includes("estate")) {
+      matchedService = "estate";
+    }
+
     const id = requestAnimationFrame(() =>
-      setFormData((f) => (f.message ? f : { ...f, message: `I'd like to know more about: ${topic.slice(0, 120)}` }))
+      setFormData((f) => ({
+        ...f,
+        service: f.service || matchedService,
+        message: f.message ? f.message : `I'd like to know more about: ${topic.slice(0, 120)}`,
+      }))
     );
     return () => cancelAnimationFrame(id);
   }, []);
@@ -158,6 +182,8 @@ export default function ContactPage() {
                       className="w-full px-4 py-3.5 rounded-2xl bg-white border border-[#ded8cb] text-sm text-[#1F3A2C] focus:outline-none focus:ring-2 focus:ring-[#1F3A2C] appearance-none cursor-pointer pr-10 shadow-xs"
                     >
                       <option value="">Select a Service</option>
+                      <option value="financial_advisory">Financial Advisory (Saloni Mehta)</option>
+                      <option value="tax_advisory">Tax Advisory &amp; Compliance (Kaushal Kapasi)</option>
                       <option value="mutual_funds">Mutual Funds &amp; Goal-Linked SIPs</option>
                       <option value="retirement">Retirement &amp; Pension Architecture</option>
                       <option value="portfolio_review">Portfolio Review &amp; Rebalancing</option>
