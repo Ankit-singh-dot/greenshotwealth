@@ -319,8 +319,8 @@
   .inset-x-8 {
     inset-inline: calc(var(--spacing) * 8);
   }
-  .-inset-y-\[12\%\] {
-    inset-block: calc(12% * -1);
+  .-inset-y-6 {
+    inset-block: calc(var(--spacing) * -6);
   }
   .inset-y-0 {
     inset-block: 0px;
@@ -2226,8 +2226,11 @@
   .object-cover {
     object-fit: cover;
   }
-  .object-\[50\%_20\%\] {
-    object-position: 50% 20%;
+  .object-\[50\%_10\%\] {
+    object-position: 50% 10%;
+  }
+  .object-\[50\%_15\%\] {
+    object-position: 50% 15%;
   }
   .object-\[55\%_center\] {
     object-position: 55% center;

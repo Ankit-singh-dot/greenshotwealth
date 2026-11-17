@@ -20,7 +20,7 @@ const FOUNDERS = [
     title: "Financial therapist & wealth architect",
     line: "Started Green Shoots so advice would begin with the person, not the product. Contact Saloni for comprehensive financial advisory, goal mapping, and wealth architecture.",
     quote: "Money is never just money. It's the school fees, the parents' care, the year off you've been promising yourself.",
-    photo: "/saloni_mehta.jpeg",
+    photo: "/team/saloni_mehta_new.webp",
     linkedin: "https://www.linkedin.com/in/the-saloni-mehta/",
     contactTopic: "Financial Advisory (Saloni Mehta)",
     contactCta: "Contact for Financial Advisory",
@@ -32,7 +32,7 @@ const FOUNDERS = [
     title: "Chartered Accountant & Tax Advisor",
     line: "Brings a CA's eye to every plan: the numbers, tax optimisation, capital gains strategy, and the fine print. Contact Kaushal for tax advisory and structuring.",
     quote: "A good plan should survive a bad year. I read the fine print so you never have to be surprised by it.",
-    photo: "/images/team/kaushal_kapasi.jpg",
+    photo: "/team/kaushal_kapasi_new.webp",
     linkedin: "https://www.linkedin.com/in/ca-kaushal-kapasi-bbb1b150/",
     contactTopic: "Tax Advisory (Kaushal Kapasi)",
     contactCta: "Contact for Tax Advisory",
@@ -40,8 +40,8 @@ const FOUNDERS = [
 ];
 
 const TEAM = [
-  { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/saloni_mehta.jpeg", tint: "#F5F1E8" },
-  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/images/team/kaushal_kapasi.jpg", tint: "#EEF0D9" },
+  { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/team/saloni_mehta_new.webp", tint: "#F5F1E8" },
+  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
   { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/other_boy.jpg", tint: "#F8F4EA" },
   { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
   { topic: "Research & investment analysis", name: "Vedant", role: "Portfolio & Research Analyst", photo: "/team/vedant.jpg", tint: "#E4ECDF" },
@@ -222,7 +222,7 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
     const p = clamp((vh - r.top) / (vh + r.height)); // 0 → 1 across the viewport
     const c = p - 0.5;
     if (nameRef.current) nameRef.current.style.transform = `translate3d(${(flip ? 1 : -1) * c * 38}vw, 0, 0)`;
-    if (imgRef.current) imgRef.current.style.transform = `translate3d(0, ${(c * -14).toFixed(2)}%, 0) scale(1.18)`;
+    if (imgRef.current) imgRef.current.style.transform = `translate3d(0, ${(c * -8).toFixed(2)}%, 0) scale(1.08)`;
     if (quoteRef.current) quoteRef.current.style.transform = `translate3d(0, ${(c * -160).toFixed(1)}px, 0)`;
   });
 
@@ -244,8 +244,8 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
         <div className={`lg:col-span-5 relative ${flip ? "lg:col-start-8 lg:order-2" : "lg:col-start-1"}`}>
           <Reveal variant="clip">
             <div className="relative aspect-[4/5] rounded-[32px] overflow-hidden bg-[#e7e1d5]">
-              <div ref={imgRef} className="absolute inset-0" style={{ transform: "scale(1.18)" }}>
-                <Image src={f.photo} alt={`${f.name}, ${f.role}`} fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover object-top" />
+              <div ref={imgRef} className="absolute inset-0" style={{ transform: "scale(1.08)" }}>
+                <Image src={f.photo} alt={`${f.name}, ${f.role}`} fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover object-[50%_10%]" priority={index === 0} />
               </div>
               <span className="absolute top-5 left-5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold tracking-[0.12em] uppercase bg-[#F5F1E8] text-[#1F3A2C]">
                 {f.role}
@@ -351,8 +351,14 @@ function InPublic() {
             className="group lg:col-span-7 relative rounded-[32px] overflow-hidden bg-[#E4ECDF] p-3 flex flex-col"
           >
             <div className="relative aspect-[16/10] rounded-[24px] overflow-hidden bg-[#d7dfcf]">
-              <div ref={screenRef} className="absolute -inset-y-[12%] inset-x-0">
-                <Image src={FOUNDERS[0].photo} alt="" fill sizes="(min-width:1024px) 55vw, 100vw" className="object-cover object-[50%_20%] transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105" />
+              <div ref={screenRef} className="absolute -inset-y-6 inset-x-0">
+                <Image
+                  src="/team/saloni_youtube_cover.webp"
+                  alt="Saloni Mehta discussing wealth in public"
+                  fill
+                  sizes="(min-width:1024px) 55vw, 100vw"
+                  className="object-cover object-center transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105"
+                />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A2C]/55 via-transparent to-transparent" aria-hidden />
               <span className="absolute inset-0 grid place-items-center" aria-hidden>

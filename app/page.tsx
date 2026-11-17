@@ -232,9 +232,9 @@ function Founder() {
       <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div className="lg:col-span-5 relative">
           <Reveal variant="clip" className="relative rounded-[32px] overflow-hidden aspect-[4/5] max-w-[480px]">
-            <div className="absolute inset-[-12%_0]">
-              <Parallax speed={0.1} className="absolute inset-0">
-                <Image src="/saloni_mehta.jpeg" alt="Saloni Mehta, Financial Therapist & Wealth Architect" fill sizes="(min-width:1024px) 36vw, 100vw" className="object-cover object-top" />
+            <div className="absolute inset-[-6%_0]">
+              <Parallax speed={0.06} className="absolute inset-0">
+                <Image src="/team/saloni_mehta_new.webp" alt="Saloni Mehta, Financial Therapist & Wealth Architect" fill sizes="(min-width:1024px) 36vw, 100vw" className="object-cover object-[50%_15%]" />
               </Parallax>
             </div>
           </Reveal>
