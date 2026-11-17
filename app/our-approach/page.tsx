@@ -229,7 +229,7 @@ export default function OurApproachPage() {
         <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           <div className="lg:col-span-5">
             <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden bg-[#e7e1d5]">
-              <Image src="/a_longer_life.jpg" alt="A woman looking out at a garden from a calm, light-filled room" fill sizes="(min-width:1024px) 38vw, 100vw" className="object-cover" />
+              <Image src="/office/start_with_conversation.webp" alt="Saloni Mehta in a financial planning session mapping client goals" fill sizes="(min-width:1024px) 38vw, 100vw" className="object-cover" />
             </div>
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
