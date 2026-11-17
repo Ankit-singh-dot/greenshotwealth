@@ -31,7 +31,7 @@ const COLS = [
   {
     title: "Offices",
     links: [
-      { label: "Mumbai · HQ", href: "" },
+      { label: "Mumbai · HQ", href: "https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525" },
       { label: "Ahmedabad", href: "" },
       { label: "Valsad", href: "" },
     ],

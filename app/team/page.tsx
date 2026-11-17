@@ -36,8 +36,8 @@ const FOUNDERS = [
 ];
 
 const TEAM = [
-  { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/sameer_shinde.jpg", tint: "#F8F4EA" },
-  { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/rama_wagmare.jpg", tint: "#F1E7D2" },
+  { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/other_boy.jpg", tint: "#F8F4EA" },
+  { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
   { topic: "Research & investment analysis", name: "Vedant", role: "Portfolio & Research Analyst", photo: "/team/vedant.jpg", tint: "#E4ECDF" },
 ];
 
