@@ -44,19 +44,18 @@ type Place = {
 
 const HQ = { lon: 72.88, lat: 19.08 };
 const CITIES = [
-  { name: "Ahmedabad", lon: 72.57, lat: 23.02 },
-  { name: "Valsad", lon: 72.93, lat: 20.61 },
+  { name: "Gujarat", lon: 72.57, lat: 22.5 },
   { name: "Mumbai", lon: HQ.lon, lat: HQ.lat },
 ];
 
 const PLACES: Place[] = [
-  { key: "ca", name: "Canada", ch: "c", lon: -100, lat: 55, label: [318, 46], align: "l" },
   { key: "us", name: "United States", ch: "u", lon: -98.5, lat: 39.5, label: [198, 182], align: "r" },
-  { key: "uk", name: "United Kingdom", ch: "k", lon: -1.5, lat: 52.5, label: [548, 52], align: "r" },
   { key: "ae", name: "UAE", ch: "e", lon: 55.3, lat: 25.2, label: [742, 128], align: "r" },
-  { key: "tz", name: "Tanzania", ch: "t", lon: 34.9, lat: -6.4, label: [668, 334], align: "r" },
-  { key: "au", name: "Australia", ch: "a", lon: 133.8, lat: -25.3, label: [1004, 420], align: "r" },
   { key: "nz", name: "New Zealand", ch: "n", lon: 174.8, lat: -41.3, label: [1150, 448], align: "r" },
+  { key: "tz", name: "Africa", ch: "t", lon: 34.9, lat: -6.4, label: [668, 334], align: "r" },
+  { key: "au", name: "Australia", ch: "a", lon: 133.8, lat: -25.3, label: [1004, 420], align: "r" },
+  { key: "uk", name: "United Kingdom", ch: "k", lon: -1.5, lat: 52.5, label: [548, 52], align: "r" },
+  { key: "ca", name: "Canada", ch: "c", lon: -100, lat: 55, label: [318, 46], align: "l" },
 ];
 
 const LAND = dotsPath((ch) => ch === "#");
@@ -116,7 +115,7 @@ export default function GlobalReach() {
               viewBox={`0 0 ${W} ${H.toFixed(0)}`}
               className={`gr-map w-full h-auto ${inView ? "is-in" : ""} ${hover ? "has-hover" : ""}`}
               role="img"
-              aria-label="World map. Clients in the United States, Canada, the United Kingdom, the UAE, Tanzania, Australia and New Zealand. Offices in Mumbai (headquarters), Ahmedabad and Valsad."
+              aria-label="World map. Clients in the United States, the UAE, New Zealand, Africa, Australia, the United Kingdom and Canada. Offices in Mumbai (headquarters) and Gujarat."
             >
               <path d={LAND} className="gr-land" />
               {PLACES.map((p) => (
@@ -160,7 +159,7 @@ export default function GlobalReach() {
                 );
               })}
 
-              {/* home: Mumbai, with Ahmedabad and Valsad up the coast */}
+              {/* home: Mumbai, with Gujarat up the coast */}
               <g className="gr-home">
                 {CITIES.map((c) => {
                   const [x, y] = toXY(c.lon, c.lat);
@@ -168,9 +167,9 @@ export default function GlobalReach() {
                 })}
                 <path d={`M${home[0].toFixed(1)},${home[1].toFixed(1)} L${hqLabel[0] - 12},${hqLabel[1] + 8} L${hqLabel[0]},${hqLabel[1] + 8}`} className="gr-leader" />
                 <g className="gr-pill">
-                  <rect x={hqLabel[0]} y={hqLabel[1] - 12} width={176} height={42} rx={12} className="gr-pill-hq" />
+                  <rect x={hqLabel[0]} y={hqLabel[1] - 12} width={144} height={42} rx={12} className="gr-pill-hq" />
                   <text x={hqLabel[0] + 14} y={hqLabel[1] + 4} className="gr-pill-hq-t">Mumbai · HQ</text>
-                  <text x={hqLabel[0] + 14} y={hqLabel[1] + 20} className="gr-pill-hq-s">Ahmedabad · Valsad</text>
+                  <text x={hqLabel[0] + 14} y={hqLabel[1] + 20} className="gr-pill-hq-s">Gujarat</text>
                 </g>
               </g>
             </svg>
@@ -183,7 +182,7 @@ export default function GlobalReach() {
             <p className="flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase text-white/45">
               <span className="w-2 h-2 rounded-full bg-[#c5a963]" /> India
             </p>
-            <p className="mt-3 text-white/80">Mumbai <span className="text-white/40">(HQ)</span> · Ahmedabad · Valsad</p>
+            <p className="mt-3 text-white/80">Mumbai <span className="text-white/40">(HQ)</span> · Gujarat</p>
           </div>
           <div className="md:col-span-8">
             <p className="flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase text-white/45">
