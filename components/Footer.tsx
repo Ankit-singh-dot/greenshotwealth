@@ -31,9 +31,26 @@ const COLS = [
   {
     title: "Offices",
     links: [
-      { label: "Mumbai · HQ", href: "https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525" },
-      { label: "Ahmedabad", href: "" },
-      { label: "Valsad", href: "" },
+      {
+        label: "Mumbai · HQ",
+        href: "https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525",
+      },
+      {
+        label: "Branch Office: Ahmedabad",
+        href: "https://maps.google.com/?q=506+Ratnakar+9+Square+Opp+Keshavbaug+Party+Plot+Satellite+Ahmedabad",
+      },
+      {
+        label: "506 Ratnakar 9 Square",
+        href: "",
+      },
+      {
+        label: "Opp. Keshavbaug Party Plot",
+        href: "",
+      },
+      {
+        label: "Satellite, Ahmedabad",
+        href: "",
+      },
     ],
   },
   {
@@ -111,9 +128,9 @@ export default function Footer() {
       {/* the close */}
       <div className="gs-container pt-20 sm:pt-24 pb-14 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end border-b border-white/10">
         <h2 className="lg:col-span-8 font-cormorant font-normal text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.02em]">
-          Every forest started
+          Strong Roots.
           <br />
-          <em className="text-[#c9d7b3]">as a conversation.</em>
+          <em className="text-[#c9d7b3]">Enduring Wealth.</em>
         </h2>
         <div className="lg:col-span-4 lg:justify-self-end flex flex-col items-start lg:items-end gap-5">
           <Link href="/contact" className="gs-btn gs-btn-light !pr-2.5">
@@ -121,8 +138,8 @@ export default function Footer() {
             <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
           </Link>
           <p className="text-[14px] text-white/70 flex flex-wrap gap-x-5 gap-y-1">
-            <a href="tel:+919819773888" className="gs-foot-link hover:text-white">+91 98197 73888</a>
-            <a href="mailto:contact@greenshootswealth.com" className="gs-foot-link hover:text-white">contact@greenshootswealth.com</a>
+            <a href="tel:+919152153555" className="gs-foot-link hover:text-white">+91 91521 53555</a>
+            <a href="mailto:admin@greenshootswealth.com" className="gs-foot-link hover:text-white">admin@greenshootswealth.com</a>
           </p>
         </div>
       </div>
@@ -179,7 +196,7 @@ export default function Footer() {
       {/* rail */}
       <div className="gs-container py-5 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
         <div className="flex items-center gap-3">
-          <Image src="/footer_logo.png" alt="" width={40} height={37} className="w-9 h-auto" />
+          <Image src="/footer_logo.png" alt="" width={40} height={37} className="w-9" style={{ height: "auto" }} />
           <span className="text-[12px] text-white/55">© {new Date().getFullYear()} Green Shoots Wealth Fintech LLP</span>
         </div>
         <div className="flex items-center gap-2">
