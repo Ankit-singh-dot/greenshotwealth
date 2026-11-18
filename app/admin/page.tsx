@@ -690,14 +690,14 @@ export default function AdminPortalPage() {
           <div className="flex items-center gap-3">
             <Image
               src="/footer_logo.png"
-              alt="Green Shoots"
+              alt="GSW Logo"
               width={28}
               height={28}
               className="object-contain"
             />
             <div className="flex items-baseline gap-2">
-              <span className="brand-logo-text text-white text-sm">
-                Green Shoots Wealth
+              <span className="brand-logo-text text-white text-sm font-semibold tracking-wider font-cormorant text-base">
+                GSW
               </span>
               <span className="text-[11px] uppercase tracking-wider text-[#c5a963] font-semibold bg-white/10 px-2 py-0.5 rounded-full">
                 Admin
