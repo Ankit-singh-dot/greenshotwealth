@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import {
   ArrowRightIcon,
   ChevronDownIcon,
@@ -9,7 +8,6 @@ import {
   LinkedinIcon,
   YoutubeIcon,
   TwitterXIcon,
-  ThreadsIcon,
 } from "@/components/Icons";
 
 export default function ContactPage() {
@@ -323,56 +321,7 @@ export default function ContactPage() {
                 >
                   <TwitterXIcon className="w-3.5 h-3.5" />
                 </a>
-                <a
-                  href="https://threads.net"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-[#F5F1E8] border border-[#ded8cb] flex items-center justify-center text-[#283d31] hover:bg-[#1F3A2C] hover:text-white transition-all shadow-xs"
-                  aria-label="Threads"
-                >
-                  <ThreadsIcon className="w-4 h-4" />
-                </a>
               </div>
-            </div>
-
-            {/* Real Office Consultation Suite Card */}
-            <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-xs border border-[#ded8cb]/60 overflow-hidden">
-              <div className="flex items-center justify-between mb-3.5">
-                <div>
-                  <span className="text-[10.5px] font-sans tracking-[0.16em] uppercase text-[#7a945b] font-semibold">Our Consultation Suite</span>
-                  <h3 className="font-cormorant text-xl text-[#1F3A2C] leading-snug">Walk into our Mumbai office</h3>
-                </div>
-                <span className="text-[11px] text-[#52704e] bg-[#EEF0D9] px-2.5 py-1 rounded-full font-medium">Ghatkopar East</span>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#e5e3df]">
-                  <Image
-                    src="/office/office_consultation_4x3.webp"
-                    alt="Green Shoots Wealth consultation suite in Mumbai"
-                    fill
-                    sizes="(min-width:1024px) 20vw, 50vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[9.5px] px-2 py-0.5 rounded-md font-medium">
-                    Advisory Suite
-                  </div>
-                </div>
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#e5e3df]">
-                  <Image
-                    src="/office/office_plaque_4x3.webp"
-                    alt="Green Shoots Wealth official emblem"
-                    fill
-                    sizes="(min-width:1024px) 20vw, 50vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[9.5px] px-2 py-0.5 rounded-md font-medium">
-                    Headquarters
-                  </div>
-                </div>
-              </div>
-              <p className="text-[12px] text-[#5d7064] mt-3 font-normal leading-relaxed">
-                6th Floor, Sai Fortune Business Centre, 601, Tilak Rd, Ghatkopar East, Mumbai · In-person consultations by appointment.
-              </p>
             </div>
 
             {/* Bottom Row: Office Map Card */}
