@@ -1,18 +1,45 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkedinIcon, InstagramIcon, YoutubeIcon } from "@/components/Icons";
 import { IconArrow, IconArrowUpRight } from "@/components/LineIcons";
 import { RevealLines, Reveal, Marquee } from "@/components/motion/primitives";
-import { onScrollFrame, clamp, prefersReducedMotion } from "@/components/motion/scroll";
+import { onScrollFrame, clamp, prefersReducedMotion, lockScroll } from "@/components/motion/scroll";
 
 /* ------------------------------------------------------------------ */
 /* People                                                              */
 /* ------------------------------------------------------------------ */
 
-const FOUNDERS = [
+type FounderExtended = {
+  bio?: string;
+  education?: string;
+  goal?: string;
+  story?: string;
+  why?: { quote: string; context?: string };
+  whatSetsApart?: string[];
+  expertise?: string[];
+  personalSide?: { intro: string; points: string[] };
+  closing?: string;
+};
+
+type FounderItem = {
+  name: string;
+  first: string;
+  role: string;
+  title: string;
+  line: string;
+  quote: string;
+  photo: string;
+  linkedin: string;
+  contactTopic: string;
+  contactCta: string;
+  extended: FounderExtended;
+};
+
+const FOUNDERS: FounderItem[] = [
   {
     name: "Saloni Mehta",
     first: "Saloni",
@@ -24,6 +51,40 @@ const FOUNDERS = [
     linkedin: "https://www.linkedin.com/in/the-saloni-mehta/",
     contactTopic: "Financial Advisory (Saloni Mehta)",
     contactCta: "Contact for Financial Advisory",
+    extended: {
+      education: "Comm Graduate | IIM-K Alumni",
+      goal: "Making Finance Work for Everyone | Helping 1 Million People Build Wealth",
+      story:
+        "20 years in capital markets taught me one thing: financial knowledge shouldn't be a privilege. After 8 years of helping the wealthy grow wealthier, I chose a different path. Today, as the Founder of Green Shoots Wealth, I'm on a mission to make financial literacy accessible to all.",
+      why: {
+        quote: "Financial independence isn't just about money – it's about giving people the power to shape their own future.",
+        context: "Experience comes from my own childhood background.",
+      },
+      whatSetsApart: [
+        "Building wealth for both Indian & Global investors through data-driven strategies.",
+        "Transforming start-ups from idea to execution with battle-tested frameworks.",
+        "Delivering personalised financial guidance that actually works.",
+        "Creating practical roadmaps for financial independence.",
+      ],
+      expertise: [
+        "Wealth Management",
+        "Startup Consulting",
+        "Strategic Planning",
+        "Financial Education",
+        "Investment Strategy",
+      ],
+      personalSide: {
+        intro: "When I'm not democratizing finance, you'll find me:",
+        points: [
+          "Chasing sunsets at beach cafes with a book and coffee in hand.",
+          "Experimenting in my kitchen (and usually succeeding!).",
+          "Morning gym sessions (to balance my love for Mumbai's famous Vada Pav).",
+          "Journaling ideas that might just change someone's financial future.",
+        ],
+      },
+      closing:
+        "Let's challenge the status quo of financial freedom together. Whether you're passionate about finance, entrepreneurship, or just enjoy a good Vada Pav conversation – I'd love to connect!",
+    },
   },
   {
     name: "Kaushal Kapasi",
@@ -36,15 +97,19 @@ const FOUNDERS = [
     linkedin: "https://www.linkedin.com/in/ca-kaushal-kapasi-bbb1b150/",
     contactTopic: "Tax Advisory (Kaushal Kapasi)",
     contactCta: "Contact for Tax Advisory",
+    extended: {
+      bio: "Experienced Chartered Accountant with a demonstrated history of working in the accounting industry. Skilled in Accounting, Business Development, Tax, Management, and Financial Accounting. A strong accounting professional graduated from ICAI.",
+    },
   },
 ];
 
 const TEAM = [
   { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/team/saloni_mehta_new.webp", tint: "#F5F1E8" },
   { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
-  { topic: "Equity & mutual funds", name: "Sameer Shinde", role: "Head of Equity & Mutual Funds", photo: "/team/other_boy.jpg", tint: "#F8F4EA" },
-  { topic: "Client wealth & operations", name: "Rama Wagmare", role: "Client Operations & Wealth Lead", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
-  { topic: "Research & investment analysis", name: "Vedant", role: "Portfolio & Research Analyst", photo: "/team/vedant.jpg", tint: "#E4ECDF" },
+  { topic: "Research & investment analysis", name: "Hetvi Soni", role: "Research & Investment Analysis", photo: "/team/hetvi_soni.webp", tint: "#E4ECDF" },
+  { topic: "Client onboarding & analysis", name: "Vedant Thorve", role: "Client Onboarding & Analysis", photo: "/team/vedant.jpg", tint: "#F8F4EA" },
+  { topic: "Transaction support", name: "Sameer Shinde", role: "Transaction Support", photo: "/team/sameer_shinde.jpg", tint: "#F5F1E8" },
+  { topic: "Admin & operations", name: "Ruhi Waghmare", role: "Admin & Operations", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
 ];
 
 const VALUES = [
@@ -54,13 +119,14 @@ const VALUES = [
   { word: "Learning", line: "Better at this every year.", bg: "#E4ECDF", accent: "#52704e" },
 ];
 
-/** Hero portrait cloud: position (%), size (vw-ish), depth for parallax. */
+/** Hero portrait cloud: symmetrical architectural framing flanking the central headline. */
 const CLOUD = [
-  { src: FOUNDERS[0].photo, alt: FOUNDERS[0].name, x: 6, y: 14, w: 15, depth: 0.35, r: -4 },
-  { src: FOUNDERS[1].photo, alt: FOUNDERS[1].name, x: 80, y: 10, w: 15, depth: 0.55, r: 3 },
-  { src: TEAM[2].photo, alt: TEAM[2].name, x: 70, y: 58, w: 12, depth: 0.85, r: -2 },
-  { src: TEAM[3].photo, alt: TEAM[3].name, x: 16, y: 62, w: 11, depth: 0.7, r: 5 },
-  { src: TEAM[4].photo, alt: TEAM[4].name, x: 44, y: 76, w: 11, depth: 0.95, r: -4 },
+  { src: FOUNDERS[0].photo, alt: FOUNDERS[0].name, x: 4.5, y: 12, w: 13.5, depth: 0.35 },
+  { src: FOUNDERS[1].photo, alt: FOUNDERS[1].name, x: 82, y: 12, w: 13.5, depth: 0.35 },
+  { src: TEAM[3].photo, alt: TEAM[3].name, x: 9.5, y: 46, w: 12, depth: 0.5 },
+  { src: TEAM[2].photo, alt: TEAM[2].name, x: 78.5, y: 46, w: 12, depth: 0.5 },
+  { src: TEAM[5].photo, alt: TEAM[5].name, x: 4, y: 68, w: 11.5, depth: 0.65 },
+  { src: TEAM[4].photo, alt: TEAM[4].name, x: 84.5, y: 68, w: 11.5, depth: 0.65 },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -126,10 +192,11 @@ function Hero() {
       tiles.current.forEach((n, i) => {
         if (!n) return;
         const c = CLOUD[i];
-        const float = Math.sin(t / 1400 + i * 1.7) * 8;
-        const x = -mx * c.depth * 46;
-        const y = -scrollY * c.depth - my * c.depth * 46 + float;
-        n.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${c.r}deg)`;
+        const pair = Math.floor(i / 2);
+        const float = Math.sin(t / 1800 + pair * 1.3) * (i % 2 === 0 ? 5 : -5);
+        const x = -mx * c.depth * 30;
+        const y = -scrollY * c.depth - my * c.depth * 30 + float;
+        n.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
       });
       if (headline.current) {
         const p = clamp(scrollY / h);
@@ -163,18 +230,18 @@ function Hero() {
       }}
       aria-label="Our team"
     >
-      {/* portrait cloud */}
-      <div className="absolute inset-0 hidden md:block" aria-hidden>
+      {/* portrait cloud — architectural symmetrical framing */}
+      <div className="absolute inset-0 hidden md:block pointer-events-none" aria-hidden>
         {CLOUD.map((c, i) => (
           <div
             key={c.src}
             ref={(n) => {
               tiles.current[i] = n;
             }}
-            className="absolute"
-            style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}vw`, transform: `rotate(${c.r}deg)` }}
+            className="absolute will-change-transform"
+            style={{ left: `${c.x}%`, top: `${c.y}%`, width: `${c.w}vw` }}
           >
-            <div className="relative aspect-[3/4] rounded-[22px] overflow-hidden shadow-[0_30px_60px_-30px_rgba(31,58,44,0.45)] ring-1 ring-white/60">
+            <div className="relative aspect-[3/4] rounded-[24px] overflow-hidden shadow-[0_24px_50px_-20px_rgba(31,58,44,0.3)] ring-1 ring-white/70 bg-[#e7e1d5]">
               <Image src={c.src} alt="" fill sizes="16vw" className="object-cover object-center" priority={i < 2} />
             </div>
           </div>
@@ -196,7 +263,7 @@ function Hero() {
 
         {/* mobile: a simple face row */}
         <div className="md:hidden mt-10 flex justify-center -space-x-3">
-          {CLOUD.slice(0, 5).map((c) => (
+          {CLOUD.map((c) => (
             <span key={c.src} className="relative w-14 h-14 rounded-full overflow-hidden ring-4 ring-[#F5F1E8]">
               <Image src={c.src} alt={c.alt} fill sizes="56px" className="object-cover object-top" />
             </span>
@@ -212,7 +279,15 @@ function Hero() {
 /* Founder — portrait with depth, a giant name sliding behind           */
 /* ------------------------------------------------------------------ */
 
-function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) {
+function Founder({
+  f,
+  index,
+  onOpenProfile,
+}: {
+  f: (typeof FOUNDERS)[number];
+  index: number;
+  onOpenProfile: () => void;
+}) {
   const flip = index % 2 === 1;
   const nameRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -255,7 +330,7 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
           {/* floating quote card — travels faster than the portrait */}
           <div
             ref={quoteRef}
-            className={`hidden sm:block absolute -bottom-10 ${flip ? "-left-8 lg:-left-24" : "-right-8 lg:-right-24"} w-[min(340px,80%)]`}
+            className={`hidden sm:block absolute -bottom-10 ${flip ? "-left-8 lg:-left-20" : "-right-8 lg:-right-20"} w-[min(340px,80%)] z-10`}
           >
             <div className="rounded-[22px] bg-[#FBF9F4] p-6 shadow-[0_30px_60px_-30px_rgba(31,58,44,0.4)] border border-white">
               <span className="font-cormorant text-[3.5rem] leading-[0.5] text-[#c5a963]" aria-hidden>
@@ -267,7 +342,7 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
         </div>
 
         {/* words */}
-        <div className={`lg:col-span-6 ${flip ? "lg:col-start-1 lg:order-1" : "lg:col-start-7"}`}>
+        <div className={`lg:col-span-7 ${flip ? "lg:col-start-1 lg:order-1" : "lg:col-start-6"}`}>
           <span className="gs-index text-[#bda15f]">0{index + 1} — {f.role}</span>
           <RevealLines
             as="h2"
@@ -276,7 +351,7 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
           />
           <Reveal delay={200}>
             <p className="font-cormorant italic text-[1.5rem] text-[#52704e] mt-5">{f.title}</p>
-            <p className="text-[16px] leading-relaxed text-[#4a5f51] mt-5 max-w-md">{f.line}</p>
+            <p className="text-[16px] leading-relaxed text-[#4a5f51] mt-5 max-w-lg">{f.line}</p>
             <p className="sm:hidden font-cormorant italic text-[1.25rem] leading-snug mt-6 border-l-2 border-[#c5a963] pl-4">{f.quote}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
@@ -297,11 +372,362 @@ function Founder({ f, index }: { f: (typeof FOUNDERS)[number]; index: number }) 
                 </span>
                 <span>LinkedIn</span>
               </a>
+              <button
+                type="button"
+                onClick={onOpenProfile}
+                className="group relative inline-flex items-center gap-3 rounded-full border border-[#1F3A2C]/25 bg-white/80 hover:bg-[#1F3A2C] px-5 py-2.5 text-[14px] font-medium text-[#1F3A2C] hover:text-[#F5F1E8] shadow-[0_4px_20px_-4px_rgba(31,58,44,0.15)] hover:shadow-[0_10px_30px_-6px_rgba(31,58,44,0.35)] transition-all duration-300"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#8fa868] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#52704e]"></span>
+                </span>
+                <span>Read full story &amp; profile</span>
+                <span className="w-6 h-6 rounded-full bg-[#1F3A2C]/10 group-hover:bg-white/20 grid place-items-center transition-colors">
+                  <IconArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </button>
             </div>
           </Reveal>
         </div>
       </div>
     </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Cinematic Founder Stage — Award-Winning 3D Depth Expansion        */
+/* ------------------------------------------------------------------ */
+
+function CinematicFounderStage({
+  founder,
+  onClose,
+}: {
+  founder: FounderItem | null;
+  onClose: () => void;
+}) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!founder) return;
+    lockScroll(true);
+
+    // Ensure reading pane starts at top when opened
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      lockScroll(false);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [founder, onClose]);
+
+  if (!founder || !mounted) return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-3 sm:p-6 lg:p-8 overflow-hidden select-text"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${founder.name} — Profile`}
+      data-lenis-prevent
+    >
+      {/* 1. Deep Atmospheric Backdrop with Blur */}
+      <div
+        onClick={onClose}
+        className="absolute inset-0 bg-[#07130D]/85 backdrop-blur-2xl transition-all duration-500 cursor-pointer"
+        aria-hidden="true"
+      />
+
+      {/* 2. Kinetic Watermark floating in depth behind the card */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="dossier-watermark font-cormorant italic text-[clamp(6rem,18vw,20rem)] text-white/[0.05] whitespace-nowrap will-change-transform leading-none">
+          {founder.name} · {founder.name}
+        </div>
+      </div>
+
+      {/* 3. The Centered Editorial Dossier Card */}
+      <div
+        key={founder.name}
+        className="dossier-stage-card relative w-full max-w-5xl h-[88vh] max-h-[740px] min-h-[460px] bg-[#FAF8F5] rounded-[24px] sm:rounded-[28px] shadow-[0_30px_90px_rgba(0,0,0,0.65)] border border-white/50 flex flex-col md:flex-row overflow-hidden z-10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Desktop Left Column: Anchored Identity Panel */}
+        <div className="hidden md:flex md:w-[34%] bg-[#EEF0D9]/80 p-6 lg:p-7 flex-col justify-between border-r border-[#1F3A2C]/10 shrink-0 select-none">
+          <div className="space-y-4">
+            <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.14em] uppercase bg-[#1F3A2C] text-[#F5F1E8]">
+              {founder.role}
+            </span>
+
+            {/* Portrait */}
+            <div className="relative aspect-[4/5] max-h-[240px] w-full rounded-2xl overflow-hidden shadow-[0_12px_28px_-10px_rgba(31,58,44,0.25)] ring-1 ring-[#1F3A2C]/10 bg-[#e7e1d5]">
+              <Image
+                src={founder.photo}
+                alt={founder.name}
+                fill
+                sizes="300px"
+                className="object-cover object-[50%_15%]"
+                priority
+              />
+            </div>
+
+            {/* Identity details */}
+            <div className="pt-1">
+              <h2 className="font-cormorant text-[2rem] leading-none text-[#1F3A2C]">
+                {founder.name}
+              </h2>
+              <p className="font-cormorant italic text-[1.1rem] text-[#52704e] mt-1 leading-snug">
+                {founder.title}
+              </p>
+            </div>
+
+            {/* Quick credentials */}
+            {(founder.extended.education || founder.extended.goal) && (
+              <div className="pt-2 space-y-1.5 text-[12px] text-[#3D5245] border-t border-[#1F3A2C]/10">
+                {founder.extended.education && (
+                  <p><span className="font-semibold text-[#1F3A2C]">Education:</span> {founder.extended.education}</p>
+                )}
+                {founder.extended.goal && (
+                  <p><span className="font-semibold text-[#1F3A2C]">Goal:</span> {founder.extended.goal}</p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Bottom actions */}
+          <div className="pt-4 space-y-2 border-t border-[#1F3A2C]/10">
+            <Link
+              href={`/contact?topic=${encodeURIComponent(founder.contactTopic)}`}
+              onClick={onClose}
+              className="gs-btn gs-btn-dark !w-full !py-2.5 !px-4 text-[13px] inline-flex justify-center items-center gap-2"
+            >
+              <span>{founder.contactCta}</span>
+              <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+            </Link>
+            <a
+              href={founder.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-[#1F3A2C]/20 bg-white hover:bg-[#1F3A2C] hover:text-[#F5F1E8] py-2 text-[12.5px] font-medium transition-colors"
+            >
+              <LinkedinIcon className="w-3.5 h-3.5" />
+              <span>LinkedIn Profile</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Mobile Top Bar */}
+        <div className="md:hidden flex items-center justify-between p-4 bg-[#EEF0D9] border-b border-[#1F3A2C]/10 shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="relative w-11 h-13 rounded-xl overflow-hidden shrink-0 bg-[#e7e1d5] ring-1 ring-[#1F3A2C]/10">
+              <Image
+                src={founder.photo}
+                alt={founder.name}
+                fill
+                sizes="50px"
+                className="object-cover object-[50%_15%]"
+                priority
+              />
+            </div>
+            <div>
+              <span className="inline-block px-2 py-0.2 rounded-full text-[9px] font-bold uppercase tracking-wider bg-[#1F3A2C] text-[#F5F1E8]">
+                {founder.role}
+              </span>
+              <h2 className="font-cormorant text-[1.45rem] leading-none text-[#1F3A2C] mt-0.5">
+                {founder.name}
+              </h2>
+            </div>
+          </div>
+          {/* THE SINGLE CLOSE BUTTON ON MOBILE */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-white text-[#1F3A2C] grid place-items-center text-sm font-semibold shadow-sm hover:bg-[#1F3A2C] hover:text-white transition-colors"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Right Column: Editorial Reading Flow (No nested cards) */}
+        <div className="flex-1 flex flex-col overflow-hidden bg-[#FAF8F5]">
+          {/* Desktop Pinned Header with THE SINGLE CLOSE BUTTON */}
+          <div className="hidden md:flex items-center justify-between px-8 py-5 border-b border-[#1F3A2C]/10 shrink-0 bg-[#FAF8F5]">
+            <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#52704e]">
+              About {founder.first}
+            </span>
+            {/* THE ONLY CLOSE BUTTON */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1F3A2C]/5 hover:bg-[#1F3A2C] text-[#1F3A2C] hover:text-white transition-all text-[12px] font-medium"
+              aria-label="Close profile"
+            >
+              <span>Close</span>
+              <span className="w-4 h-4 rounded-full bg-[#1F3A2C]/10 group-hover:bg-white/20 grid place-items-center text-[10px] font-bold">✕</span>
+            </button>
+          </div>
+
+          {/* Reading Scroll Body */}
+          <div
+            ref={contentRef}
+            className="flex-1 overflow-y-auto px-6 py-6 sm:px-9 sm:py-8 space-y-7 [scrollbar-width:thin] text-[#1F3A2C]"
+          >
+            {/* 1. Core Story / 20 Years in Capital Markets */}
+            {founder.extended.story && (
+              <div className="space-y-3">
+                <p className="font-cormorant text-[1.45rem] sm:text-[1.65rem] leading-snug text-[#1F3A2C] font-normal">
+                  20 years in capital markets taught me one thing: financial knowledge shouldn&apos;t be a privilege.
+                </p>
+                <p className="text-[15px] sm:text-[15.5px] leading-relaxed text-[#3D5245]">
+                  After 8 years of helping the wealthy grow wealthier, I chose a different path. Today, as the Founder of Green Shoots Wealth, I&apos;m on a mission to make financial literacy accessible to all.
+                </p>
+              </div>
+            )}
+
+            {/* Kaushal Kapasi Bio */}
+            {founder.extended.bio && (
+              <div className="space-y-4">
+                <p className="text-[15.5px] sm:text-[16px] leading-relaxed text-[#2C3E33]">
+                  {founder.extended.bio}
+                </p>
+                <div className="pt-2">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e] mb-2.5">
+                    Core Expertise
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {["Accounting", "Business Development", "Tax", "Management", "Financial Accounting"].map((pill) => (
+                      <span
+                        key={pill}
+                        className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#EEF0D9] text-[12.5px] font-medium text-[#1F3A2C]"
+                      >
+                        {pill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. Why I do what I do (Saloni) */}
+            {founder.extended.why && (
+              <div className="border-l-2 border-[#52704e] pl-4 sm:pl-5 py-1 space-y-1.5">
+                <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
+                  Why I do what I do
+                </p>
+                <blockquote className="font-cormorant italic text-[1.3rem] sm:text-[1.45rem] leading-snug text-[#1F3A2C]">
+                  &ldquo;{founder.extended.why.quote}&rdquo;
+                </blockquote>
+                {founder.extended.why.context && (
+                  <p className="text-[13px] text-[#5A7063]">
+                    — {founder.extended.why.context}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* 3. What Sets Us Apart (Saloni) */}
+            {founder.extended.whatSetsApart && founder.extended.whatSetsApart.length > 0 && (
+              <div className="space-y-3 pt-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
+                  What sets us apart
+                </p>
+                <ul className="space-y-2">
+                  {founder.extended.whatSetsApart.map((pt, i) => (
+                    <li key={i} className="flex items-start gap-3 text-[14px] sm:text-[14.5px] text-[#3D5245] leading-relaxed">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#52704e] mt-2 shrink-0" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* 4. Core Expertise (Saloni - clean text pills, NO emojis) */}
+            {founder.extended.expertise && founder.extended.expertise.length > 0 && (
+              <div className="space-y-3 pt-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
+                  Core Expertise
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {founder.extended.expertise.map((item, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#EEF0D9] text-[12.5px] font-medium text-[#1F3A2C]"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 5. The Personal Side (Saloni) */}
+            {founder.extended.personalSide && (
+              <div className="space-y-3 pt-2">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
+                  The Personal Side
+                </p>
+                <p className="text-[14px] text-[#3D5245]">
+                  {founder.extended.personalSide.intro}
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
+                  {founder.extended.personalSide.points.map((pt, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-[13.5px] text-[#4A5F51] leading-relaxed">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#c5a963] mt-2 shrink-0" />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* 6. Closing Note */}
+            {founder.extended.closing && (
+              <div className="pt-4 border-t border-[#1F3A2C]/10 space-y-4">
+                <p className="font-cormorant italic text-[1.25rem] sm:text-[1.35rem] leading-snug text-[#1F3A2C]">
+                  {founder.extended.closing}
+                </p>
+                <Link
+                  href={`/contact?topic=${encodeURIComponent(founder.contactTopic)}`}
+                  onClick={onClose}
+                  className="gs-btn gs-btn-dark !py-2.5 !px-5 text-[13px] inline-flex items-center gap-2"
+                >
+                  <span>Connect with {founder.first}</span>
+                  <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+                </Link>
+              </div>
+            )}
+
+            {/* Mobile Bottom Actions */}
+            <div className="md:hidden pt-4 pb-2 space-y-2 border-t border-[#1F3A2C]/10">
+              <a
+                href={founder.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-[#1F3A2C]/20 bg-white py-2 text-[12.5px] font-medium text-[#1F3A2C]"
+              >
+                <LinkedinIcon className="w-3.5 h-3.5" />
+                <span>LinkedIn Profile</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -446,7 +872,7 @@ function InPublic() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Specialists — a pinned horizontal reel on desktop                    */
+/* Specialists — a pinned horizontal reel on all screen sizes        */
 /* ------------------------------------------------------------------ */
 
 function Specialists() {
@@ -454,73 +880,57 @@ function Specialists() {
   const barRef = useRef<HTMLSpanElement>(null);
   const cardImgs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState(0);
-  const [desktop, setDesktop] = useState(false);
 
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const set = () => setDesktop(mq.matches && !prefersReducedMotion());
-    set();
-    mq.addEventListener("change", set);
-    return () => mq.removeEventListener("change", set);
-  }, []);
-
-  const ref = useScrollFx<HTMLElement>(
-    (r, vh, vw) => {
-      const track = trackRef.current;
-      if (!track) return;
-      if (!desktop) {
-        track.style.transform = "";
-        return;
-      }
-      const p = clamp(-r.top / (r.height - vh));
-      const max = track.scrollWidth - vw;
-      track.style.transform = `translate3d(${(-p * max).toFixed(1)}px, 0, 0)`;
-      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
-      setActive(Math.min(TEAM.length - 1, Math.round(p * (TEAM.length - 1))));
-      // each portrait slides inside its frame relative to screen centre
-      cardImgs.current.forEach((img) => {
-        if (!img) return;
-        const cr = img.parentElement!.getBoundingClientRect();
-        const off = (cr.left + cr.width / 2 - vw / 2) / vw;
-        img.style.transform = `translate3d(${(off * -10).toFixed(2)}%, 0, 0) scale(1.04)`;
-      });
-    },
-    [desktop]
-  );
+  const ref = useScrollFx<HTMLElement>((r, vh, vw) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const p = clamp(-r.top / (r.height - vh));
+    const max = track.scrollWidth - vw + (vw * 0.05);
+    track.style.transform = `translate3d(${(-p * max).toFixed(1)}px, 0, 0)`;
+    if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
+    setActive(Math.min(TEAM.length - 1, Math.round(p * (TEAM.length - 1))));
+    // each portrait slides inside its frame relative to screen centre
+    cardImgs.current.forEach((img) => {
+      if (!img) return;
+      const cr = img.parentElement!.getBoundingClientRect();
+      const off = (cr.left + cr.width / 2 - vw / 2) / vw;
+      img.style.transform = `translate3d(${(off * -10).toFixed(2)}%, 0, 0) scale(1.04)`;
+    });
+  });
 
   return (
     <section
       ref={ref}
-      className="relative bg-[#EEF0D9] lg:h-[420vh]"
+      className="relative bg-[#EEF0D9] h-[360vh] sm:h-[400vh] lg:h-[450vh]"
       aria-label="Who to call for what"
     >
-      <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden flex flex-col justify-center py-24 lg:py-0 lg:pt-[calc(var(--nav-h)-20px)]">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center py-6 sm:py-8 lg:py-0 lg:pt-[calc(var(--nav-h)-20px)]">
         {/* big faint topic word that swaps as you travel */}
         <div className="absolute right-[-2vw] top-[8vh] font-cormorant italic text-[clamp(6rem,16vw,16rem)] leading-none text-[#1F3A2C]/[0.05] pointer-events-none select-none hidden lg:block" aria-hidden>
           0{active + 1}
         </div>
 
-        <div className="gs-container relative flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div className="gs-container relative flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6">
           <div>
             <p className="gs-eyebrow text-[#52704e]">The specialists</p>
-            <h2 className="gs-h1 mt-4">
+            <h2 className="font-cormorant text-[clamp(2.2rem,5vw,4.4rem)] leading-[0.95] tracking-[-0.02em] mt-2 sm:mt-4">
               Who to call <em className="text-[#52704e]">for what.</em>
             </h2>
           </div>
-          <p className="text-[15.5px] text-[#4a5f51] max-w-sm">
+          <p className="text-[13.5px] sm:text-[15.5px] text-[#4a5f51] max-w-sm">
             Every client gets a named lead. When something specific comes up, the right specialist steps in.
           </p>
         </div>
 
-        <div className="mt-10 lg:mt-14 overflow-x-auto lg:overflow-visible snap-x snap-mandatory [scrollbar-width:none]" data-lenis-prevent-touch>
-          <div ref={trackRef} className="flex gap-5 lg:gap-8 w-max px-[var(--gutter)]">
+        <div className="mt-6 sm:mt-10 lg:mt-14 overflow-hidden w-full select-none">
+          <div ref={trackRef} className="flex gap-4 sm:gap-6 lg:gap-8 w-max px-[var(--gutter)] will-change-transform">
             {TEAM.map((t, i) => (
               <article
                 key={t.name}
-                className={`snap-start shrink-0 w-[78vw] sm:w-[46vw] lg:w-[30vw] xl:w-[26vw] rounded-[28px] p-3 transition-transform duration-700 ${desktop && i === active ? "lg:-translate-y-3" : ""}`}
+                className="shrink-0 w-[74vw] sm:w-[44vw] lg:w-[28vw] xl:w-[24vw] rounded-[24px] sm:rounded-[28px] p-2.5 sm:p-3 transition-transform duration-500"
                 style={{ background: t.tint }}
               >
-                <div className="relative aspect-[4/5] rounded-[22px] overflow-hidden bg-white/40">
+                <div className="relative aspect-[4/5] max-h-[38vh] sm:max-h-[46vh] lg:max-h-none rounded-[18px] sm:rounded-[22px] overflow-hidden bg-white/40">
                   <div
                     ref={(n) => {
                       cardImgs.current[i] = n;
@@ -528,36 +938,36 @@ function Specialists() {
                     className="absolute inset-0"
                     style={{ transform: "scale(1.04)" }}
                   >
-                    <Image src={t.photo} alt={`${t.name}, ${t.role}`} fill sizes="(min-width:1024px) 30vw, 78vw" className="object-cover object-center" />
+                    <Image src={t.photo} alt={`${t.name}, ${t.role}`} fill sizes="(min-width:1024px) 28vw, (min-width:640px) 44vw, 74vw" className="object-cover object-center" />
                   </div>
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#F5F1E8] text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1F3A2C]">
+                  <span className="absolute top-3 left-3 sm:top-4 sm:left-4 px-2.5 sm:px-3 py-1 rounded-full bg-[#F5F1E8] text-[10px] sm:text-[11px] font-semibold tracking-[0.12em] uppercase text-[#1F3A2C]">
                     {t.topic}
                   </span>
-                  <span className="absolute bottom-3 right-4 font-cormorant italic text-[5rem] leading-none text-white/85 drop-shadow" aria-hidden>
+                  <span className="absolute bottom-2 right-3 sm:bottom-3 sm:right-4 font-cormorant italic text-[3.8rem] sm:text-[5rem] leading-none text-white/85 drop-shadow" aria-hidden>
                     0{i + 1}
                   </span>
                 </div>
-                <div className="px-3 pt-5 pb-3 flex items-end justify-between gap-4">
+                <div className="px-2 pt-3 pb-1 sm:px-3 sm:pt-4 sm:pb-2 flex items-end justify-between gap-3">
                   <div>
-                    <h3 className="font-cormorant text-[2rem] leading-none">{t.name}</h3>
-                    <p className="text-[13.5px] text-[#4a5f51] mt-2">{t.role}</p>
+                    <h3 className="font-cormorant text-[1.6rem] sm:text-[2rem] leading-none">{t.name}</h3>
+                    <p className="text-[12px] sm:text-[13.5px] text-[#4a5f51] mt-1 sm:mt-1.5">{t.role}</p>
                   </div>
                   <Link
                     href={`/contact?topic=${encodeURIComponent(`${t.topic} (${t.name})`)}`}
                     aria-label={`Book time with ${t.name}`}
-                    className="shrink-0 w-12 h-12 rounded-full bg-[#1F3A2C] text-[#F5F1E8] grid place-items-center hover:bg-[#c5a963] hover:text-[#1F3A2C] transition-colors"
+                    className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1F3A2C] text-[#F5F1E8] grid place-items-center hover:bg-[#c5a963] hover:text-[#1F3A2C] transition-colors"
                   >
-                    <IconArrow className="w-4 h-4 -rotate-45" />
+                    <IconArrow className="w-3.5 h-3.5 sm:w-4 sm:h-4 -rotate-45" />
                   </Link>
                 </div>
               </article>
             ))}
             {/* end card */}
-            <div className="snap-start shrink-0 w-[78vw] sm:w-[46vw] lg:w-[26vw] rounded-[28px] border border-dashed border-[#1F3A2C]/25 grid place-items-center p-10 text-center">
+            <div className="shrink-0 w-[74vw] sm:w-[44vw] lg:w-[24vw] rounded-[24px] sm:rounded-[28px] border border-dashed border-[#1F3A2C]/25 grid place-items-center p-6 sm:p-10 text-center">
               <div>
-                <p className="font-cormorant italic text-[2.2rem] leading-tight">Not sure who you need?</p>
-                <p className="text-[14.5px] text-[#4a5f51] mt-3">Start with a conversation. We&apos;ll route you.</p>
-                <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5 mt-7 inline-flex">
+                <p className="font-cormorant italic text-[1.8rem] sm:text-[2.2rem] leading-tight">Not sure who you need?</p>
+                <p className="text-[13px] sm:text-[14.5px] text-[#4a5f51] mt-2 sm:mt-3">Start with a conversation. We&apos;ll route you.</p>
+                <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5 mt-5 sm:mt-7 inline-flex text-[13px]">
                   <span>Start here</span>
                   <span className="gs-btn-arrow">
                     <IconArrow className="w-3.5 h-3.5" />
@@ -569,13 +979,13 @@ function Specialists() {
         </div>
 
         {/* progress */}
-        <div className="gs-container mt-10 hidden lg:flex items-center gap-6" aria-live="polite">
-          <span className="gs-index text-[#1F3A2C]">0{active + 1}</span>
+        <div className="gs-container mt-6 sm:mt-8 flex items-center gap-4 sm:gap-6" aria-live="polite">
+          <span className="gs-index text-[#1F3A2C] text-[11px] sm:text-xs">0{active + 1}</span>
           <span className="relative flex-1 h-px bg-[#1F3A2C]/15 overflow-hidden">
             <span ref={barRef} className="absolute inset-0 bg-[#c5a963] origin-left" style={{ transform: "scaleX(0)" }} />
           </span>
-          <span className="gs-index text-[#1F3A2C]/50">0{TEAM.length}</span>
-          <span className="font-cormorant italic text-[1.35rem] min-w-[22ch] text-right">
+          <span className="gs-index text-[#1F3A2C]/50 text-[11px] sm:text-xs">0{TEAM.length}</span>
+          <span className="font-cormorant italic text-[1.1rem] sm:text-[1.35rem] min-w-[16ch] sm:min-w-[22ch] text-right truncate">
             {TEAM[active].topic} → {TEAM[active].name.split(" ")[0]}
           </span>
         </div>
@@ -692,16 +1102,38 @@ function Close() {
 /* ------------------------------------------------------------------ */
 
 export default function TeamPage() {
+  const [activeFounder, setActiveFounder] = useState<FounderItem | null>(null);
+
   return (
-    <div className="w-full flex flex-col bg-[#F5F1E8] text-[#1F3A2C]" data-motion-managed>
-      <Hero />
-      {FOUNDERS.map((f, i) => (
-        <Founder key={f.name} f={f} index={i} />
-      ))}
-      <InPublic />
-      <Specialists />
-      <Values />
-      <Close />
-    </div>
+    <>
+      <div
+        className="w-full flex flex-col bg-[#F5F1E8] text-[#1F3A2C] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-center"
+        style={{
+          transform: activeFounder ? "scale(0.95)" : "scale(1)",
+          filter: activeFounder ? "blur(6px) brightness(0.65)" : "none",
+        }}
+        data-motion-managed
+      >
+        <Hero />
+        {FOUNDERS.map((f, i) => (
+          <Founder
+            key={f.name}
+            f={f}
+            index={i}
+            onOpenProfile={() => setActiveFounder(f)}
+          />
+        ))}
+        <InPublic />
+        <Specialists />
+        <Values />
+        <Close />
+      </div>
+
+      {/* Cinematic Award-Winning Depth Expansion Stage */}
+      <CinematicFounderStage
+        founder={activeFounder}
+        onClose={() => setActiveFounder(null)}
+      />
+    </>
   );
 }
