@@ -59,7 +59,7 @@ function StreetHero() {
           play={ready}
           delay={120}
           stagger={110}
-          className="font-cormorant font-normal text-[clamp(3rem,6.6vw,7.4rem)] leading-[0.92] tracking-[-0.03em]"
+          className="font-cormorant font-normal text-[clamp(3rem,6.6vw,7.4rem)] leading-[0.96] tracking-[-0.03em] pb-2"
           lines={[<>Beyond wealth <em key="m" className="text-[#52704e]">management.</em></>]}
         />
         <p className={`text-[16px] sm:text-[17px] leading-relaxed text-[#3d5446] max-w-[30rem] mx-auto mt-5 rv rv-up ${on}`} style={{ ["--rv-delay" as string]: "400ms" }}>
@@ -179,7 +179,7 @@ function VideoHero() {
           play={ready}
           delay={150}
           stagger={120}
-          className="font-cormorant font-normal text-[clamp(2.7rem,8.2vw,9rem)] leading-[0.9] tracking-[-0.035em] mt-6"
+          className="font-cormorant font-normal text-[clamp(2.7rem,8.2vw,9rem)] leading-[0.96] tracking-[-0.035em] mt-6 pb-2"
           lines={[<>Beyond wealth</>, <em key="m" className="text-[#c9d7b3]">management.</em>]}
         />
 
@@ -223,60 +223,143 @@ function VideoHero() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Founder                                                             */
+/* Leadership: Founder & Co-founder                                    */
 /* ------------------------------------------------------------------ */
 
-function Founder() {
+function Leadership() {
   return (
-    <section className="w-full bg-[#EEF0D9] py-28 sm:py-36 overflow-hidden" aria-label="About Saloni Mehta">
-      <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        <div className="lg:col-span-5 relative">
-          <Reveal variant="clip" className="relative rounded-[32px] overflow-hidden aspect-[4/5] max-w-[480px]">
-            <div className="absolute inset-[-6%_0]">
-              <Parallax speed={0.06} className="absolute inset-0">
-                <Image src="/team/saloni_mehta_new.webp" alt="Saloni Mehta, Financial Therapist & Wealth Architect" fill sizes="(min-width:1024px) 36vw, 100vw" className="object-cover object-[50%_15%]" />
-              </Parallax>
-            </div>
-          </Reveal>
-          <Reveal delay={400} className="absolute -bottom-8 right-0 lg:-right-8 bg-[#1F3A2C] text-[#F5F1E8] rounded-2xl p-5 sm:p-6 max-w-[240px] shadow-2xl">
-            <p className="font-cormorant italic text-[1.3rem] leading-snug">&ldquo;Wealth planning with the empathy of therapy.&rdquo;</p>
-          </Reveal>
+    <section className="w-full bg-[#EEF0D9] py-24 sm:py-32 overflow-hidden" aria-label="Leadership team">
+      <div className="gs-container">
+        {/* 1. Founder: Saloni Mehta */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="lg:col-span-5 relative">
+            <Reveal variant="clip" className="relative rounded-[32px] overflow-hidden aspect-[4/5] max-w-[480px]">
+              <div className="absolute inset-[-6%_0]">
+                <Parallax speed={0.06} className="absolute inset-0">
+                  <Image
+                    src="/team/saloni_mehta_new.webp"
+                    alt="Saloni Mehta, Founder & Wealth Architect"
+                    fill
+                    sizes="(min-width:1024px) 36vw, 100vw"
+                    className="object-cover object-[50%_15%]"
+                  />
+                </Parallax>
+              </div>
+            </Reveal>
+            <Reveal delay={400} className="absolute -bottom-8 right-0 lg:-right-8 bg-[#1F3A2C] text-[#F5F1E8] rounded-2xl p-5 sm:p-6 max-w-[240px] shadow-2xl">
+              <p className="font-cormorant italic text-[1.3rem] leading-snug">&ldquo;Wealth planning with the empathy of therapy.&rdquo;</p>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-7">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Founder</span></Reveal>
+            <RevealLines
+              as="h2"
+              className="gs-h1 text-[#1F3A2C] mt-6"
+              lines={[
+                <>Saloni Mehta.</>,
+                <em key="b" className="text-[#52704e]">Financial therapist</em>,
+                <em key="c" className="text-[#52704e]">&amp; wealth architect.</em>,
+              ]}
+            />
+            <Reveal delay={200} className="mt-8 max-w-xl">
+              <p className="gs-lead text-[#485c4f]">
+                Saloni built Green Shoots Wealth on one conviction: financial advice in India should be more than product distribution. Advice begins with the person, their story, and their deepest values.
+              </p>
+            </Reveal>
+
+            <Reveal delay={400} className="mt-10 flex flex-wrap items-center gap-4">
+              <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5">
+                <span>Schedule a conversation</span>
+                <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+              </Link>
+              <a
+                href="https://www.linkedin.com/in/the-saloni-mehta/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gs-btn gs-btn-ghost on-light text-[#1F3A2C]"
+              >
+                <LinkedinIcon className="w-3.5 h-3.5" />
+                <span>LinkedIn profile</span>
+              </a>
+            </Reveal>
+          </div>
         </div>
 
-        <div className="lg:col-span-7">
-          <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Founder</span></Reveal>
-          <RevealLines as="h2" className="gs-h1 text-[#1F3A2C] mt-6" lines={[<>Saloni Mehta.</>, <em key="b" className="text-[#52704e]">Financial therapist</em>, <em key="c" className="text-[#52704e]">&amp; wealth architect.</em>]} />
-          <Reveal delay={200} className="mt-8 max-w-xl">
-            <p className="gs-lead text-[#485c4f]">
-              Saloni built Green Shoots Wealth on one conviction: financial advice in India should be more than product distribution.
-            </p>
-          </Reveal>
+        {/* Subtle Leadership Divider */}
+        <div className="w-full h-px bg-[#1F3A2C]/10 my-20 sm:my-28" />
 
-          <Reveal delay={400} className="mt-10 flex flex-wrap items-center gap-4">
-            <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5">
-              <span>Schedule a conversation</span>
-              <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
-            </Link>
-            <a href="https://www.linkedin.com/in/the-saloni-mehta/" target="_blank" rel="noopener noreferrer" className="gs-btn gs-btn-ghost on-light text-[#1F3A2C]">
-              <LinkedinIcon className="w-3.5 h-3.5" />
-              <span>LinkedIn profile</span>
-            </a>
-          </Reveal>
+        {/* 2. Co-founder: Kaushal Kapasi */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Copy Column (Left on desktop) */}
+          <div className="lg:col-span-7 order-2 lg:order-1">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Co-founder</span></Reveal>
+            <RevealLines
+              as="h2"
+              className="gs-h1 text-[#1F3A2C] mt-6"
+              lines={[
+                <>Kaushal Kapasi.</>,
+                <em key="b" className="text-[#52704e]">Chartered Accountant</em>,
+                <em key="c" className="text-[#52704e]">&amp; tax strategist.</em>,
+              ]}
+            />
+            <Reveal delay={200} className="mt-8 max-w-xl">
+              <p className="gs-lead text-[#485c4f]">
+                Brings a CA&apos;s analytical eye to every financial roadmap: capital gains optimisation, tax efficiency, and fine-print structuring so wealth endures across market cycles and transitions.
+              </p>
+            </Reveal>
 
-          <Reveal delay={550} className="mt-10 pt-8 border-t border-[#1F3A2C]/12 max-w-xl">
-            <Link href="/team" className="group flex items-center justify-between gap-6">
-              <span>
-                <span className="gs-index text-[#52704e] uppercase">The people behind the plan</span>
-                <span className="block font-cormorant text-[1.7rem] sm:text-[2rem] leading-tight text-[#1F3A2C] mt-1">
-                  Meet the <em className="text-[#52704e]">Green Shoots</em> team
-                </span>
-              </span>
-              <span className="grid place-items-center w-12 h-12 shrink-0 rounded-full border border-[#1F3A2C]/25 text-[#1F3A2C] transition-all duration-500 group-hover:bg-[#1F3A2C] group-hover:text-[#F5F1E8] group-hover:border-[#1F3A2C]">
-                <IconArrow className="w-4 h-4 transition-transform duration-500 group-hover:-rotate-45" />
-              </span>
-            </Link>
-          </Reveal>
+            <Reveal delay={400} className="mt-10 flex flex-wrap items-center gap-4">
+              <Link href={`/contact?topic=${encodeURIComponent("Tax Advisory (Kaushal Kapasi)")}`} className="gs-btn gs-btn-dark !pr-2.5">
+                <span>Consult on tax &amp; planning</span>
+                <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+              </Link>
+              <a
+                href="https://www.linkedin.com/in/ca-kaushal-kapasi-bbb1b150/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gs-btn gs-btn-ghost on-light text-[#1F3A2C]"
+              >
+                <LinkedinIcon className="w-3.5 h-3.5" />
+                <span>LinkedIn profile</span>
+              </a>
+            </Reveal>
+          </div>
+
+          {/* Photo Column (Right on desktop) */}
+          <div className="lg:col-span-5 relative order-1 lg:order-2">
+            <Reveal variant="clip" className="relative rounded-[32px] overflow-hidden aspect-[4/5] max-w-[480px]">
+              <div className="absolute inset-[-6%_0]">
+                <Parallax speed={0.06} className="absolute inset-0">
+                  <Image
+                    src="/team/kaushal_kapasi_new.webp"
+                    alt="Kaushal Kapasi, Co-founder & Tax Advisor"
+                    fill
+                    sizes="(min-width:1024px) 36vw, 100vw"
+                    className="object-cover object-[50%_10%]"
+                  />
+                </Parallax>
+              </div>
+            </Reveal>
+            <Reveal delay={400} className="absolute -bottom-8 left-0 lg:-left-8 bg-[#1F3A2C] text-[#F5F1E8] rounded-2xl p-5 sm:p-6 max-w-[260px] shadow-2xl">
+              <p className="font-cormorant italic text-[1.3rem] leading-snug">&ldquo;A good plan should survive a bad year.&rdquo;</p>
+            </Reveal>
+          </div>
         </div>
+
+        {/* Shared Team Banner */}
+        <Reveal delay={200} className="mt-20 sm:mt-24 pt-10 sm:pt-14 border-t border-[#1F3A2C]/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="max-w-xl">
+            <span className="gs-index text-[#52704e] uppercase">The people behind the plan</span>
+            <h3 className="font-cormorant text-[1.8rem] sm:text-[2.2rem] leading-tight text-[#1F3A2C] mt-1.5">
+              Meet the advisors, analysts &amp; <em className="text-[#52704e]">wealth specialists</em>
+            </h3>
+          </div>
+          <Link href="/team" className="gs-btn gs-btn-dark !pr-3.5 inline-flex self-start sm:self-auto shrink-0">
+            <span>Meet the Green Shoots team</span>
+            <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+          </Link>
+        </Reveal>
       </div>
     </section>
   );
@@ -333,7 +416,7 @@ export default function Home() {
       <div id="wealth-score">
         <WealthScoreQuiz />
       </div>
-      <Founder />
+      <Leadership />
       <Stories />
       <AppShowcase />
     </div>
