@@ -18,7 +18,7 @@ interface Testimonial {
 
 const COLUMN_1: Testimonial[] = [
   {
-    tag: ">_ Long-term Foundation",
+    tag: "Long-term Foundation",
     quote:
       "Saloni has always played a vital role when it comes to my investment and financial advice. Her expertise, personalized guidance, and proactive approach helped me lay a strong financial foundation — not just for short-term goals but long-term.",
     name: "Parina Shah",
@@ -27,7 +27,7 @@ const COLUMN_1: Testimonial[] = [
     accent: "gold",
   },
   {
-    tag: ">_ Global Market Acumen",
+    tag: "Global Market Acumen",
     quote:
       "A top-notch investment advisor. Her expertise in global economics, stock markets, and thriving industries is unparalleled. Saloni ensures your funds are strategically placed, aligned with your risk appetite, and diligently reviews them.",
     name: "Ronil Doshi",
@@ -36,7 +36,7 @@ const COLUMN_1: Testimonial[] = [
     accent: "sage",
   },
   {
-    tag: ">_ Women & Wealth Practice",
+    tag: "Women & Wealth Practice",
     quote:
       "Navigating business liquidity and personal wealth felt overwhelming until I met Saloni. She understands the emotional and practical side of money like no one else in the industry.",
     name: "Meera Singhania",
@@ -48,7 +48,7 @@ const COLUMN_1: Testimonial[] = [
 
 const COLUMN_2: Testimonial[] = [
   {
-    tag: ">_ Transparent & Honest",
+    tag: "Transparent & Honest",
     quote:
       "Every time I consider investments, you're the first person I think of — because of how knowledgeable, experienced and trustworthy you are. Working with you has always been transparent and honest.",
     name: "Sejal Shah",
@@ -57,7 +57,7 @@ const COLUMN_2: Testimonial[] = [
     accent: "sage",
   },
   {
-    tag: ">_ Stress-Free Execution",
+    tag: "Stress-Free Execution",
     quote:
       "It's been a little over two years dealing with you. It's been a seamless, stress-free, uncomplicated experience — giving me good returns while I stay focused on flying.",
     name: "Capt. Jatin Y Vora",
@@ -66,7 +66,7 @@ const COLUMN_2: Testimonial[] = [
     accent: "gold",
   },
   {
-    tag: ">_ Life Stage Architecture",
+    tag: "Life Stage Architecture",
     quote:
       "Between clinical hours and surgery, I had zero bandwidth to audit portfolios. Green Shoots structured my daughter's overseas education fund and private practice contingency without me losing sleep.",
     name: "Dr. Ananya Sen",
@@ -78,7 +78,7 @@ const COLUMN_2: Testimonial[] = [
 
 const COLUMN_3: Testimonial[] = [
   {
-    tag: ">_ GIFT City Offshore Gateway",
+    tag: "GIFT City Offshore Gateway",
     quote:
       "Setting up our US dollar portfolio through the GIFT City IFSC gateway was effortless. Saloni's team handled regulatory compliance, taxation nuances, and dollar diversification with total precision.",
     name: "Siddharth Mehta",
@@ -87,7 +87,7 @@ const COLUMN_3: Testimonial[] = [
     accent: "gold",
   },
   {
-    tag: ">_ Multi-Decade Trust",
+    tag: "Multi-Decade Trust",
     quote:
       "Zero jargon, zero product pushing. We receive structured quarterly audits and actionable rebalancing prompts. It feels like having a private family office dedicated solely to our interests.",
     name: "Radhika & Aditya Roy",
@@ -96,7 +96,7 @@ const COLUMN_3: Testimonial[] = [
     accent: "sage",
   },
   {
-    tag: ">_ Fiduciary Integrity",
+    tag: "Fiduciary Integrity",
     quote:
       "What stood out immediately was when Saloni told me NOT to buy a lucrative insurance-linked product my private bank had pushed for months. That fiduciary integrity is priceless.",
     name: "Kavita Krishnamurthy",
@@ -132,9 +132,9 @@ function TestimonialCard({ item }: { item: Testimonial }) {
     <div
       className={`relative rounded-[22px] bg-white border border-[#1F3A2C]/[0.08] p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 mb-6 group ${accentGlow}`}
     >
-      {/* Top Header: Monospace Tag + 5 Stars */}
+      {/* Top Header: Editorial Tag + 5 Stars */}
       <div className="flex items-center justify-between gap-3 mb-4">
-        <span className="text-[10px] font-mono tracking-wide text-[#5d7064] bg-[#F5F1E8] border border-[#1F3A2C]/[0.07] px-2.5 py-1 rounded-md">
+        <span className="text-[11px] font-sans font-medium tracking-wide text-[#3a5241] bg-[#F5F1E8] border border-[#1F3A2C]/[0.08] px-3 py-1 rounded-full">
           {item.tag}
         </span>
         <StarRating />
@@ -186,17 +186,15 @@ export default function Stories() {
         {/* Header */}
         <div className="max-w-2xl mx-auto text-center mb-14 sm:mb-20">
           <Reveal variant="fade">
-            <span className="text-[10.5px] font-mono tracking-[0.28em] uppercase text-[#ba9749] font-semibold bg-white border border-[#ba9749]/20 px-3 py-1 rounded-full shadow-sm">
-              &gt;_ CLIENT EXPERIENCES
-            </span>
+            <span className="gs-eyebrow text-[#bda15f]">Client Experiences</span>
           </Reveal>
           <RevealLines
             as="h2"
-            className="font-cormorant text-3xl sm:text-4xl lg:text-5xl text-[#1F3A2C] font-normal leading-[1.12] mt-4"
-            lines={[<>Real journeys.</>, <em className="text-[#8fa868] italic font-serif">Measured in trust.</em>]}
+            className="gs-h1 text-[#1F3A2C] mt-4"
+            lines={[<>Real journeys.</>, <em key="b" className="text-[#8fa868]">Measured in trust.</em>]}
           />
           <Reveal delay={150}>
-            <p className="text-[14px] sm:text-[15px] text-[#5d7064] mt-3 font-light leading-relaxed max-w-lg mx-auto">
+            <p className="gs-lead text-[#5d7064] mt-4 max-w-lg mx-auto text-[14.5px] sm:text-[15.5px]">
               See what corporate leaders, airline pilots, doctors, and independent entrepreneurs have to say about navigating wealth with Green Shoots.
             </p>
           </Reveal>
