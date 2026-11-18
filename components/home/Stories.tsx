@@ -123,25 +123,25 @@ function StarRating() {
 function TestimonialCard({ item }: { item: Testimonial }) {
   const accentGlow =
     item.accent === "gold"
-      ? "hover:border-[#c5a963]/50 hover:shadow-[0_16px_36px_rgba(197,169,99,0.12)]"
+      ? "hover:border-[#c5a963]/60 hover:shadow-[0_24px_48px_-12px_rgba(197,169,99,0.20)]"
       : item.accent === "sage"
-        ? "hover:border-[#8fa868]/50 hover:shadow-[0_16px_36px_rgba(143,168,104,0.12)]"
-        : "hover:border-[#ba9749]/50 hover:shadow-[0_16px_36px_rgba(186,151,73,0.12)]";
+        ? "hover:border-[#8fa868]/60 hover:shadow-[0_24px_48px_-12px_rgba(143,168,104,0.20)]"
+        : "hover:border-[#ba9749]/60 hover:shadow-[0_24px_48px_-12px_rgba(186,151,73,0.20)]";
 
   return (
     <div
-      className={`relative rounded-[22px] bg-white border border-[#1F3A2C]/[0.08] p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 mb-6 group ${accentGlow}`}
+      className={`relative z-10 rounded-[22px] bg-white border border-[#1F3A2C]/[0.08] p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.03)] mb-6 group cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-2 hover:scale-[1.03] hover:z-30 will-change-transform ${accentGlow}`}
     >
       {/* Top Header: Editorial Tag + 5 Stars */}
       <div className="flex items-center justify-between gap-3 mb-4">
-        <span className="text-[11px] font-sans font-medium tracking-wide text-[#3a5241] bg-[#F5F1E8] border border-[#1F3A2C]/[0.08] px-3 py-1 rounded-full">
+        <span className="text-[11px] font-sans font-medium tracking-wide text-[#3a5241] bg-[#F5F1E8] group-hover:bg-[#1F3A2C] group-hover:text-[#F5F1E8] border border-[#1F3A2C]/[0.08] px-3 py-1 rounded-full transition-colors duration-300">
           {item.tag}
         </span>
         <StarRating />
       </div>
 
       {/* Quote Body */}
-      <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[#2c3d31] font-normal">
+      <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[#2c3d31] group-hover:text-[#1F3A2C] font-normal transition-colors duration-300">
         &ldquo;{item.quote}&rdquo;
       </p>
 
@@ -208,7 +208,7 @@ export default function Stories() {
             WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-2">
             {/* Column 1 (Moves Upwards) */}
             <div
               className={`animate-marquee-up flex flex-col transition-opacity duration-300 ${
