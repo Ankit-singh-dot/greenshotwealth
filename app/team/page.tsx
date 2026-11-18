@@ -298,7 +298,7 @@ function Founder({
     const c = p - 0.5;
     if (nameRef.current) nameRef.current.style.transform = `translate3d(${(flip ? 1 : -1) * c * 38}vw, 0, 0)`;
     if (imgRef.current) imgRef.current.style.transform = `translate3d(0, ${(c * -8).toFixed(2)}%, 0) scale(1.08)`;
-    if (quoteRef.current) quoteRef.current.style.transform = `translate3d(0, ${(c * -160).toFixed(1)}px, 0)`;
+    if (quoteRef.current) quoteRef.current.style.transform = `translate3d(0, ${(c * -50).toFixed(1)}px, 0)`;
   });
 
   return (
@@ -327,22 +327,22 @@ function Founder({
               </span>
             </div>
           </Reveal>
-          {/* floating quote card — travels faster than the portrait */}
+          {/* floating quote card — positioned on the outer flank away from buttons */}
           <div
             ref={quoteRef}
-            className={`hidden sm:block absolute -bottom-10 ${flip ? "-left-8 lg:-left-20" : "-right-8 lg:-right-20"} w-[min(340px,80%)] z-10`}
+            className={`hidden sm:block absolute -bottom-6 ${flip ? "-right-4 sm:-right-6 lg:-right-10" : "-left-4 sm:-left-6 lg:-left-10"} w-[min(310px,85%)] z-10 pointer-events-none`}
           >
-            <div className="rounded-[22px] bg-[#FBF9F4] p-6 shadow-[0_30px_60px_-30px_rgba(31,58,44,0.4)] border border-white">
+            <div className="rounded-[22px] bg-[#FBF9F4] p-5 sm:p-6 shadow-[0_30px_60px_-30px_rgba(31,58,44,0.4)] border border-white">
               <span className="font-cormorant text-[3.5rem] leading-[0.5] text-[#c5a963]" aria-hidden>
                 &ldquo;
               </span>
-              <p className="font-cormorant italic text-[1.3rem] leading-snug text-[#1F3A2C] mt-2">{f.quote}</p>
+              <p className="font-cormorant italic text-[1.25rem] leading-snug text-[#1F3A2C] mt-2">{f.quote}</p>
             </div>
           </div>
         </div>
 
         {/* words */}
-        <div className={`lg:col-span-7 ${flip ? "lg:col-start-1 lg:order-1" : "lg:col-start-6"}`}>
+        <div className={`lg:col-span-7 relative z-20 ${flip ? "lg:col-start-1 lg:order-1" : "lg:col-start-6"}`}>
           <span className="gs-index text-[#bda15f]">0{index + 1} — {f.role}</span>
           <RevealLines
             as="h2"
