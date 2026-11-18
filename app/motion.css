@@ -266,7 +266,7 @@ body {
 }
 
 .gs-btn-ghost::before {
-  background: currentColor;
+  background: var(--gs-cream);
 }
 
 .gs-btn-ghost:hover {
