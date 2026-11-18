@@ -81,7 +81,7 @@ export default function AppShowcase() {
                   href="https://play.google.com/store/apps/details?id=com.greenshoots.greenshootswealth"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="gs-btn gs-btn-ghost text-[#F5F1E8]"
+                  className="gs-btn gs-btn-ghost on-dark text-[#F5F1E8] hover:bg-[#F5F1E8] hover:text-[#1F3A2C] hover:border-[#F5F1E8] transition-colors"
                 >
                   <GooglePlayIcon className="w-4 h-4 fill-current" />
                   <span>Google Play</span>
