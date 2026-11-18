@@ -262,12 +262,12 @@ export default function ContactPage() {
                       Phone / WhatsApp
                     </span>
                     <a
-                      href="https://wa.me/919819773888"
+                      href="https://wa.me/919152153555"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-[#283d31] font-sans mt-0.5 block font-medium hover:text-emerald-700 transition-colors"
                     >
-                      +91 98197 73888
+                      +91 91521 53555
                     </a>
                   </div>
 
@@ -276,10 +276,10 @@ export default function ContactPage() {
                       Email
                     </span>
                     <a
-                      href="mailto:rohangupta@gmail.com"
+                      href="mailto:admin@greenshootswealth.com"
                       className="text-xs text-[#283d31] font-sans mt-0.5 block font-medium hover:text-emerald-700 transition-colors"
                     >
-                      rohangupta@gmail.com
+                      admin@greenshootswealth.com
                     </a>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default function ContactPage() {
             <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-xs border border-[#ded8cb]/60 overflow-hidden">
               <div className="flex items-center justify-between mb-3.5">
                 <div>
-                  <span className="text-[10px] font-mono tracking-wider uppercase text-[#8fa868] font-semibold">Our Consultation Suite</span>
+                  <span className="text-[10.5px] font-sans tracking-[0.16em] uppercase text-[#7a945b] font-semibold">Our Consultation Suite</span>
                   <h3 className="font-cormorant text-xl text-[#1F3A2C] leading-snug">Walk into our Mumbai office</h3>
                 </div>
                 <span className="text-[11px] text-[#52704e] bg-[#EEF0D9] px-2.5 py-1 rounded-full font-medium">Ghatkopar East</span>
