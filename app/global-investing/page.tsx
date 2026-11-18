@@ -12,8 +12,8 @@ const content: InvestContent = {
     title: ["One country is one bet.", "Spread the rest."],
     body: "Markets, sectors and currencies move differently. Holding part of your wealth abroad can soften the swings of any single economy, and gives you access to companies that aren't listed in India.",
     points: ["Across markets, sectors and currencies", "Matched to your residency and goals", "Part of one plan, not a separate pot"],
-    image: "/office/office_consultation_portrait.webp",
-    imageAlt: "The Green Shoots advisory consultation desk overlooking the city in Mumbai",
+    image: "/images/india_gdp_growth_4x5.webp",
+    imageAlt: "UNSTOPPABLE INDIA - FY26 GDP Growth Rate ranking India as the brightest spot at 7.7% vs global economies",
   },
   solutionsTitle: ["Ways to invest", "beyond India."],
   solutions: [
@@ -25,7 +25,13 @@ const content: InvestContent = {
   ],
   spread: [
     { src: "/new_images/pexels-olia-danilevich-5466785.jpg", alt: "A calculator, notes and US dollar bills on a desk", caption: "Currencies move. The plan holds." },
-    { src: "/office/office_plaque_4x5.webp", alt: "The Green Shoots Wealth official emblem at Mumbai headquarters", caption: "Grounded in discipline. Global in scope." },
+    {
+      src: "/videos/office/office_tour_optimized.jpg",
+      video: "/videos/office/office_tour_optimized.mp4",
+      poster: "/videos/office/office_tour_optimized.jpg",
+      alt: "The Green Shoots Wealth official executive suite at Mumbai headquarters",
+      caption: "Grounded in discipline. Global in scope.",
+    },
   ],
   audiences: {
     heading: ["For NRIs and", "families across borders."],
