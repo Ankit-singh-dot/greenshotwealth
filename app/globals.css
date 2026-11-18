@@ -4000,6 +4000,9 @@
     .hover\:border-\[\#8fa868\]\/60:hover {
       border-color: color-mix(in oklab, #8fa868 60%, transparent);
     }
+    .hover\:border-\[\#F5F1E8\]:hover {
+      border-color: #F5F1E8;
+    }
     .hover\:border-\[\#ba9749\]\/60:hover {
       border-color: color-mix(in oklab, #ba9749 60%, transparent);
     }
