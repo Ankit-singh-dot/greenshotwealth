@@ -39,27 +39,6 @@ const COLS = [
         label: "Branch Office: Ahmedabad",
         href: "https://maps.google.com/?q=506+Ratnakar+9+Square+Opp+Keshavbaug+Party+Plot+Satellite+Ahmedabad",
       },
-      {
-        label: "506 Ratnakar 9 Square",
-        href: "",
-      },
-      {
-        label: "Opp. Keshavbaug Party Plot",
-        href: "",
-      },
-      {
-        label: "Satellite, Ahmedabad",
-        href: "",
-      },
-    ],
-  },
-  {
-    title: "Compliance",
-    links: [
-      { label: "AMFI ARN 321729", href: "" },
-      { label: "Privacy Policy", href: "#privacy" },
-      { label: "Disclaimer", href: "#disclaimer" },
-      { label: "Grievance Redressal", href: "#grievance" },
     ],
   },
 ];
@@ -171,7 +150,7 @@ export default function Footer() {
           </form>
         </div>
 
-        <nav aria-label="Footer" className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
+        <nav aria-label="Footer" className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
           {COLS.map((col) => (
             <div key={col.title}>
               <p className="text-[11px] tracking-[0.18em] uppercase text-[#c5a963]">{col.title}</p>
