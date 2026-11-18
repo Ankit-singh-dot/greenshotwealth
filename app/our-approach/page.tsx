@@ -22,8 +22,8 @@ const STEPS = [
     title: "A written plan you can actually read.",
     body: "We turn what you've told us into an allocation, with tax, insurance and an emergency fund built in from the start.",
     points: ["Asset allocation for each goal", "Tax efficiency", "Emergency reserve and cover"],
-    image: "/images/financial_planning_clarity.jpg",
-    alt: "A handwritten financial plan with goals and asset allocation",
+    image: "/images/accounting_4x3.webp",
+    alt: "Accounting ledgers, financial calculation sheets, and an advisory calculator for structured wealth planning",
   },
   {
     season: "Growth",
