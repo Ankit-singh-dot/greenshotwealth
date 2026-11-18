@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IconArrow, IconArrowUpRight } from "../LineIcons";
 import { SipTool, DollarGoalTool, GiftFitTool } from "./Tools";
+import GdpGrowthSection from "./GdpComparison";
 
 /**
  * Shared layout for the three invest pages. Static on purpose: the only
@@ -25,13 +26,16 @@ export type InvestContent = {
     points: string[];
     image: string;
     imageAlt: string;
+    video?: string;
+    poster?: string;
   };
   solutions: { title: string; desc: string }[];
   solutionsTitle: [string, string];
-  spread: { src: string; alt: string; caption: string }[];
+  spread: { src: string; alt: string; caption: string; video?: string; poster?: string }[];
   audiences?: { heading: [string, string]; items: { title: string; desc: string }[] };
   faqs: { q: string; a: string }[];
   tool?: "sip" | "dollar-goal" | "gift-fit";
+  showGdpGrowth?: boolean;
   close: { title: [string, string]; body: string; image: string };
   disclaimer: string;
 };
@@ -148,8 +152,21 @@ export default function InvestPage({ c }: { c: InvestContent }) {
             </ul>
           </div>
           <div className="lg:col-span-6">
-            <div className="relative aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-[28px] overflow-hidden bg-[#e7e1d5]">
-              <Image src={c.why.image} alt={c.why.imageAlt} fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
+            <div className="relative aspect-[4/5] max-w-lg lg:max-w-none mx-auto rounded-[28px] overflow-hidden bg-white border border-[#1F3A2C]/10 shadow-[0_20px_50px_-15px_rgba(31,58,44,0.18)]">
+              {c.why.video ? (
+                <video
+                  src={c.why.video}
+                  poster={c.why.poster || c.why.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <Image src={c.why.image} alt={c.why.imageAlt} fill sizes="(min-width:1024px) 45vw, 100vw" className="object-cover" />
+              )}
             </div>
           </div>
         </div>
@@ -202,14 +219,30 @@ export default function InvestPage({ c }: { c: InvestContent }) {
         <div className="gs-container grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-end">
           {c.spread.map((p, i) => (
             <figure key={p.src} className={i === 0 ? "md:col-span-7" : "md:col-span-5"}>
-              <div className={`relative ${i === 0 ? "aspect-[4/3]" : "aspect-[4/5]"} rounded-[24px] overflow-hidden bg-[#e7e1d5]`}>
-                <Image src={p.src} alt={p.alt} fill sizes="(min-width:768px) 55vw, 100vw" className="object-cover" />
+              <div className={`relative ${i === 0 ? "aspect-[4/3]" : "aspect-[4/5]"} rounded-[24px] overflow-hidden bg-[#e7e1d5] shadow-[0_16px_40px_-12px_rgba(31,58,44,0.15)]`}>
+                {p.video ? (
+                  <video
+                    src={p.video}
+                    poster={p.poster || p.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image src={p.src} alt={p.alt} fill sizes="(min-width:768px) 55vw, 100vw" className="object-cover" />
+                )}
               </div>
               <figcaption className="mt-4 font-cormorant italic text-[1.5rem] text-[#3d5446]">{p.caption}</figcaption>
             </figure>
           ))}
         </div>
       </section>
+
+      {/* ---------------- Macro GDP Comparison (Unstoppable India) ---------------- */}
+      {c.showGdpGrowth && <GdpGrowthSection />}
 
       {/* ---------------- Audiences ---------------- */}
       {c.audiences && (
