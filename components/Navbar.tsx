@@ -199,12 +199,23 @@ export default function Navbar() {
 
       <header className={navClass} onMouseLeave={scheduleClose} onMouseEnter={() => window.clearTimeout(closeTimer.current)}>
         <div className="gs-nav-row">
-          {/* 1 — the mark, alone */}
-          <Link href="/" className="gs-island gs-island-logo flex group" aria-label="Green Shoots Wealth — home" onMouseEnter={() => setMenu(null)}>
-            <Image src="/footer_logo.png" alt="" width={80} height={73} priority className="gs-logo-mark w-[34px] h-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-10deg] group-hover:scale-110" />
-            <span className="gs-logo-name" aria-hidden>
-              <b>Green Shoots</b>
-              <small>Wealth</small>
+          {/* 1 — the mark + GSW monogram */}
+          <Link
+            href="/"
+            className="gs-island gs-island-logo flex items-center group"
+            aria-label="Green Shoots Wealth (GSW) — Home"
+            onMouseEnter={() => setMenu(null)}
+          >
+            <Image
+              src="/footer_logo.png"
+              alt="GSW Logo"
+              width={80}
+              height={73}
+              priority
+              className="gs-logo-mark w-[33px] h-auto transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[-8deg] group-hover:scale-108"
+            />
+            <span className="gs-logo-gsw" aria-hidden>
+              GSW
             </span>
           </Link>
 
