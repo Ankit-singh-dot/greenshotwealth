@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrow } from "@/components/LineIcons";
+import BeliefsManifesto from "@/components/BeliefsManifesto";
 
 /* ------------------------------------------------------------------ */
 /* Content                                                             */
@@ -43,13 +44,6 @@ const STEPS = [
     image: "/images/plan_ahead_card.jpg",
     alt: "A peaceful life enjoying long-term generational wealth",
   },
-];
-
-const BELIEFS = [
-  { line: "You come first. Always.", note: "Advice is shaped by your goals, never by what would pay us more." },
-  { line: "We tell you the truth about markets.", note: "Including when the news is dull, or bad." },
-  { line: "We take on fewer families.", note: "So each one gets real attention, from someone who knows them." },
-  { line: "We promise only what we can deliver.", note: "No guaranteed returns. No shortcuts in due diligence." },
 ];
 
 const STAGES = [
@@ -179,25 +173,8 @@ export default function OurApproachPage() {
         </div>
       </section>
 
-      {/* ---------------- Beliefs ---------------- */}
-      <section className="py-24 sm:py-32" aria-label="What we believe">
-        <div className="gs-container">
-          <h2 className="gs-h1">
-            What we
-            <br />
-            <em className="text-[#52704e]">believe.</em>
-          </h2>
-          <ol className="mt-14 border-t border-[#1F3A2C]/15">
-            {BELIEFS.map((b, i) => (
-              <li key={b.line} className="grid grid-cols-[2.5rem_1fr] lg:grid-cols-[5rem_1.3fr_1fr] gap-x-4 gap-y-2 items-baseline py-8 sm:py-10 border-b border-[#1F3A2C]/15">
-                <span className="gs-index text-[#bda15f]">0{i + 1}</span>
-                <p className="font-cormorant text-[clamp(1.9rem,3.6vw,3.2rem)] leading-[1.05] tracking-[-0.015em]">{b.line}</p>
-                <p className="col-start-2 lg:col-start-3 text-[15px] leading-relaxed text-[#4a5f51] max-w-sm">{b.note}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* ---------------- Beliefs: Strong Roots. Enduring Wealth. ---------------- */}
+      <BeliefsManifesto />
 
       {/* ---------------- Who we work with ---------------- */}
       <section className="bg-[#EEF0D9] py-24 sm:py-32" aria-label="Who we work with">
