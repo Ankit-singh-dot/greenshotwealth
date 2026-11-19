@@ -8,6 +8,7 @@ import {
   LinkedinIcon,
   YoutubeIcon,
   TwitterXIcon,
+  WhatsAppIcon,
 } from "@/components/Icons";
 
 const OFFICES = [
@@ -331,7 +332,16 @@ export default function ContactPage() {
               </div>
 
               {/* Vertical Social Pill Card */}
-              <div className="w-16 bg-white rounded-3xl py-6 px-2 shadow-xs border border-[#ded8cb]/60 flex flex-col items-center justify-between shrink-0">
+              <div className="w-16 bg-white rounded-3xl py-6 px-2 shadow-xs border border-[#ded8cb]/60 flex flex-col items-center justify-between shrink-0 gap-3">
+                <a
+                  href="https://wa.me/919152153555"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-[#F5F1E8] border border-[#ded8cb] flex items-center justify-center text-[#283d31] hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all shadow-xs"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                </a>
                 <a
                   href="https://instagram.com"
                   target="_blank"
