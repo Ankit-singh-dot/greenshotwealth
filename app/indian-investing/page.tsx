@@ -30,7 +30,11 @@ const content: InvestContent = {
     { title: "Estate Planning", desc: "Plan, protect, and pass on your wealth." },
   ],
   spread: [
-    { src: "/new_images/pexels-ravi-roshan-2875998-14907339.jpg", alt: "Indian rupee notes and coins", caption: "Every rupee, with a reason." },
+    {
+      src: "/office_image2/office_5.webp",
+      alt: "Green Shoots Wealth Grand Office Inauguration Ceremony welcome easel with fresh flowers and traditional rangoli",
+      caption: "Rooted in tradition. Growing with India.",
+    },
     {
       src: "/videos/office/advisory_suite.jpg",
       video: "/videos/office/advisory_suite.mp4",
