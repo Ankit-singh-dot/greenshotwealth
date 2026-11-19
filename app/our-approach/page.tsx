@@ -32,8 +32,8 @@ const STEPS = [
     title: "Steady, disciplined, spread out.",
     body: "We put the plan to work across mutual funds, SIPs, debt and global funds, chosen for your timeline rather than last year's returns.",
     points: ["Goal-linked SIPs", "India and global funds", "Patience over timing"],
-    image: "/images/framework_invest.jpg",
-    alt: "Disciplined investment growth step by step",
+    image: "/office_image2/office_7.webp",
+    alt: "Green Shoots Wealth plantable seed pencils: Planted with purpose, grown with patience",
   },
   {
     season: "Forest",
@@ -41,8 +41,8 @@ const STEPS = [
     title: "We keep tending it.",
     body: "Markets move and lives change: a marriage, a new job, children, retirement. We review regularly and adjust, with the same adviser each time.",
     points: ["Regular reviews and rebalancing", "Plans that follow your life", "Passing it on, when it's time"],
-    image: "/images/plan_ahead_card.jpg",
-    alt: "A peaceful life enjoying long-term generational wealth",
+    image: "/office_image2/office_3.webp",
+    alt: "Curated advisory shelves at Green Shoots Wealth headquarters featuring finance philosophy books and hourglass",
   },
 ];
 
