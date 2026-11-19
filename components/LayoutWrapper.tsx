@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import Intro from "@/components/motion/Intro";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -24,6 +25,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         {children}
       </main>
       <Footer />
+      <FloatingWhatsApp />
       <div className="gs-grain" aria-hidden />
     </>
   );
