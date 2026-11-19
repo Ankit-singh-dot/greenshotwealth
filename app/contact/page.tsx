@@ -10,7 +10,33 @@ import {
   TwitterXIcon,
 } from "@/components/Icons";
 
+const OFFICES = [
+  {
+    key: "mumbai",
+    name: "Mumbai · HQ",
+    fullName: "Green Shoots Wealth Fintech LLP",
+    shortAddress: "6th Flr, Sai Fortune Business Centre, 601, Tilak Rd, Ghatkopar East, Mumbai",
+    mapSrc:
+      "https://maps.google.com/maps?q=Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+Tilak+Rd,+Ghatkopar+East,+Mumbai+400077&t=&z=16&ie=UTF8&iwloc=&output=embed",
+    gmapsUrl:
+      "https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525",
+    rating: "5.0",
+  },
+  {
+    key: "ahmedabad",
+    name: "Branch Office: Ahmedabad",
+    fullName: "Green Shoots Wealth (Branch Office)",
+    shortAddress: "506 Ratnakar 9 Square, Opp. Keshavbaug Party Plot, Satellite, Ahmedabad",
+    mapSrc:
+      "https://maps.google.com/maps?q=506+Ratnakar+9+Square,+Opp.+Keshavbaug+Party+Plot,+Satellite,+Ahmedabad&t=&z=16&ie=UTF8&iwloc=&output=embed",
+    gmapsUrl:
+      "https://maps.google.com/?q=506+Ratnakar+9+Square+Opp+Keshavbaug+Party+Plot+Satellite+Ahmedabad",
+    rating: "5.0",
+  },
+] as const;
+
 export default function ContactPage() {
+  const [selectedOffice, setSelectedOffice] = useState<"mumbai" | "ahmedabad">("mumbai");
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -246,13 +272,34 @@ export default function ContactPage() {
                 <div className="space-y-3.5 pt-1">
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-wider text-[#798e82] font-sans">
-                      Address
+                      Mumbai Location · HQ
                     </span>
-                    <p className="text-xs text-[#283d31] font-sans mt-0.5 leading-relaxed font-medium">
+                    <a
+                      href="https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#283d31] font-sans mt-0.5 block leading-relaxed font-medium hover:text-emerald-700 transition-colors"
+                    >
                       6th Floor, Sai Fortune Business Centre, 601 <br />
                       Tilak Road, Ghatkopar East <br />
                       Mumbai, Maharashtra 400077
-                    </p>
+                    </a>
+                  </div>
+
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-[#798e82] font-sans">
+                      Branch Office: Ahmedabad
+                    </span>
+                    <a
+                      href="https://maps.google.com/?q=506+Ratnakar+9+Square+Opp+Keshavbaug+Party+Plot+Satellite+Ahmedabad"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-[#283d31] font-sans mt-0.5 block leading-relaxed font-medium hover:text-emerald-700 transition-colors"
+                    >
+                      506 Ratnakar 9 Square <br />
+                      Opp. Keshavbaug Party Plot <br />
+                      Satellite, Ahmedabad
+                    </a>
                   </div>
 
                   <div>
@@ -326,68 +373,93 @@ export default function ContactPage() {
 
             {/* Bottom Row: Office Map Card */}
             <div className="bg-white rounded-3xl p-3 shadow-xs border border-[#ded8cb]/60 overflow-hidden">
-              <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-[#e5e3df]">
-                {/* Embedded Interactive Google Map */}
-                <iframe
-                  title="Green Shoots Wealth Location"
-                  src="https://maps.google.com/maps?q=Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+Tilak+Rd,+Ghatkopar+East,+Mumbai+400077&t=&z=16&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full border-0 filter contrast-[1.02]"
-                  loading="lazy"
-                  allowFullScreen={false}
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+              {/* Location Switcher Tabs */}
+              <div className="flex items-center gap-1.5 p-1 mb-2.5 bg-[#F5F1E8] rounded-2xl w-fit">
+                {OFFICES.map((loc) => (
+                  <button
+                    key={loc.key}
+                    type="button"
+                    onClick={() => setSelectedOffice(loc.key)}
+                    className={`text-[11px] px-3 py-1 rounded-xl transition-all ${
+                      selectedOffice === loc.key
+                        ? "bg-[#1F3A2C] text-[#F5F1E8] shadow-xs font-semibold"
+                        : "text-[#4a5f51] hover:text-[#1F3A2C] font-medium"
+                    }`}
+                  >
+                    {loc.name}
+                  </button>
+                ))}
+              </div>
 
-                {/* Floating Figma-Style Google Place Card */}
-                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-[#e0dad0] max-w-[240px] pointer-events-auto">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <h4 className="font-semibold text-xs text-[#1F3A2C] leading-tight line-clamp-1">
-                        Green Shoots Wealth Fintech LLP
-                      </h4>
-                      <p className="text-[10px] text-gray-500 line-clamp-2 mt-0.5">
-                        6th Flr, Sai Fortune Business Centre, 601, Tilak Rd, Ghatkopar East, Mumbai
-                      </p>
-                      <div className="flex items-center gap-1 mt-1 text-[10px] text-amber-500 font-medium">
-                        <span>5.0</span>
-                        <span>★★★★★</span>
+              {(() => {
+                const currentOffice =
+                  OFFICES.find((o) => o.key === selectedOffice) || OFFICES[0];
+                return (
+                  <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden bg-[#e5e3df]">
+                    {/* Embedded Interactive Google Map */}
+                    <iframe
+                      key={currentOffice.key}
+                      title={currentOffice.fullName}
+                      src={currentOffice.mapSrc}
+                      className="w-full h-full border-0 filter contrast-[1.02]"
+                      loading="lazy"
+                      allowFullScreen={false}
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+
+                    {/* Floating Google Place Card */}
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-[#e0dad0] max-w-[240px] pointer-events-auto">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h4 className="font-semibold text-xs text-[#1F3A2C] leading-tight line-clamp-1">
+                            {currentOffice.fullName}
+                          </h4>
+                          <p className="text-[10px] text-gray-500 line-clamp-2 mt-0.5">
+                            {currentOffice.shortAddress}
+                          </p>
+                          <div className="flex items-center gap-1 mt-1 text-[10px] text-amber-500 font-medium">
+                            <span>{currentOffice.rating}</span>
+                            <span>★★★★★</span>
+                          </div>
+                        </div>
+                        <a
+                          href={currentOffice.gmapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded-md hover:bg-neutral-100 text-blue-600 shrink-0"
+                          title="View larger map"
+                        >
+                          <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                          </svg>
+                        </a>
+                      </div>
+                      <div className="mt-2.5 pt-2 border-t border-gray-100 flex items-center justify-between">
+                        <a
+                          href={currentOffice.gmapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                        >
+                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
+                          </svg>
+                          <span>Directions</span>
+                        </a>
+                        <a
+                          href={currentOffice.gmapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] text-gray-500 hover:text-gray-700"
+                        >
+                          View larger map
+                        </a>
                       </div>
                     </div>
-                    <a
-                      href="https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-1 rounded-md hover:bg-neutral-100 text-blue-600 shrink-0"
-                      title="View larger map"
-                    >
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                      </svg>
-                    </a>
                   </div>
-                  <div className="mt-2.5 pt-2 border-t border-gray-100 flex items-center justify-between">
-                    <a
-                      href="https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[10px] font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                    >
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" />
-                      </svg>
-                      <span>Directions</span>
-                    </a>
-                    <a
-                      href="https://www.google.com/maps/dir//Green+Shoots+Wealth+Fintech+LLP,+6th+Floor,+Sai+Fortune+Business+Centre,+601,+Tilak+Rd,+Maheshwar+Nagar,+Sindhu+Wadi,+Ghatkopar+East,+Mumbai,+Maharashtra+400077/@19.0773666,72.9090628,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x219a1a63ada9356f:0xad289e7f7f3cee8a!2m2!1d72.9053625!2d19.0773525"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[10px] text-gray-500 hover:text-gray-700"
-                    >
-                      View larger map
-                    </a>
-                  </div>
-                </div>
-              </div>
+                );
+              })()}
             </div>
           </div>
         </div>
