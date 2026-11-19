@@ -24,7 +24,7 @@ const content: InvestContent = {
   ],
   spread: [
     { src: "/new_images/pexels-karola-g-4386469.jpg", alt: "US dollar notes", caption: "Dollar-based, India-regulated." },
-    { src: "/office/office_consultation_4x3.webp", alt: "The Green Shoots advisory consultation suite in Mumbai", caption: "Grounded in Mumbai. Connected globally." },
+    { src: "/office_image2/office_1.webp", alt: "The Green Shoots advisory workstation and global research desk in Mumbai", caption: "Grounded in Mumbai. Connected globally." },
   ],
   audiences: {
     heading: ["Who it's", "designed for."],
