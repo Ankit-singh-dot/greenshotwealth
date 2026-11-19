@@ -3,24 +3,19 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FigmaTickBadge, ChevronDownIcon } from "@/components/Icons";
 import { IconArrow, IconArrowUpRight } from "@/components/LineIcons";
-import { Reveal, RevealLines, ScrollWords, CountUp, Parallax, useInView } from "@/components/motion/primitives";
+import { Reveal, RevealLines, ScrollWords, CountUp, useInView } from "@/components/motion/primitives";
 
 /* ------------------------------------------------------------------ */
 /* Content                                                             */
 /* ------------------------------------------------------------------ */
 
-const HERO_FACTS = [
-  { value: "≈5 yrs", label: "Longer women live than men, worldwide" },
-  { value: "80%", label: "Of married women will one day manage alone" },
-  { value: "₹73 lakh cr", label: "Moving into women's hands in India this decade" },
-];
-
 const LONGEVITY_STATS = [
-  { to: 5, prefix: "≈", suffix: " yrs", label: "How much longer women live than men, on average, worldwide." },
-  { to: 74.4, decimals: 1, suffix: " yrs", label: "Average life expectancy for women." },
-  { to: 71.2, decimals: 1, suffix: " yrs", label: "Average life expectancy for men." },
-  { to: 73, prefix: "₹", suffix: " lakh cr", label: "Wealth expected to pass to women in India over the next decade." },
+  { to: 5, prefix: "≈", suffix: " years", label: "How much longer women live than men, on average, across the world." },
+  { to: 74.4, decimals: 1, suffix: " years", label: "Average life expectancy for women." },
+  { to: 71.2, decimals: 1, suffix: " years", label: "Average life expectancy for men." },
+  { to: 73, prefix: "₹", suffix: " lakh cr", label: "Wealth expected to pass into women's hands in India over the next decade." },
 ];
 
 const QUIET_QUESTIONS = [
@@ -40,30 +35,30 @@ const TWO_FUTURES = {
   prepared: [
     "Knows what the family owns, where it is, and why.",
     "Claims insurance and transfers assets calmly, step by step.",
-    "Decides on her own timeline, with advice she understands.",
+    "Makes decisions on her own timeline, with advice she understands.",
     "Shows her children what independence looks like.",
   ],
 };
 
 const WIDOW_STATS = [
-  { to: 258, suffix: "M+", label: "Women worldwide living after the loss of a spouse" },
-  { to: 42, suffix: "M", label: "Widows in India" },
-  { to: 43, suffix: "M", label: "Widows in China" },
-  { to: 11, suffix: "M+", label: "Widows in the United States" },
+  { to: 258, suffix: "M+", label: "Women worldwide navigating life after the loss of a spouse." },
+  { to: 42, suffix: "M", label: "Women in India living through widowhood." },
+  { to: 43, suffix: "M", label: "Women in China living through widowhood." },
+  { to: 11, suffix: "M+", label: "Women in the United States living through widowhood." },
 ];
 
 const WEALTH_ARRIVES = [
-  { title: "Life insurance", desc: "A payout arrives at the hardest moment. Pause, protect it, then put it to work — without pressure." },
-  { title: "Inheritance", desc: "A thoughtful plan for inherited wealth, so it honours the person who left it." },
-  { title: "Existing wealth", desc: "Scattered accounts and paperwork, brought into one picture you fully understand." },
-  { title: "Family wealth", desc: "The responsibility of managing family wealth — and passing it on well." },
+  { title: "Life Insurance", desc: "A payout arrives at the hardest moment. We help you pause, protect it and put it to work — without pressure." },
+  { title: "Inheritance", desc: "Create a thoughtful plan for newly inherited wealth and assets, so it honours the person who left it." },
+  { title: "Existing Wealth", desc: "Bring scattered investments, accounts and paperwork into one clear picture you fully understand." },
+  { title: "Family Wealth", desc: "Prepare for the responsibilities of managing family wealth — and passing it on well." },
 ];
 
 const LEARNING_PATH = [
-  { title: "Understand", desc: "Know what you own, why you own it and what it is meant to achieve." },
-  { title: "Protect", desc: "Make sure your health, family and income are adequately covered." },
-  { title: "Invest", desc: "Build wealth around your own goals and time horizon." },
-  { title: "Plan ahead", desc: "Retirement, succession and the years ahead — on your terms." },
+  { img: "/images/understand_card.jpg", title: "Understand", desc: "Know what you own, why you own it and what it is meant to achieve." },
+  { img: "/images/plan_card.jpg", title: "Plan", desc: "Make sure your health, family and financial future are adequately protected." },
+  { img: "/images/invest_card.jpg", title: "Invest", desc: "Build and manage wealth around your own goals and time horizon." },
+  { img: "/images/plan_ahead_card.jpg", title: "Plan Ahead", desc: "Prepare for retirement, succession and the years ahead — on your terms." },
 ];
 
 const SELF_CHECK = [
@@ -75,17 +70,17 @@ const SELF_CHECK = [
 ];
 
 const SERVICES = [
-  { title: "Investment planning", desc: "Investments built around your goals, risk and time horizon." },
-  { title: "Retirement planning", desc: "Financial independence for a longer, more secure retirement." },
-  { title: "Insurance planning", desc: "Protection for your health, income and family." },
-  { title: "Estate & succession", desc: "How your wealth is managed — and passed on." },
-  { title: "Portfolio review", desc: "Clarity on what you already hold, and what needs attention." },
+  { title: "Investment Planning", desc: "Build and manage investments around your goals, risk and time horizon." },
+  { title: "Retirement Planning", desc: "Prepare for financial independence and a longer, more secure retirement." },
+  { title: "Insurance Planning", desc: "Protect your health, income, family and financial future." },
+  { title: "Estate & Succession Planning", desc: "Plan how your wealth should be managed and passed on." },
+  { title: "Portfolio Review", desc: "Bring clarity to existing investments and see where your strategy needs attention." },
 ];
 
 const FAQS = [
   {
     q: "Why is financial planning particularly important for women?",
-    a: "Women generally live longer and may spend more years managing their own finances — often alone. A clear plan prepares you for retirement, protection and long-term wealth management, so those years are lived with confidence rather than uncertainty.",
+    a: "Women generally live longer and may spend more years managing their own financial needs — often alone. A clear plan prepares you for retirement, protection and long-term wealth management, so those years are lived with confidence rather than uncertainty.",
   },
   {
     q: "My husband handles our money. Why should I get involved?",
@@ -93,11 +88,11 @@ const FAQS = [
   },
   {
     q: "What should I do if I receive an inheritance or insurance payout?",
-    a: "First, give yourself time. Then understand the amount, your existing position, your goals and your liquidity needs before making any major investment decision. You don't have to decide everything at once.",
+    a: "First, give yourself time. Then start by understanding the amount, your existing financial position, your goals and your liquidity needs before making any major investment decisions. You don't have to decide everything at once.",
   },
   {
     q: "I don't know much about investing. Can you still help me?",
-    a: "Yes — that's exactly where many of our clients begin. Planning starts with your situation and goals, not with how much you already know. We explain everything in plain language, at your pace.",
+    a: "Yes — that's exactly where many of our clients begin. Financial planning starts with understanding your situation and goals, not with how much you already know. We explain everything in plain language, at your pace.",
   },
   {
     q: "Can I review my existing investments with you?",
@@ -106,159 +101,111 @@ const FAQS = [
 ];
 
 /* ------------------------------------------------------------------ */
-/* Building blocks                                                     */
+/* Longevity bars — a simple, honest 0–80 year scale                    */
 /* ------------------------------------------------------------------ */
 
-/** A photograph that wipes in from below and drifts gently on scroll. */
-function Photo({
-  src,
-  alt,
-  className = "",
-  sizes,
-  position = "center",
-  children,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  sizes: string;
-  position?: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <Reveal variant="clip" className={`relative overflow-hidden rounded-[28px] bg-[#d9d2c2] ${className}`}>
-      <div className="absolute inset-[-7%_0]">
-        <Parallax speed={0.07} className="absolute inset-0">
-          <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" style={{ objectPosition: position }} />
-        </Parallax>
-      </div>
-      {children}
-    </Reveal>
-  );
-}
-
-function Eyebrow({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "sage" | "light" }) {
-  const color = tone === "gold" ? "text-[#bda15f]" : tone === "sage" ? "text-[#73885c]" : "text-[#c7af75]";
-  return (
-    <Reveal variant="fade">
-      <span className={`gs-eyebrow ${color}`}>{children}</span>
-    </Reveal>
-  );
-}
-
-function Tick({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 12 12" className={className} fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
-      <path d="M2.5 6.2l2.3 2.3 4.7-4.9" />
-    </svg>
-  );
-}
-
-/* Longevity bars — a simple, honest 0–80 year scale. */
 function LongevityBars() {
   const [ref, inView] = useInView<HTMLDivElement>({ threshold: 0.35 });
   const SCALE = 80;
   const women = 74.4;
   const men = 71.2;
   return (
-    <div
-      ref={ref}
-      className="rounded-[28px] border border-white/10 bg-white/[0.03] p-7 sm:p-9"
-      role="img"
-      aria-label={`Average life expectancy: women ${women} years, men ${men} years — a gap of ${(women - men).toFixed(1)} years.`}
-    >
-      <span className="gs-index uppercase text-[#c7af75]">Life expectancy</span>
-      <div className="mt-7 space-y-6">
-        {[
-          { label: "Women", value: women, color: "bg-[#c5a963]" },
-          { label: "Men", value: men, color: "bg-[#F5F1E8]/30" },
-        ].map((row, i) => (
-          <div key={row.label}>
-            <div className="flex items-baseline justify-between mb-2.5">
-              <span className="text-[13px] text-[#cfded5]">{row.label}</span>
-              <span className="font-cormorant text-[1.7rem] leading-none text-[#F5F1E8] tabular-nums">{row.value}</span>
-            </div>
-            <div className="relative h-2.5 rounded-full bg-white/8 overflow-hidden">
-              <div
-                className={`absolute inset-y-0 left-0 rounded-full ${row.color} transition-[width] duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
-                style={{ width: inView ? `${(row.value / SCALE) * 100}%` : "0%", transitionDelay: `${i * 180}ms` }}
-              />
-              {i === 0 && (
-                <div
-                  aria-hidden
-                  className="absolute inset-y-0 rounded-r-full bg-[#f3dfa6] transition-opacity duration-700 delay-[1600ms]"
-                  style={{ left: `${(men / SCALE) * 100}%`, width: `${((women - men) / SCALE) * 100}%`, opacity: inView ? 1 : 0 }}
-                />
-              )}
-            </div>
+    <div ref={ref} className="w-full" role="img" aria-label={`Average life expectancy: women ${women} years, men ${men} years — a gap of ${(women - men).toFixed(1)} years.`}>
+      {[
+        { label: "Women", value: women, color: "bg-[#c5a963]" },
+        { label: "Men", value: men, color: "bg-[#F5F1E8]/35" },
+      ].map((row, i) => (
+        <div key={row.label} className="mb-5 last:mb-0">
+          <div className="flex items-baseline justify-between mb-2">
+            <span className="gs-index uppercase text-[#cfded5]">{row.label}</span>
+            <span className="font-cormorant text-2xl text-[#F5F1E8] tabular-nums">{row.value} yrs</span>
           </div>
-        ))}
-      </div>
-      <p className={`mt-8 pt-6 border-t border-white/10 text-sm text-[#cfded5] leading-relaxed transition-opacity duration-700 delay-[1700ms] ${inView ? "opacity-100" : "opacity-0"}`}>
-        <span className="font-cormorant text-[1.6rem] text-[#f3dfa6] mr-1.5">+{(women - men).toFixed(1)} years.</span>
-        Often, those are the years she manages alone.
+          <div className="relative h-3 rounded-full bg-white/8 overflow-hidden">
+            <div
+              className={`absolute inset-y-0 left-0 rounded-full ${row.color} transition-[width] duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)]`}
+              style={{ width: inView ? `${(row.value / SCALE) * 100}%` : "0%", transitionDelay: `${i * 180}ms` }}
+            />
+            {i === 0 && (
+              /* the extra years, picked out once both bars have landed */
+              <div
+                aria-hidden
+                className="absolute inset-y-0 rounded-r-full bg-[#f3dfa6] transition-opacity duration-700 delay-[1600ms]"
+                style={{ left: `${(men / SCALE) * 100}%`, width: `${((women - men) / SCALE) * 100}%`, opacity: inView ? 1 : 0 }}
+              />
+            )}
+          </div>
+        </div>
+      ))}
+      <p className={`mt-6 text-sm text-[#cfded5] transition-opacity duration-700 delay-[1700ms] ${inView ? "opacity-100" : "opacity-0"}`}>
+        <span className="text-[#c5a963] font-semibold">+{(women - men).toFixed(1)} years</span> on average — and for many women, far more. Often, those are years spent managing alone.
       </p>
     </div>
   );
 }
 
-/* Self-check — five questions every woman should be able to answer. */
+/* ------------------------------------------------------------------ */
+/* Self-check — five questions every woman should be able to answer    */
+/* ------------------------------------------------------------------ */
+
 function SelfCheck() {
   const [checked, setChecked] = useState<boolean[]>(() => SELF_CHECK.map(() => false));
   const count = checked.filter(Boolean).length;
-  const left = SELF_CHECK.length - count;
   const toggle = (i: number) => setChecked((c) => c.map((v, j) => (j === i ? !v : v)));
 
   const verdict =
     count === SELF_CHECK.length
       ? { title: "You're in control.", body: "Wonderful. A periodic review will keep it that way as life changes." }
       : count >= 3
-      ? { title: "You're well on your way.", body: `${left} gap${left > 1 ? "s" : ""} left to close — that's one conversation, not a mountain.` }
-      : { title: "Every “not yet” is where we begin.", body: "You're not behind. Most women we meet start exactly here — and leave the first conversation feeling lighter." };
+        ? { title: "You're well on your way.", body: `${SELF_CHECK.length - count} gap${SELF_CHECK.length - count > 1 ? "s" : ""} left to close — that's a single conversation, not a mountain.` }
+        : { title: "Every “not yet” is where we begin.", body: "You're not behind. Most women we meet start exactly here — and leave the first conversation feeling lighter." };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-      <ul className="lg:col-span-7 border-t border-[#1F3A2C]/12">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <ul className="lg:col-span-7 space-y-3">
         {SELF_CHECK.map((q, i) => (
-          <li key={q} className="border-b border-[#1F3A2C]/12">
+          <li key={q}>
             <button
               type="button"
               onClick={() => toggle(i)}
               aria-pressed={checked[i]}
-              className="group w-full text-left flex items-start gap-5 py-5 sm:py-6"
+              className={`w-full text-left flex items-start gap-4 rounded-2xl border p-5 transition-all duration-300 ${checked[i] ? "bg-[#1F3A2C] border-[#1F3A2C] text-[#F5F1E8]" : "bg-white border-[#eae4d7] text-[#1F3A2C] hover:border-[#c5a963]"
+                }`}
             >
               <span
                 aria-hidden
-                className={`mt-0.5 grid place-items-center w-7 h-7 shrink-0 rounded-full border transition-all duration-300 ${
-                  checked[i] ? "bg-[#1F3A2C] border-[#1F3A2C] text-[#c5a963] scale-105" : "border-[#1F3A2C]/30 text-transparent group-hover:border-[#bda15f]"
-                }`}
+                className={`mt-0.5 grid place-items-center w-6 h-6 shrink-0 rounded-full border transition-colors ${checked[i] ? "bg-[#c5a963] border-[#c5a963] text-[#1F3A2C]" : "border-[#1F3A2C]/30"
+                  }`}
               >
-                <Tick className="w-3 h-3" />
+                {checked[i] && (
+                  <svg viewBox="0 0 12 12" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M2.5 6.2l2.3 2.3 4.7-4.9" />
+                  </svg>
+                )}
               </span>
-              <span className={`text-[15px] sm:text-base leading-relaxed transition-colors duration-300 ${checked[i] ? "text-[#1F3A2C]" : "text-[#5d7064]"}`}>{q}</span>
+              <span className="text-sm sm:text-[15px] leading-relaxed">{q}</span>
             </button>
           </li>
         ))}
       </ul>
 
-      <div className="lg:col-span-5 lg:sticky lg:top-[calc(var(--nav-h)+40px)] rounded-[28px] bg-[#1F3A2C] text-[#F5F1E8] p-8 sm:p-10" aria-live="polite">
-        <span className="gs-index uppercase text-[#c7af75]">Your answers</span>
-        <div className="flex items-baseline gap-2 mt-4">
-          <span className="font-cormorant text-7xl tabular-nums leading-none">{count}</span>
-          <span className="font-cormorant text-2xl text-[#cfded5]/70">/ {SELF_CHECK.length}</span>
+      <div className="lg:col-span-5 lg:sticky lg:top-[calc(var(--nav-h)+40px)] rounded-3xl bg-white border border-[#eae4d7] p-7 sm:p-8" aria-live="polite">
+        <span className="gs-index uppercase text-[#bda15f]">Your answers</span>
+        <div className="flex items-baseline gap-2 mt-3">
+          <span className="font-cormorant text-6xl text-[#1F3A2C] tabular-nums leading-none">{count}</span>
+          <span className="font-cormorant text-2xl text-[#5d7064]">/ {SELF_CHECK.length}</span>
         </div>
-        <div className="flex gap-1.5 mt-6" aria-hidden>
+        <div className="flex gap-1.5 mt-5" aria-hidden>
           {SELF_CHECK.map((_, i) => (
-            <span key={i} className={`h-1 flex-1 rounded-full transition-colors duration-500 ${i < count ? "bg-[#c5a963]" : "bg-white/12"}`} />
+            <span key={i} className={`h-1.5 flex-1 rounded-full transition-colors duration-500 ${i < count ? "bg-[#c5a963]" : "bg-[#1F3A2C]/10"}`} />
           ))}
         </div>
-        <p key={verdict.title} className="font-cormorant italic text-[1.8rem] leading-tight mt-7 stage-in">{verdict.title}</p>
-        <p className="text-sm text-[#cfded5] leading-relaxed mt-2">{verdict.body}</p>
-        <Link href="/contact" className="gs-btn gs-btn-light !pr-2.5 mt-8">
+        <p key={verdict.title} className="font-cormorant italic text-[1.7rem] leading-tight text-[#1F3A2C] mt-6 stage-in">{verdict.title}</p>
+        <p className="text-sm text-[#5d7064] leading-relaxed mt-2">{verdict.body}</p>
+        <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5 mt-7">
           <span>Close the gaps with us</span>
           <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
         </Link>
-        <p className="text-[11px] text-[#cfded5]/60 mt-5">Your answers stay on this page — nothing is saved or sent.</p>
+        <p className="text-[11px] text-[#5d7064]/80 mt-4">Your answers stay on this page — nothing is saved or sent.</p>
       </div>
     </div>
   );
@@ -273,94 +220,84 @@ export default function WomenAndWealthPage() {
 
   return (
     <div className="w-full flex flex-col bg-[#F5F1E8] text-[#1F3A2C]" data-motion-managed>
-      {/* 1. HERO — let the photograph breathe; copy sits in the shade on the left */}
-      <section className="relative w-full min-h-[100svh] flex flex-col justify-end overflow-hidden bg-[#0d1f16]">
-        <div className="absolute inset-0">
-          <Parallax speed={-0.12} className="absolute inset-[-6%_0]">
-            <Image
-              src="/images/women_hero_authentic.jpg"
-              alt="A confident woman in a light suit, smiling as she looks out over the city"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-[55%_center] lg:object-[62%_center]"
-            />
-          </Parallax>
-          {/* mobile: shade from the bottom; desktop: shade from the left */}
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,31,22,0.35)_0%,rgba(13,31,22,0)_30%,rgba(13,31,22,0.75)_62%,rgba(13,31,22,0.95)_100%)] lg:bg-[linear-gradient(90deg,rgba(13,31,22,0.92)_0%,rgba(13,31,22,0.72)_30%,rgba(13,31,22,0.15)_55%,rgba(13,31,22,0)_70%)]" />
-          <div className="hidden lg:block absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#0d1f16]/80 to-transparent" />
+      {/* 1. HERO ------------------------------------------------------ */}
+      <section className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image src="/images/women_hero_authentic.jpg" alt="A poised, sovereign Indian woman overlooking the city at morning light" fill priority sizes="100vw" className="object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/85" />
+          <div className="absolute inset-0 bg-[#0f241a]/40 mix-blend-multiply" />
         </div>
 
-        <div className="relative z-10 gs-container pt-[calc(var(--nav-h)+4rem)] pb-10 sm:pb-12">
-          <div className="max-w-[36rem]">
-            <Eyebrow tone="light">Women &amp; Wealth</Eyebrow>
-            <RevealLines
-              as="h1"
-              className="gs-h1 text-[#F5F1E8] mt-6"
-              delay={150}
-              lines={[<>She plans for everyone.</>, <em key="b" className="text-[#c9d7b3]">Who plans for her?</em>]}
-            />
-            <Reveal delay={450} className="mt-7">
-              <p className="gs-lead text-[#dce7e0]">
-                Women live longer than men — often by years. Many of us will, one day, manage a family&apos;s finances alone.
-                Knowing how should never depend on someone else.
-              </p>
-            </Reveal>
-            <Reveal delay={650} className="mt-9 flex flex-wrap items-center gap-4">
-              <Link href="/contact" className="gs-btn gs-btn-light !pr-2.5">
-                <span>Talk to an expert</span>
-                <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
-              </Link>
-              <a href="#self-check" className="gs-link text-[#F5F1E8]">
-                Take the 2-minute self-check <IconArrow className="w-3.5 h-3.5" />
-              </a>
-            </Reveal>
-          </div>
+        <div className="relative z-10 gs-container py-32 text-white text-center flex flex-col items-center">
+          <Reveal variant="fade"><span className="gs-eyebrow text-[#c7af75]">Women &amp; Wealth</span></Reveal>
 
-          <Reveal delay={850} className="mt-14 sm:mt-20 pt-6 border-t border-white/15 grid grid-cols-3 gap-4 sm:gap-10 max-w-4xl">
-            {HERO_FACTS.map((f) => (
-              <div key={f.label}>
-                <div className="font-cormorant text-[1.3rem] sm:text-[2.4rem] leading-none text-[#F5F1E8] sm:whitespace-nowrap">{f.value}</div>
-                <p className="text-[11px] sm:text-[13px] text-[#cfded5]/85 leading-snug mt-2">{f.label}</p>
-              </div>
-            ))}
+          <RevealLines
+            as="h1"
+            className="gs-h1 text-white mt-7 max-w-4xl"
+            delay={150}
+            lines={[<>She plans for everyone.</>, <em key="b" className="text-[#a9c08a]">Who plans for her?</em>]}
+          />
+
+          <Reveal delay={500} className="max-w-2xl mx-auto mt-8">
+            <p className="gs-lead text-[#dce7e0]">
+              Women live longer than men — often by years. That means many of us will, one day, manage a family&apos;s finances alone.
+              Knowing how should never depend on someone else.
+            </p>
           </Reveal>
+
+          <Reveal delay={700} className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <Link href="/contact" className="gs-btn gs-btn-light !pr-2.5">
+              <span>Talk to an expert</span>
+              <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
+            </Link>
+            <a href="#self-check" className="gs-btn gs-btn-ghost on-dark text-white">
+              <span>Take the 2-minute self-check</span>
+            </a>
+          </Reveal>
+        </div>
+
+        <div className="absolute bottom-8 inset-x-0 z-10 flex justify-center" aria-hidden>
+          <span className="block w-px h-12 bg-gradient-to-b from-transparent via-white/50 to-transparent" />
         </div>
       </section>
 
       {/* 2. THE LONGER VIEW ------------------------------------------ */}
-      <section className="w-full py-24 sm:py-32 bg-[#1F3A2C] text-[#F5F1E8]">
-        <div className="gs-container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-6">
-              <Eyebrow tone="light">The longer view</Eyebrow>
+      <section className="w-full py-24 sm:py-32 bg-[#1F3A2C] text-white">
+        <div className="gs-container space-y-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 space-y-6">
+              <Reveal variant="fade"><span className="gs-eyebrow text-[#c7af75]">The longer view</span></Reveal>
               <RevealLines
                 as="h2"
-                className="gs-h2 mt-6"
-                lines={[<>A longer life is a gift.</>, <em key="b" className="text-[#c9d7b3]">It also needs a longer plan.</em>]}
+                className="gs-h2 text-white"
+                lines={[<>A longer life is a gift.</>, <em key="b" className="text-[#a9c08a]">It also needs a longer plan.</em>]}
               />
               <Reveal delay={200}>
-                <p className="gs-lead text-[#cfded5] mt-7 max-w-lg">
-                  More years means more decisions and more responsibility — and, for many women, a chapter where every financial choice is hers alone.
+                <p className="gs-lead text-[#cfded5] max-w-xl">
+                  More years means more decisions, more responsibility — and, for many women, a chapter of life where every financial choice is hers alone to make.
                 </p>
               </Reveal>
+              <Reveal delay={300} className="pt-4 max-w-xl">
+                <LongevityBars />
+              </Reveal>
             </div>
-            <Reveal delay={200} className="lg:col-span-6">
-              <LongevityBars />
+
+            <Reveal variant="clip" className="lg:col-span-5 relative h-80 sm:h-[30rem] rounded-[28px] overflow-hidden border border-white/10">
+              <Image src="/a_longer_life.jpg" alt="A woman reflecting on her financial future" fill sizes="(min-width:1024px) 40vw, 100vw" className="object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f16]/80 via-transparent to-transparent" />
+              <p className="absolute inset-x-0 bottom-0 p-6 sm:p-8 font-cormorant italic text-[1.5rem] sm:text-[1.8rem] leading-snug text-[#F5F1E8]">
+                &ldquo;Planning for those years isn&apos;t pessimism. It&apos;s love — and it&apos;s freedom.&rdquo;
+              </p>
             </Reveal>
           </div>
 
-          <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 border-t border-white/12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {LONGEVITY_STATS.map((s, i) => (
-              <Reveal
-                key={s.label}
-                delay={i * 90}
-                className={`pt-8 pb-2 pr-4 sm:pr-6 ${i > 0 ? "lg:pl-8 lg:border-l lg:border-white/12" : ""} ${i % 2 === 1 ? "pl-4 sm:pl-6 border-l border-white/12 lg:pl-8" : ""} ${i >= 2 ? "max-lg:mt-2 max-lg:border-t max-lg:border-white/12" : ""}`}
-              >
-                <div className="font-cormorant text-[1.9rem] sm:text-[3.2rem] leading-none sm:whitespace-nowrap">
+              <Reveal key={s.label} delay={i * 90} className="rounded-3xl border border-white/12 bg-white/[0.04] p-6 sm:p-7">
+                <div className="font-cormorant text-[2.6rem] sm:text-[3rem] leading-none text-[#F5F1E8]">
                   <CountUp to={s.to} decimals={s.decimals ?? 0} prefix={s.prefix ?? ""} suffix={s.suffix} duration={2000} />
                 </div>
-                <p className="text-[13px] text-[#cfded5]/85 leading-relaxed mt-4 max-w-[15rem]">{s.label}</p>
+                <p className="text-[13px] text-[#cfded5] leading-relaxed mt-4">{s.label}</p>
               </Reveal>
             ))}
           </div>
@@ -368,10 +305,10 @@ export default function WomenAndWealthPage() {
       </section>
 
       {/* 3. THE MOMENT ------------------------------------------------ */}
-      <section className="w-full bg-[#F5F1E8] pt-24 sm:pt-36" aria-label="The moment everything changes">
+      <section className="w-full bg-[#F5F1E8] pt-24 sm:pt-32 pb-16" aria-label="The moment everything changes">
         <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-2">
-            <Eyebrow>The moment</Eyebrow>
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#bda15f]">The moment</span></Reveal>
           </div>
           <div className="lg:col-span-10">
             <ScrollWords
@@ -382,30 +319,32 @@ export default function WomenAndWealthPage() {
         </div>
 
         <div className="gs-container mt-20 sm:mt-28 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <Photo
-            src="/images/women_moment_clarity.jpg"
-            alt="A woman sits by a window with a family file on her lap, lost in thought"
-            sizes="(min-width:1024px) 42vw, 100vw"
-            position="40% center"
-            className="lg:col-span-5 aspect-[4/5]"
-          />
+          <Reveal variant="clip" className="lg:col-span-5 relative aspect-[4/5] rounded-[28px] overflow-hidden border border-[#1F3A2C]/10 shadow-xl bg-white">
+            <Image
+              src="/office_image2/office_6.webp"
+              alt="Green Shoots Wealth printed Women & Wealth reflection questionnaire and family goal leaf card"
+              fill
+              sizes="(min-width:1024px) 42vw, 100vw"
+              className="object-cover object-center"
+            />
+          </Reveal>
           <div className="lg:col-span-7">
             <Reveal>
-              <p className="gs-lead text-[#5d7064] max-w-xl">
-                When a husband passes away, or a marriage ends, the questions arrive all at once — usually when she is least able to face them.
+              <p className="gs-lead text-[#5d7064] max-w-2xl">
+                When a husband passes away, or a marriage ends, the questions arrive all at once — usually when she is least able to face them:
               </p>
             </Reveal>
-            <ol className="mt-10 border-t border-[#1F3A2C]/12">
+            <ul className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-x-10">
               {QUIET_QUESTIONS.map((q, i) => (
-                <Reveal as="li" key={q} delay={i * 110} className="flex items-baseline gap-6 py-5 border-b border-[#1F3A2C]/12">
+                <Reveal as="li" key={q} delay={i * 110} className="flex items-baseline gap-5 py-5 border-t border-[#1F3A2C]/12">
                   <span className="gs-index text-[#bda15f]">0{i + 1}</span>
-                  <span className="font-cormorant italic text-[1.45rem] sm:text-[1.8rem] leading-snug">{q}</span>
+                  <span className="font-cormorant italic text-[1.5rem] sm:text-[1.75rem] leading-snug text-[#1F3A2C]">{q}</span>
                 </Reveal>
               ))}
-            </ol>
-            <Reveal delay={300} className="mt-10">
-              <p className="font-cormorant text-[1.6rem] sm:text-[2.1rem] leading-snug">
-                Too often, the only answer is <em className="text-[#8fa868]">&ldquo;I&apos;ll have to ask someone.&rdquo;</em>
+            </ul>
+            <Reveal delay={300} className="mt-12">
+              <p className="font-cormorant text-[1.6rem] sm:text-[2rem] leading-snug text-[#1F3A2C] max-w-3xl">
+                Too often, the only answer is: <em className="text-[#8fa868]">&ldquo;I&apos;ll have to ask someone.&rdquo;</em>
               </p>
             </Reveal>
           </div>
@@ -413,46 +352,68 @@ export default function WomenAndWealthPage() {
       </section>
 
       {/* 4. TWO FUTURES ---------------------------------------------- */}
-      <section className="w-full bg-[#F5F1E8] pt-28 sm:pt-36 pb-24 sm:pb-32">
+      <section className="w-full bg-[#F5F1E8] pt-10 pb-24 sm:pb-32">
         <div className="gs-container">
-          <div className="text-center max-w-3xl mx-auto">
-            <Eyebrow>Two futures</Eyebrow>
+          <div className="max-w-3xl">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#bda15f]">Two futures</span></Reveal>
             <RevealLines
               as="h2"
-              className="gs-h2 mt-6"
+              className="gs-h2 text-[#1F3A2C] mt-6"
               lines={[<>The same loss.</>, <em key="b" className="text-[#8fa868]">Two very different years ahead.</em>]}
             />
           </div>
 
-          <Reveal variant="scale" className="mt-14 sm:mt-16 grid grid-cols-1 md:grid-cols-2 rounded-[32px] overflow-hidden border border-[#1F3A2C]/10 shadow-[0_40px_80px_-50px_rgba(13,31,22,0.45)]">
-            <div className="bg-[#ebe5d8] p-8 sm:p-12">
-              <span className="gs-index uppercase text-[#5d7064]">When she depends on others</span>
-              <ul className="mt-8 space-y-5">
-                {TWO_FUTURES.dependent.map((t) => (
-                  <li key={t} className="flex items-start gap-4 text-[#5d7064]">
-                    <span aria-hidden className="mt-[0.7rem] w-3 h-px bg-[#5d7064]/50 shrink-0" />
-                    <span className="text-[15px] leading-relaxed">{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-[#1F3A2C] text-[#F5F1E8] p-8 sm:p-12">
-              <span className="gs-index uppercase text-[#c7af75]">When she understands</span>
-              <ul className="mt-8 space-y-5">
-                {TWO_FUTURES.prepared.map((t) => (
-                  <li key={t} className="flex items-start gap-4">
-                    <span className="mt-1 grid place-items-center w-5 h-5 rounded-full bg-[#c5a963] text-[#1F3A2C] shrink-0">
-                      <Tick className="w-2.5 h-2.5" />
-                    </span>
-                    <span className="text-[15px] leading-relaxed">{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+          <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <div className="lg:col-span-7 flex flex-col gap-5">
+              <Reveal variant="left" className="rounded-[28px] border border-[#1F3A2C]/12 bg-[#ebe5d8]/60 p-7 sm:p-9 flex-1">
+                <span className="gs-index uppercase text-[#5d7064]">When she depends on others</span>
+                <ul className="mt-6 space-y-4">
+                  {TWO_FUTURES.dependent.map((t) => (
+                    <li key={t} className="flex items-start gap-4 text-[#5d7064]">
+                      <span aria-hidden className="mt-[0.55rem] w-3 h-px bg-[#5d7064]/60 shrink-0" />
+                      <span className="text-[14px] sm:text-[15px] leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
 
-          <Reveal delay={200} className="mt-14 text-center">
-            <p className="font-cormorant italic text-[1.8rem] sm:text-[2.6rem] leading-tight">
+              <Reveal variant="left" delay={150} className="rounded-[28px] bg-[#1F3A2C] text-[#F5F1E8] p-7 sm:p-9 shadow-[0_30px_60px_-30px_rgba(13,31,22,0.55)] flex-1">
+                <span className="gs-index uppercase text-[#c5a963]">When she understands</span>
+                <ul className="mt-6 space-y-4">
+                  {TWO_FUTURES.prepared.map((t) => (
+                    <li key={t} className="flex items-start gap-4">
+                      <span aria-hidden className="mt-1 grid place-items-center w-5 h-5 rounded-full bg-[#c5a963] text-[#1F3A2C] shrink-0">
+                        <svg viewBox="0 0 12 12" className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path d="M2.5 6.2l2.3 2.3 4.7-4.9" />
+                        </svg>
+                      </span>
+                      <span className="text-[14px] sm:text-[15px] leading-relaxed">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+
+            <Reveal variant="right" delay={200} className="lg:col-span-5 relative min-h-[360px] sm:min-h-[460px] rounded-[28px] overflow-hidden border border-[#1F3A2C]/12 shadow-xl">
+              <Image
+                src="/images/women_moment_clarity.jpg"
+                alt="An Indian woman holding family documents with quiet confidence and peace of mind"
+                fill
+                sizes="(min-width:1024px) 40vw, 100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#132A1F]/90 via-[#132A1F]/20 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5">
+                <span className="text-[10px] font-mono tracking-widest text-[#c5a963] uppercase block">THE QUIET RESOLUTION</span>
+                <p className="font-cormorant italic text-xl sm:text-2xl text-[#F5F1E8] leading-snug">
+                  &ldquo;A woman who understands her money is never stranded by circumstance.&rdquo;
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={200} className="mt-12 text-center">
+            <p className="font-cormorant italic text-[1.6rem] sm:text-[2.1rem] leading-snug text-[#1F3A2C] max-w-3xl mx-auto">
               The difference isn&apos;t money. <span className="text-[#8fa868]">It&apos;s knowing.</span>
             </p>
           </Reveal>
@@ -460,147 +421,170 @@ export default function WomenAndWealthPage() {
       </section>
 
       {/* 5. THE FINANCIAL REALITY ------------------------------------ */}
-      <section className="w-full py-24 sm:py-32 bg-[#EEF0D9]">
+      <section className="w-full py-24 sm:py-32 bg-[#EEF0D9] border-y border-[#dbe4ca]">
         <div className="gs-container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-7">
-              <Eyebrow tone="sage">The financial reality</Eyebrow>
+              <Reveal variant="fade"><span className="gs-eyebrow text-[#73885c]">The financial reality</span></Reveal>
               <RevealLines
                 as="h2"
-                className="gs-h2 mt-6"
-                lines={[<>Behind every number,</>, <em key="b" className="text-[#4a6344]">a woman who had to learn overnight.</em>]}
+                className="gs-h2 text-[#1F3A2C] mt-6"
+                lines={[<>Behind every number,</>, <em key="b" className="text-[#4a6344]">a woman who had to learn — overnight.</em>]}
               />
             </div>
             <Reveal delay={200} className="lg:col-span-5">
-              <div className="font-cormorant text-[clamp(5rem,11vw,9rem)] leading-[0.85] text-[#1F3A2C]">
+              <div className="font-cormorant text-[clamp(4.5rem,10vw,8rem)] leading-none text-[#1F3A2C]">
                 <CountUp to={80} suffix="%" duration={1800} />
               </div>
-              <p className="text-[15px] text-[#526658] leading-relaxed mt-4 max-w-sm">
-                of married women will eventually be solely responsible for their household finances — most often because they outlive their husbands.
+              <p className="text-sm sm:text-base text-[#526658] leading-relaxed mt-3 max-w-md">
+                of married women will eventually become solely responsible for their household finances — most often because they outlive their husbands.
               </p>
             </Reveal>
           </div>
 
-          <Reveal className="mt-16 rounded-[28px] bg-white/70 border border-[#d6e0c6] grid grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {WIDOW_STATS.map((c, i) => (
-              <div
-                key={c.label}
-                className={`p-6 sm:p-8 ${i % 2 === 1 ? "border-l border-[#d6e0c6]" : ""} ${i >= 2 ? "border-t lg:border-t-0 border-[#d6e0c6]" : ""} ${i === 2 ? "lg:border-l" : ""}`}
-              >
-                <div className="font-cormorant text-[2.6rem] sm:text-[3.2rem] leading-none">
+              <Reveal key={c.label} delay={i * 90} className="bg-white rounded-3xl p-7 border border-[#d6e0c6]">
+                <div className="font-cormorant text-[3rem] leading-none text-[#1F3A2C]">
                   <CountUp to={c.to} suffix={c.suffix} duration={2200} />
                 </div>
-                <p className="text-[13px] text-[#526658] leading-relaxed mt-3">{c.label}</p>
-              </div>
+                <p className="text-[13px] text-[#526658] leading-relaxed mt-4">{c.label}</p>
+              </Reveal>
             ))}
-          </Reveal>
-
-          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
-            <Reveal className="lg:col-span-8">
-              <p className="font-cormorant text-[1.6rem] sm:text-[2.1rem] leading-snug">
-                Widowhood isn&apos;t rare — it&apos;s a likely chapter. That&apos;s why financial education for women
-                isn&apos;t a luxury. <em className="text-[#4a6344]">It&apos;s protection.</em>
-              </p>
-            </Reveal>
-            <p className="lg:col-span-4 lg:text-right text-[11px] text-[#526658]/80">
-              Figures are approximate, drawn from published research on longevity, widowhood and wealth transfer.
-            </p>
           </div>
+
+          <Reveal delay={200} className="mt-12 max-w-3xl">
+            <p className="gs-lead text-[#1F3A2C]">
+              Widowhood is not a rare event. It is, statistically, a likely chapter in a woman&apos;s life.
+              That&apos;s why financial education isn&apos;t a luxury for women — <em className="font-cormorant text-[1.2em] text-[#4a6344]">it&apos;s protection.</em>
+            </p>
+          </Reveal>
+          <p className="mt-8 text-[11px] text-[#526658]/80 max-w-3xl">
+            Figures are approximate and drawn from published research on longevity, widowhood and wealth transfer.
+          </p>
         </div>
       </section>
 
       {/* 6. WHEN WEALTH BECOMES YOURS -------------------------------- */}
       <section className="w-full py-24 sm:py-32 bg-[#F5F1E8]">
-        <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <Photo
-            src="/images/women_wealth_transfer.jpg"
-            alt="A grandmother places her hand over her daughter's on an heirloom box in a sunlit courtyard"
-            sizes="(min-width:1024px) 46vw, 100vw"
-            className="lg:col-span-6 aspect-[4/3] lg:aspect-[4/5]"
-          />
-
-          <div className="lg:col-span-6">
-            <Eyebrow>When wealth becomes yours</Eyebrow>
+        <div className="gs-container">
+          <div className="max-w-2xl">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#bda15f]">When wealth becomes yours</span></Reveal>
             <RevealLines
               as="h2"
-              className="gs-h2 mt-6"
-              lines={[<>What happens when</>, <em key="b" className="text-[#6e8f66]">the wealth comes to you?</em>]}
+              className="gs-h2 text-[#1F3A2C] mt-6"
+              lines={[<>What happens when the</>, <em key="b" className="text-[#6e8f66]">wealth comes to you?</em>]}
             />
             <Reveal delay={200}>
-              <p className="gs-lead text-[#5d7064] mt-6 max-w-lg">
-                It often arrives at a time of loss. Knowing how to care for it matters as much as receiving it.
+              <p className="gs-lead text-[#5d7064] mt-6">
+                An inheritance, an insurance payout or a family transfer can change your financial life overnight — often at a time of loss. Knowing how to care for it matters as much as receiving it.
               </p>
             </Reveal>
+          </div>
 
-            <ul className="mt-10 border-t border-[#1F3A2C]/12">
+          <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <Reveal variant="left" className="lg:col-span-5 relative min-h-[380px] sm:min-h-[460px] rounded-[28px] overflow-hidden border border-[#eae4d7] shadow-xl">
+              <Image
+                src="/images/women_wealth_transfer.jpg"
+                alt="Intergenerational family wealth transfer and inheritance in an Indian heritage courtyard"
+                fill
+                sizes="(min-width:1024px) 40vw, 100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#132A1F]/90 via-[#132A1F]/20 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5">
+                <span className="text-[10px] font-mono tracking-widest text-[#c5a963] uppercase block">FAMILY LEGACY</span>
+                <p className="font-cormorant italic text-xl sm:text-2xl text-[#F5F1E8] leading-snug">
+                  &ldquo;Passing on wealth is not just transferring assets. It is honouring family wisdom.&rdquo;
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
               {WEALTH_ARRIVES.map((card, i) => (
-                <Reveal as="li" key={card.title} delay={i * 80} className="border-b border-[#1F3A2C]/12">
-                  <Link href="/contact" className="group flex items-start gap-5 py-5 sm:py-6">
-                    <span className="gs-index text-[#bda15f] mt-2">0{i + 1}</span>
-                    <span className="flex-1">
-                      <span className="block font-cormorant text-[1.5rem] sm:text-[1.7rem] leading-tight transition-colors group-hover:text-[#52704e]">{card.title}</span>
-                      <span className="block text-[14px] text-[#5d7064] leading-relaxed mt-1">{card.desc}</span>
-                    </span>
-                    <IconArrowUpRight className="w-4 h-4 mt-2.5 text-[#52704e] opacity-40 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <Reveal key={card.title} delay={i * 80}>
+                  <Link
+                    href="/contact"
+                    className="group h-full bg-white rounded-3xl p-6 sm:p-7 border border-[#eae4d7] hover:border-[#c5a963] hover:shadow-[0_20px_40px_-28px_rgba(13,31,22,0.4)] transition-all duration-500 flex flex-col justify-between gap-4"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <FigmaTickBadge className="w-9 h-9" />
+                        <IconArrowUpRight className="w-4 h-4 text-[#52704e] opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      </div>
+                      <span className="block font-cormorant italic text-[1.5rem] sm:text-[1.65rem] text-[#1F3A2C] leading-snug">{card.title}</span>
+                      <p className="text-[13px] text-[#55695c] leading-relaxed mt-2">{card.desc}</p>
+                    </div>
                   </Link>
                 </Reveal>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 7. EDUCATION IS INDEPENDENCE -------------------------------- */}
-      <section className="w-full pb-24 sm:pb-32 bg-[#F5F1E8]">
+      <section className="w-full py-24 sm:py-32 bg-[#EEF0D9] border-y border-[#dbe4ca]">
         <div className="gs-container">
-          <Photo
-            src="/images/women_intergenerational.jpg"
-            alt="A mother talks through the family's finances with her daughter over tea"
-            sizes="(min-width:1440px) 1340px, 100vw"
-            position="center 40%"
-            className="h-[78svh] min-h-[520px] max-h-[820px] rounded-[32px]"
-          >
-            <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(13,31,22,0.92)_0%,rgba(13,31,22,0.55)_35%,rgba(13,31,22,0)_65%)]" />
-            <div className="absolute inset-x-0 bottom-0 p-7 sm:p-12 lg:p-16 text-[#F5F1E8]">
-              <span className="gs-eyebrow text-[#c7af75]">Education is independence</span>
-              <h2 className="gs-h2 mt-5 max-w-3xl">
-                It&apos;s not only about having wealth.
-                <em className="block text-[#c9d7b3]">It&apos;s about never having to ask permission.</em>
-              </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-14">
+            <div className="lg:col-span-7">
+              <Reveal variant="fade"><span className="gs-eyebrow text-[#73885c]">Education is independence</span></Reveal>
+              <RevealLines
+                as="h2"
+                className="gs-h2 text-[#1F3A2C] mt-6"
+                lines={[<>It&apos;s not only about having wealth.</>, <em key="b" className="text-[#4a6344]">It&apos;s about never having to ask permission.</em>]}
+              />
+              <Reveal delay={200}>
+                <p className="gs-lead text-[#526658] mt-6">
+                  We teach as we plan. Step by step, in plain language, until every decision feels like yours — because it is. When a woman truly understands her family&apos;s financial blueprint, she shows her children what lasting self-reliance looks like.
+                </p>
+              </Reveal>
             </div>
-          </Photo>
 
-          <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-10">
-            <Reveal className="lg:col-span-4">
-              <p className="gs-lead text-[#5d7064]">
-                We teach as we plan — step by step, in plain language — until every decision feels like yours. Because it is.
+            <Reveal variant="clip" className="lg:col-span-5 relative h-72 sm:h-80 rounded-[28px] overflow-hidden border border-[#d6e0c6] shadow-md">
+              <Image
+                src="/images/women_intergenerational.jpg"
+                alt="Indian mother and daughter discussing family finances and future roadmap over tea"
+                fill
+                sizes="(min-width:1024px) 40vw, 100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1F3A2C]/80 via-transparent to-transparent" />
+              <p className="absolute bottom-5 left-5 right-5 font-cormorant italic text-lg sm:text-xl text-[#F5F1E8] leading-snug">
+                &ldquo;Shows her children what independence looks like.&rdquo;
               </p>
             </Reveal>
-            <ol className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-10">
-              {LEARNING_PATH.map((s, i) => (
-                <Reveal as="li" key={s.title} delay={i * 90} className="py-6 border-t border-[#1F3A2C]/12">
-                  <span className="gs-index text-[#bda15f]">Step 0{i + 1}</span>
-                  <h3 className="font-cormorant text-[1.7rem] leading-tight mt-2">{s.title}</h3>
-                  <p className="text-[14px] text-[#5d7064] leading-relaxed mt-1.5">{s.desc}</p>
-                </Reveal>
-              ))}
-            </ol>
           </div>
+
+          <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {LEARNING_PATH.map((card, i) => (
+              <Reveal as="li" key={card.title} delay={i * 100} className="bg-white rounded-3xl overflow-hidden border border-[#d6e0c6] flex flex-col group">
+                <div className="relative h-52 w-full overflow-hidden bg-neutral-100">
+                  <Image src={card.img} alt="" fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <span className="absolute top-4 left-4 gs-index bg-[#F5F1E8]/90 text-[#1F3A2C] rounded-full px-3 py-1.5">Step 0{i + 1}</span>
+                </div>
+                <div className="p-6 flex-1">
+                  <h3 className="font-cormorant text-[1.8rem] leading-tight text-[#1F3A2C]">{card.title}</h3>
+                  <p className="text-[13px] text-[#526658] mt-2 leading-relaxed">{card.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </section>
 
       {/* 8. SELF-CHECK ------------------------------------------------ */}
-      <section id="self-check" className="w-full py-24 sm:py-32 bg-[#EEF0D9] scroll-mt-24">
+      <section id="self-check" className="w-full py-24 sm:py-32 bg-[#F5F1E8] scroll-mt-24">
         <div className="gs-container">
-          <div className="max-w-3xl mb-12 sm:mb-14">
-            <Eyebrow tone="sage">A quiet self-check</Eyebrow>
+          <div className="max-w-3xl mb-14">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#bda15f]">A quiet self-check</span></Reveal>
             <RevealLines
               as="h2"
-              className="gs-h2 mt-6"
-              lines={[<>If you had to manage alone tomorrow,</>, <em key="b" className="text-[#4a6344]">could you answer these?</em>]}
+              className="gs-h2 text-[#1F3A2C] mt-6"
+              lines={[<>If you had to manage alone tomorrow,</>, <em key="b" className="text-[#8fa868]">could you answer these?</em>]}
             />
             <Reveal delay={200}>
-              <p className="gs-lead text-[#526658] mt-6">Tap each statement that is true for you today. There are no wrong answers — only a starting point.</p>
+              <p className="gs-lead text-[#5d7064] mt-6">Tap each statement that is true for you today. There are no wrong answers — only a starting point.</p>
             </Reveal>
           </div>
           <SelfCheck />
@@ -608,64 +592,72 @@ export default function WomenAndWealthPage() {
       </section>
 
       {/* 9. HOW WE HELP ----------------------------------------------- */}
-      <section className="w-full py-24 sm:py-32 bg-[#F5F1E8]">
-        <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-[calc(var(--nav-h)+40px)]">
-              <Eyebrow>How we help</Eyebrow>
-              <RevealLines as="h2" className="gs-h2 mt-6" lines={[<>A financial plan</>, <em key="b" className="text-[#8fa868]">built around your life.</em>]} />
-              <Reveal delay={250} className="mt-9">
-                <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5">
-                  <span>Begin with one conversation</span>
-                  <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
-                </Link>
-              </Reveal>
-            </div>
+      <section className="w-full py-24 sm:py-32 bg-[#EEF0D9] border-y border-[#dbe4ca]">
+        <div className="gs-container">
+          <div className="max-w-2xl">
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#73885c]">How we help</span></Reveal>
+            <RevealLines
+              as="h2"
+              className="gs-h2 text-[#1F3A2C] mt-6"
+              lines={[<>A financial plan built</>, <em key="b" className="text-[#4a6344]">around your life.</em>]}
+            />
           </div>
-          <ul className="lg:col-span-7 border-t border-[#1F3A2C]/12">
+
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {SERVICES.map((srv, i) => (
-              <Reveal as="li" key={srv.title} delay={i * 70} className="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_14rem_1fr] gap-x-6 gap-y-1 py-6 border-b border-[#1F3A2C]/12">
-                <span className="gs-index text-[#bda15f] mt-2">0{i + 1}</span>
-                <h3 className="font-cormorant text-[1.5rem] sm:text-[1.6rem] leading-tight">{srv.title}</h3>
-                <p className="col-start-2 sm:col-start-3 text-[14px] text-[#5d7064] leading-relaxed sm:mt-1.5">{srv.desc}</p>
+              <Reveal key={srv.title} delay={i * 70} className="bg-white rounded-3xl p-7 border border-[#d6e0c6] flex items-start gap-4">
+                <FigmaTickBadge className="w-10 h-10 mt-0.5 shrink-0" />
+                <div>
+                  <h3 className="font-cormorant italic text-[1.6rem] text-[#1F3A2C] leading-snug">{srv.title}</h3>
+                  <p className="text-[13px] text-[#55695c] leading-relaxed mt-1.5">{srv.desc}</p>
+                </div>
               </Reveal>
             ))}
-          </ul>
+            <Reveal delay={SERVICES.length * 70}>
+              <Link href="/contact" className="group h-full min-h-[160px] rounded-3xl bg-[#1F3A2C] text-[#F5F1E8] p-7 flex flex-col justify-between">
+                <span className="font-cormorant italic text-[1.6rem] leading-snug">Not sure where to start?</span>
+                <span className="inline-flex items-center gap-2 text-[13px] font-semibold text-[#c5a963]">
+                  Begin with one conversation
+                  <IconArrow className="w-3.5 h-3.5 transition-transform duration-500 group-hover:translate-x-1" />
+                </span>
+              </Link>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* 10. FAQ ------------------------------------------------------ */}
-      <section className="w-full py-24 sm:py-32 bg-[#1F3A2C] text-[#F5F1E8]">
-        <div className="gs-container grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-4">
-            <Eyebrow tone="light">Questions we hear often</Eyebrow>
-            <RevealLines as="h2" className="gs-h2 mt-6" lines={[<>Asked gently,</>, <em key="b" className="text-[#c9d7b3]">answered plainly.</em>]} />
+      <section className="w-full py-24 sm:py-32 bg-[#1F3A2C] text-white">
+        <div className="gs-container">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+              <Reveal variant="fade"><span className="gs-eyebrow text-[#c7af75]">Questions we hear often</span></Reveal>
+              <RevealLines as="h2" className="gs-h2 text-white mt-6" lines={[<>Asked, gently</>, <em key="b" className="text-[#a9c08a]">and answered plainly.</em>]} />
+            </div>
+            <p className="text-sm text-[#cfded5] max-w-md">
+              The questions women ask us most — about investing, planning, and taking charge of their financial lives.
+            </p>
           </div>
 
-          <div className="lg:col-span-8 border-t border-white/12">
+          <div className="mt-14 space-y-3 max-w-5xl">
             {FAQS.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
-                <div key={faq.q} className="border-b border-white/12">
+                <div key={faq.q} className="bg-white text-[#1F3A2C] rounded-2xl overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
                     aria-expanded={isOpen}
-                    className="group w-full py-6 text-left flex items-start justify-between gap-6"
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-cormorant text-[1.35rem] sm:text-[1.5rem] leading-snug text-[#1F3A2C]"
                   >
-                    <span className={`font-cormorant text-[1.35rem] sm:text-[1.6rem] leading-snug transition-colors ${isOpen ? "text-[#F5F1E8]" : "text-[#F5F1E8]/80 group-hover:text-[#F5F1E8]"}`}>
-                      {faq.q}
+                    <span className="flex items-center gap-3">
+                      <FigmaTickBadge className="w-8 h-8 shrink-0" iconSize="w-4 h-4" />
+                      <span>{faq.q}</span>
                     </span>
-                    <span
-                      aria-hidden
-                      className={`relative mt-1.5 w-7 h-7 shrink-0 rounded-full border transition-colors duration-300 ${isOpen ? "bg-[#c5a963] border-[#c5a963] text-[#1F3A2C]" : "border-white/25 text-[#F5F1E8]"}`}
-                    >
-                      <span className="absolute left-1/2 top-1/2 w-2.5 h-px -translate-x-1/2 -translate-y-1/2 bg-current" />
-                      <span className={`absolute left-1/2 top-1/2 w-px h-2.5 -translate-x-1/2 -translate-y-1/2 bg-current transition-transform duration-300 ${isOpen ? "scale-y-0" : ""}`} />
-                    </span>
+                    <ChevronDownIcon className={`w-4 h-4 text-gray-500 transition-transform duration-300 shrink-0 ${isOpen ? "rotate-180 text-[#1F3A2C]" : ""}`} />
                   </button>
                   <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                     <div className="overflow-hidden">
-                      <p className="pb-7 pr-12 text-[15px] text-[#cfded5] leading-relaxed max-w-2xl">{faq.a}</p>
+                      <p className="px-5 sm:px-6 pb-6 sm:pl-[4.25rem] text-sm text-[#526658] leading-relaxed">{faq.a}</p>
                     </div>
                   </div>
                 </div>
@@ -678,18 +670,18 @@ export default function WomenAndWealthPage() {
       {/* 11. START YOUR JOURNEY --------------------------------------- */}
       <section className="w-full py-24 sm:py-32 bg-[#F5F1E8]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <Reveal variant="scale" className="relative bg-white rounded-[32px] p-10 sm:p-14 lg:p-20 border border-[#e8e2d4] text-center overflow-hidden">
+          <Reveal variant="scale" className="relative bg-white rounded-[32px] p-10 sm:p-14 lg:p-16 border border-[#e8e2d4] text-center overflow-hidden">
             <div className="absolute inset-0 bg-cover bg-center pointer-events-none" style={{ backgroundImage: "url('/images/card_silk_exact.jpg')" }} />
             <div className="relative z-10 max-w-2xl mx-auto">
               <span className="gs-eyebrow text-[#bda15f]">Start your journey</span>
-              <h2 className="gs-h2 mt-6">
+              <h2 className="gs-h2 text-[#1F3A2C] mt-6">
                 Independence is the most
                 <em className="block text-[#8fa868]">loving plan of all.</em>
               </h2>
               <p className="gs-lead text-[#5d7064] mt-6">
-                For you, and for everyone who depends on you. Let&apos;s build a plan around your goals and your future — at your pace.
+                For you, and for everyone who depends on you. Let&apos;s build a plan around your goals, your responsibilities and your future — at your pace.
               </p>
-              <div className="pt-9 flex flex-col sm:flex-row items-center justify-center gap-5 sm:gap-7">
+              <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
                 <Link href="/contact" className="gs-btn gs-btn-dark !pr-2.5">
                   <span>Talk to an expert</span>
                   <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
