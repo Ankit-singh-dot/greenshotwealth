@@ -107,8 +107,8 @@ const TEAM = [
   { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/team/saloni_mehta_new.webp", tint: "#F5F1E8" },
   { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
   { topic: "Research & investment analysis", name: "Hetvi Soni", role: "Research & Investment Analysis", photo: "/team/hetvi_soni.webp", tint: "#E4ECDF" },
-  { topic: "Client onboarding & analysis", name: "Vedant Thorve", role: "Client Onboarding & Analysis", photo: "/team/vedant.jpg", tint: "#F8F4EA" },
-  { topic: "Transaction support", name: "Sameer Shinde", role: "Transaction Support", photo: "/team/sameer_shinde.jpg", tint: "#F5F1E8" },
+  { topic: "Client onboarding & analysis", name: "Vedant Thorve", role: "Client Onboarding & Analysis", photo: "/team/vedant_pdf.webp", tint: "#F8F4EA" },
+  { topic: "Transaction support", name: "Sameer Shinde", role: "Transaction Support", photo: "/team/sameer_coat_pant.webp", tint: "#F5F1E8" },
   { topic: "Admin & operations", name: "Ruhi Waghmare", role: "Admin & Operations", photo: "/team/other_girl.jpg", tint: "#F1E7D2" },
 ];
 
@@ -1079,8 +1079,8 @@ function Close() {
           <div className="lg:col-span-6 relative">
             <div className="relative aspect-[16/10] rounded-[28px] overflow-hidden shadow-2xl border border-[#1F3A2C]/10 bg-white">
               <Image
-                src="/office/office_consultation_4x3.webp"
-                alt="Green Shoots Wealth consultation suite in Mumbai"
+                src="/office_image2/office_2.webp"
+                alt="Green Shoots Wealth advisory workstations and consultation suite at Sai Fortune, Mumbai"
                 fill
                 sizes="(min-width:1024px) 45vw, 100vw"
                 className="object-cover"
