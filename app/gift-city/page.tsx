@@ -22,10 +22,6 @@ const content: InvestContent = {
     { title: "Cross-Border Wealth", desc: "Connect Indian and global wealth through a coordinated strategy." },
     { title: "IFSC Advantage", desc: "Explore opportunities available through India's international financial centre." },
   ],
-  spread: [
-    { src: "/new_images/pexels-karola-g-4386469.jpg", alt: "US dollar notes", caption: "Dollar-based, India-regulated." },
-    { src: "/office_image2/office_1.webp", alt: "The Green Shoots advisory workstation and global research desk in Mumbai", caption: "Grounded in Mumbai. Connected globally." },
-  ],
   audiences: {
     heading: ["Who it's", "designed for."],
     items: [
