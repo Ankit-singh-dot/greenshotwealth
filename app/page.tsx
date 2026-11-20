@@ -202,9 +202,9 @@ function VideoHero() {
       </div>
 
       {/* bottom rail */}
-      <div className={`absolute inset-x-0 bottom-0 gs-container flex items-center justify-between gap-4 pb-6 text-[10.5px] tracking-[0.2em] uppercase text-white/50 rv rv-fade ${on}`} style={{ ["--rv-delay" as string]: "800ms" }}>
-        <span className="hidden sm:inline">AMFI ARN 321729</span>
-        <span className="sm:hidden">ARN 321729</span>
+      <div className={`absolute inset-x-0 bottom-0 gs-container flex items-center justify-between gap-4 pb-6 text-[10.5px] tracking-[0.2em] uppercase text-white/55 rv rv-fade ${on}`} style={{ ["--rv-delay" as string]: "800ms" }}>
+        <span className="hidden sm:inline">Green Shoots Wealth Fintech LLP · AMFI ARN 321729</span>
+        <span className="sm:hidden">Green Shoots Wealth Fintech LLP · ARN 321729</span>
         <button
           type="button"
           onClick={toggle}
@@ -258,13 +258,13 @@ function Leadership() {
               className="gs-h1 text-[#1F3A2C] mt-6"
               lines={[
                 <>Saloni Mehta.</>,
-                <em key="b" className="text-[#52704e]">Financial therapist</em>,
-                <em key="c" className="text-[#52704e]">&amp; wealth architect.</em>,
+                <em key="b" className="text-[#52704e]">Financial Therapist</em>,
+                <em key="c" className="text-[#52704e]">&amp; Wealth Architect.</em>,
               ]}
             />
             <Reveal delay={200} className="mt-8 max-w-xl">
               <p className="gs-lead text-[#485c4f]">
-                Saloni built Green Shoots Wealth on one conviction: financial advice in India should be more than product distribution. Advice begins with the person, their story, and their deepest values.
+                Saloni founded Green Shoots Wealth Fintech LLP on one conviction: financial advice in India should be more than product distribution. Advice begins with the person, their story, and their deepest values.
               </p>
             </Reveal>
 
@@ -293,25 +293,25 @@ function Leadership() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Copy Column (Left on desktop) */}
           <div className="lg:col-span-7 order-2 lg:order-1">
-            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Co-founder</span></Reveal>
+            <Reveal variant="fade"><span className="gs-eyebrow text-[#52704e]">Co-Founder</span></Reveal>
             <RevealLines
               as="h2"
               className="gs-h1 text-[#1F3A2C] mt-6"
               lines={[
                 <>Kaushal Kapasi.</>,
                 <em key="b" className="text-[#52704e]">Chartered Accountant</em>,
-                <em key="c" className="text-[#52704e]">&amp; tax strategist.</em>,
+                <em key="c" className="text-[#52704e]">&amp; co-founder.</em>,
               ]}
             />
             <Reveal delay={200} className="mt-8 max-w-xl">
               <p className="gs-lead text-[#485c4f]">
-                Brings a CA&apos;s analytical eye to every financial roadmap: capital gains optimisation, tax efficiency, and fine-print structuring so wealth endures across market cycles and transitions.
+                14 years in finance taught me one thing: wealth isn&apos;t built by products, it&apos;s built by structure. Helping families build wealth like great businesses: with discipline, clarity and a design that lasts generations.
               </p>
             </Reveal>
 
             <Reveal delay={400} className="mt-10 flex flex-wrap items-center gap-4">
               <Link href={`/contact?topic=${encodeURIComponent("Tax Advisory (Kaushal Kapasi)")}`} className="gs-btn gs-btn-dark !pr-2.5">
-                <span>Consult on tax &amp; planning</span>
+                <span>Connect with Kaushal</span>
                 <span className="gs-btn-arrow"><IconArrow className="w-3.5 h-3.5" /></span>
               </Link>
               <a
@@ -333,7 +333,7 @@ function Leadership() {
                 <Parallax speed={0.06} className="absolute inset-0">
                   <Image
                     src="/team/kaushal_kapasi_new.webp"
-                    alt="Kaushal Kapasi, Co-founder & Tax Advisor"
+                    alt="Kaushal Kapasi, Co-founder & Chartered Accountant"
                     fill
                     sizes="(min-width:1024px) 36vw, 100vw"
                     className="object-cover object-[50%_10%]"
@@ -341,8 +341,8 @@ function Leadership() {
                 </Parallax>
               </div>
             </Reveal>
-            <Reveal delay={400} className="absolute -bottom-8 left-0 lg:-left-8 bg-[#1F3A2C] text-[#F5F1E8] rounded-2xl p-5 sm:p-6 max-w-[260px] shadow-2xl">
-              <p className="font-cormorant italic text-[1.3rem] leading-snug">&ldquo;A good plan should survive a bad year.&rdquo;</p>
+            <Reveal delay={400} className="absolute -bottom-8 left-0 lg:-left-8 bg-[#1F3A2C] text-[#F5F1E8] rounded-2xl p-5 sm:p-6 max-w-[280px] shadow-2xl">
+              <p className="font-cormorant italic text-[1.2rem] sm:text-[1.3rem] leading-snug">&ldquo;Wealth isn&apos;t built by products, it&apos;s built by structure.&rdquo;</p>
             </Reveal>
           </div>
         </div>
