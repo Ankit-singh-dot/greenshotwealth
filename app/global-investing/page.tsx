@@ -23,16 +23,6 @@ const content: InvestContent = {
     { title: "Global Wealth Score", desc: "Understand how diversified your portfolio is across markets and currencies." },
     { title: "Global Diversification", desc: "Build a more balanced portfolio across countries, sectors, and currencies." },
   ],
-  spread: [
-    { src: "/new_images/pexels-olia-danilevich-5466785.jpg", alt: "A calculator, notes and US dollar bills on a desk", caption: "Currencies move. The plan holds." },
-    {
-      src: "/videos/office/office_tour_optimized.jpg",
-      video: "/videos/office/office_tour_optimized.mp4",
-      poster: "/videos/office/office_tour_optimized.jpg",
-      alt: "The Green Shoots Wealth official executive suite at Mumbai headquarters",
-      caption: "Grounded in discipline. Global in scope.",
-    },
-  ],
   audiences: {
     heading: ["For NRIs and", "families across borders."],
     items: [
