@@ -41,13 +41,20 @@ const COLS = [
       },
     ],
   },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Regulatory Disclosures", href: "/regulatory-disclosures" },
+    ],
+  },
 ];
 
 const SOCIALS = [
   { label: "Instagram", href: "https://www.instagram.com/wealthwithsaloni/", Icon: InstagramIcon },
   { label: "LinkedIn", href: "https://www.linkedin.com/company/greenshootswealth/", Icon: LinkedinIcon },
   { label: "YouTube", href: "https://www.youtube.com/@salonimehtaofficial", Icon: YoutubeIcon },
-  { label: "X (Twitter)", href: "https://twitter.com", Icon: TwitterXIcon },
+
 ];
 
 /**
@@ -126,6 +133,9 @@ export default function Footer() {
       {/* newsletter + links */}
       <div className="gs-container py-14 grid grid-cols-1 lg:grid-cols-12 gap-12">
         <div className="lg:col-span-4">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-[#c5a963] font-medium mb-3">
+            Green Shoots Wealth Fintech LLP
+          </p>
           <p className="font-cormorant text-[1.7rem] leading-tight">
             Letters, <em className="text-[#c9d7b3]">not noise.</em>
           </p>
@@ -150,7 +160,7 @@ export default function Footer() {
           </form>
         </div>
 
-        <nav aria-label="Footer" className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+        <nav aria-label="Footer" className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-8">
           {COLS.map((col) => (
             <div key={col.title}>
               <p className="text-[11px] tracking-[0.18em] uppercase text-[#c5a963]">{col.title}</p>
@@ -174,9 +184,23 @@ export default function Footer() {
 
       {/* rail */}
       <div className="gs-container py-5 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-5">
-        <div className="flex items-center gap-3">
-          <Image src="/footer_logo.png" alt="" width={40} height={37} className="w-9" style={{ height: "auto" }} />
-          <span className="text-[12px] text-white/55">© {new Date().getFullYear()} Green Shoots Wealth Fintech LLP</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex items-center gap-3">
+            <Image src="/footer_logo.png" alt="Green Shoots Wealth" width={40} height={37} className="w-9" style={{ height: "auto" }} />
+            <span className="text-[12px] text-white/70">
+              <span className="text-white/85 font-medium">Green Shoots Wealth Fintech LLP</span> · © {new Date().getFullYear()}
+            </span>
+          </div>
+          <span className="hidden sm:inline text-white/20">·</span>
+          <div className="flex items-center gap-3 text-[12px] text-white/60">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-white/20">·</span>
+            <Link href="/regulatory-disclosures" className="hover:text-white transition-colors">
+              Regulatory Disclosures
+            </Link>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           {SOCIALS.map(({ label, href, Icon }) => (
@@ -207,7 +231,14 @@ export default function Footer() {
       </div>
 
       <p className="gs-container pb-6 pt-2 text-[11px] text-white/40 leading-relaxed">
-        Mutual fund investments are subject to market risks. Read all scheme-related documents carefully.
+        Mutual fund investments are subject to market risks. Read all scheme-related documents carefully. Green Shoots Wealth Fintech LLP · AMFI ARN-321729. For statutory information and disclosures, please review our{" "}
+        <Link href="/regulatory-disclosures" className="underline hover:text-white/70 transition-colors">
+          Regulatory Disclosures
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy-policy" className="underline hover:text-white/70 transition-colors">
+          Privacy Policy
+        </Link>.
       </p>
     </footer>
   );
