@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   ArrowRightIcon,
   ChevronDownIcon,
@@ -58,6 +59,8 @@ export default function ContactPage() {
       matchedService = "tax_advisory";
     } else if (lower.includes("mutual") || lower.includes("equity") || lower.includes("sameer")) {
       matchedService = "mutual_funds";
+    } else if (lower.includes("pms") || lower.includes("aif") || lower.includes("sif")) {
+      matchedService = "pms_aif";
     } else if (lower.includes("women")) {
       matchedService = "women_wealth";
     } else if (lower.includes("gift") || lower.includes("global")) {
@@ -211,6 +214,7 @@ export default function ContactPage() {
                       <option value="financial_advisory">Financial Advisory (Saloni Mehta)</option>
                       <option value="tax_advisory">Tax Advisory &amp; Compliance (Kaushal Kapasi)</option>
                       <option value="mutual_funds">Mutual Funds &amp; Goal-Linked SIPs</option>
+                      <option value="pms_aif">PMS &amp; AIFs (Specialized Investments)</option>
                       <option value="retirement">Retirement &amp; Pension Architecture</option>
                       <option value="portfolio_review">Portfolio Review &amp; Rebalancing</option>
                       <option value="insurance">Insurance Optimization (Life &amp; Health)</option>
@@ -255,6 +259,16 @@ export default function ContactPage() {
                     <span>{loading ? "Submitting..." : "Book a Consultation"}</span>
                     {!loading && <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
                   </button>
+                  <p className="text-[11px] text-center text-[#798e82] pt-3 leading-relaxed">
+                    By submitting, you agree to our{" "}
+                    <Link href="/privacy-policy" className="underline hover:text-[#1F3A2C] transition-colors">
+                      Privacy Policy
+                    </Link>{" "}
+                    and acknowledge our{" "}
+                    <Link href="/regulatory-disclosures" className="underline hover:text-[#1F3A2C] transition-colors">
+                      Regulatory Disclosures
+                    </Link>.
+                  </p>
                 </div>
               </form>
             )}
@@ -369,15 +383,7 @@ export default function ContactPage() {
                 >
                   <YoutubeIcon className="w-4 h-4" />
                 </a>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-[#F5F1E8] border border-[#ded8cb] flex items-center justify-center text-[#283d31] hover:bg-[#1F3A2C] hover:text-white transition-all shadow-xs"
-                  aria-label="X (Twitter)"
-                >
-                  <TwitterXIcon className="w-3.5 h-3.5" />
-                </a>
+
               </div>
             </div>
 
@@ -390,11 +396,10 @@ export default function ContactPage() {
                     key={loc.key}
                     type="button"
                     onClick={() => setSelectedOffice(loc.key)}
-                    className={`text-[11px] px-3 py-1 rounded-xl transition-all ${
-                      selectedOffice === loc.key
+                    className={`text-[11px] px-3 py-1 rounded-xl transition-all ${selectedOffice === loc.key
                         ? "bg-[#1F3A2C] text-[#F5F1E8] shadow-xs font-semibold"
                         : "text-[#4a5f51] hover:text-[#1F3A2C] font-medium"
-                    }`}
+                      }`}
                   >
                     {loc.name}
                   </button>
