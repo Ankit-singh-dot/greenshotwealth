@@ -17,6 +17,8 @@ type FounderExtended = {
   bio?: string;
   education?: string;
   goal?: string;
+  storyHeadline?: string;
+  storyBody?: string;
   story?: string;
   why?: { quote: string; context?: string };
   whatSetsApart?: string[];
@@ -50,12 +52,14 @@ const FOUNDERS: FounderItem[] = [
     photo: "/team/saloni_mehta_new.webp",
     linkedin: "https://www.linkedin.com/in/the-saloni-mehta/",
     contactTopic: "Financial Advisory (Saloni Mehta)",
-    contactCta: "Contact for Financial Advisory",
+    contactCta: "Connect with Saloni",
     extended: {
       education: "Comm Graduate | IIM-K Alumni",
       goal: "Making Finance Work for Everyone | Helping 1 Million People Build Wealth",
-      story:
-        "20 years in capital markets taught me one thing: financial knowledge shouldn't be a privilege. After 8 years of helping the wealthy grow wealthier, I chose a different path. Today, as the Founder of Green Shoots Wealth, I'm on a mission to make financial literacy accessible to all.",
+      storyHeadline:
+        "20 years in capital markets taught me one thing: financial knowledge shouldn't be a privilege.",
+      storyBody:
+        "After 8 years of helping the wealthy grow wealthier, I chose a different path. Today, as the Founder of Green Shoots Wealth, I'm on a mission to make financial literacy accessible to all.",
       why: {
         quote: "Financial independence isn't just about money – it's about giving people the power to shape their own future.",
         context: "Experience comes from my own childhood background.",
@@ -90,22 +94,52 @@ const FOUNDERS: FounderItem[] = [
     name: "Kaushal Kapasi",
     first: "Kaushal",
     role: "Co-founder",
-    title: "Chartered Accountant & Tax Advisor",
-    line: "Brings a CA's eye to every plan: the numbers, tax optimisation, capital gains strategy, and the fine print. Contact Kaushal for tax advisory and structuring.",
-    quote: "A good plan should survive a bad year. I read the fine print so you never have to be surprised by it.",
+    title: "Chartered Accountant & Wealth Architect",
+    line: "14 years in finance taught me one thing: wealth isn't built by products, it's built by structure. Helping families and individuals build wealth the way great businesses are built: with discipline, clarity and a design that lasts generations.",
+    quote: "I don't merely advise. I bring clarity, direction and structure to your financial journey, as a trusted advisor and a partner in your growth.",
     photo: "/team/kaushal_kapasi_new.webp",
     linkedin: "https://www.linkedin.com/in/ca-kaushal-kapasi-bbb1b150/",
     contactTopic: "Tax Advisory (Kaushal Kapasi)",
-    contactCta: "Contact for Tax Advisory",
+    contactCta: "Connect with Kaushal",
     extended: {
-      bio: "Experienced Chartered Accountant with a demonstrated history of working in the accounting industry. Skilled in Accounting, Business Development, Tax, Management, and Financial Accounting. A strong accounting professional graduated from ICAI.",
+      education: "Chartered Accountant | ICAI",
+      goal: "Helping Families Build Wealth Like Great Businesses: Disciplined, Clear & Built to Last",
+      storyHeadline:
+        "14 years in finance taught me one thing: wealth isn't built by products, it's built by structure.",
+      storyBody:
+        "As a Chartered Accountant, I've spent over a decade inside the numbers. Today, as Co-Founder of Green Shoots Wealth, I help families and individuals build wealth the way great businesses are built: with discipline, clarity and a design that lasts generations.",
+      why: {
+        quote:
+          "I don't merely advise. I bring clarity, direction and structure to your financial journey, as a trusted advisor and a partner in your growth.",
+      },
+      whatSetsApart: [
+        "Architecting the wealth of families and individuals like a business: disciplined, clear and built to last.",
+        "Bringing a CA's rigour to every financial decision, from tax to investments to long-term planning.",
+        "Offering structure and direction instead of scattered advice.",
+        "Acting as a partner in your growth, not just a voice on the sidelines.",
+      ],
+      expertise: [
+        "Chartered Accountancy",
+        "Financial Planning",
+        "Tax-Efficient Investing",
+        "Family Wealth Structuring",
+      ],
+      personalSide: {
+        intro: "A fellow builder at heart, you'll find me:",
+        points: [
+          "Googling about AI or new tech in the market.",
+          "Cycling in the morning to burn my fats and stay fit.",
+        ],
+      },
+      closing:
+        "Let's build something that outlasts us. Whether you're planning for your family, your business or the next generation, I'd love to connect.",
     },
   },
 ];
 
 const TEAM = [
   { topic: "Financial advisory", name: "Saloni Mehta", role: "Founder & Financial Advisor", photo: "/team/saloni_mehta_new.webp", tint: "#F5F1E8" },
-  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Tax Advisory Lead", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
+  { topic: "Tax advisory & compliance", name: "Kaushal Kapasi", role: "Co-founder & Chartered Accountant", photo: "/team/kaushal_kapasi_new.webp", tint: "#EEF0D9" },
   { topic: "Research & investment analysis", name: "Hetvi Soni", role: "Research & Investment Analysis", photo: "/team/hetvi_soni.webp", tint: "#E4ECDF" },
   { topic: "Client onboarding & analysis", name: "Vedant Thorve", role: "Client Onboarding & Analysis", photo: "/team/vedant_pdf.webp", tint: "#F8F4EA" },
   { topic: "Transaction support", name: "Sameer Shinde", role: "Transaction Support", photo: "/team/sameer_coat_pant.webp", tint: "#F5F1E8" },
@@ -585,43 +619,36 @@ function CinematicFounderStage({
             ref={contentRef}
             className="flex-1 overflow-y-auto px-6 py-6 sm:px-9 sm:py-8 space-y-7 [scrollbar-width:thin] text-[#1F3A2C]"
           >
-            {/* 1. Core Story / 20 Years in Capital Markets */}
-            {founder.extended.story && (
+            {/* 1. Core Story / Headline & Narrative */}
+            {(founder.extended.storyHeadline || founder.extended.story) && (
               <div className="space-y-3">
-                <p className="font-cormorant text-[1.45rem] sm:text-[1.65rem] leading-snug text-[#1F3A2C] font-normal">
-                  20 years in capital markets taught me one thing: financial knowledge shouldn&apos;t be a privilege.
-                </p>
-                <p className="text-[15px] sm:text-[15.5px] leading-relaxed text-[#3D5245]">
-                  After 8 years of helping the wealthy grow wealthier, I chose a different path. Today, as the Founder of Green Shoots Wealth, I&apos;m on a mission to make financial literacy accessible to all.
-                </p>
+                {founder.extended.storyHeadline && (
+                  <p className="font-cormorant text-[1.45rem] sm:text-[1.65rem] leading-snug text-[#1F3A2C] font-normal">
+                    {founder.extended.storyHeadline}
+                  </p>
+                )}
+                {founder.extended.storyBody && (
+                  <p className="text-[15px] sm:text-[15.5px] leading-relaxed text-[#3D5245]">
+                    {founder.extended.storyBody}
+                  </p>
+                )}
+                {!founder.extended.storyHeadline && founder.extended.story && (
+                  <p className="text-[15px] sm:text-[15.5px] leading-relaxed text-[#3D5245]">
+                    {founder.extended.story}
+                  </p>
+                )}
               </div>
             )}
 
-            {/* Kaushal Kapasi Bio */}
-            {founder.extended.bio && (
+            {founder.extended.bio && !founder.extended.storyHeadline && !founder.extended.story && (
               <div className="space-y-4">
                 <p className="text-[15.5px] sm:text-[16px] leading-relaxed text-[#2C3E33]">
                   {founder.extended.bio}
                 </p>
-                <div className="pt-2">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e] mb-2.5">
-                    Core Expertise
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {["Accounting", "Business Development", "Tax", "Management", "Financial Accounting"].map((pill) => (
-                      <span
-                        key={pill}
-                        className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#EEF0D9] text-[12.5px] font-medium text-[#1F3A2C]"
-                      >
-                        {pill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             )}
 
-            {/* 2. Why I do what I do (Saloni) */}
+            {/* 2. Why I do what I do */}
             {founder.extended.why && (
               <div className="border-l-2 border-[#52704e] pl-4 sm:pl-5 py-1 space-y-1.5">
                 <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
@@ -638,13 +665,13 @@ function CinematicFounderStage({
               </div>
             )}
 
-            {/* 3. What Sets Us Apart (Saloni) */}
+            {/* 3. What Sets Me Apart */}
             {founder.extended.whatSetsApart && founder.extended.whatSetsApart.length > 0 && (
               <div className="space-y-3 pt-2">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#52704e]">
-                  What sets us apart
+                  What sets me apart
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {founder.extended.whatSetsApart.map((pt, i) => (
                     <li key={i} className="flex items-start gap-3 text-[14px] sm:text-[14.5px] text-[#3D5245] leading-relaxed">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#52704e] mt-2 shrink-0" />
