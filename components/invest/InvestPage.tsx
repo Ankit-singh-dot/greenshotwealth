@@ -31,7 +31,7 @@ export type InvestContent = {
   };
   solutions: { title: string; desc: string }[];
   solutionsTitle: [string, string];
-  spread: { src: string; alt: string; caption: string; video?: string; poster?: string }[];
+  spread?: { src: string; alt: string; caption: string; video?: string; poster?: string }[];
   audiences?: { heading: [string, string]; items: { title: string; desc: string }[] };
   faqs: { q: string; a: string }[];
   tool?: "sip" | "dollar-goal" | "gift-fit";
@@ -211,33 +211,6 @@ export default function InvestPage({ c }: { c: InvestContent }) {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      {/* ---------------- Photo spread ---------------- */}
-      <section className="py-24 sm:py-32" aria-label="In practice">
-        <div className="gs-container grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-end">
-          {c.spread.map((p, i) => (
-            <figure key={p.src} className={i === 0 ? "md:col-span-7" : "md:col-span-5"}>
-              <div className={`relative ${i === 0 ? "aspect-[4/3]" : "aspect-[4/5]"} rounded-[24px] overflow-hidden bg-[#e7e1d5] shadow-[0_16px_40px_-12px_rgba(31,58,44,0.15)]`}>
-                {p.video ? (
-                  <video
-                    src={p.video}
-                    poster={p.poster || p.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Image src={p.src} alt={p.alt} fill sizes="(min-width:768px) 55vw, 100vw" className="object-cover" />
-                )}
-              </div>
-              <figcaption className="mt-4 font-cormorant italic text-[1.5rem] text-[#3d5446]">{p.caption}</figcaption>
-            </figure>
-          ))}
         </div>
       </section>
 
