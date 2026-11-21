@@ -741,6 +741,9 @@
   .aspect-\[403\/369\] {
     aspect-ratio: 403/369;
   }
+  .aspect-\[593\/806\] {
+    aspect-ratio: 593/806;
+  }
   .aspect-\[945\/2048\] {
     aspect-ratio: 945/2048;
   }
@@ -2062,9 +2065,6 @@
   .bg-\[\#E5E9EE\] {
     background-color: #E5E9EE;
   }
-  .bg-\[\#EDE8DC\] {
-    background-color: #EDE8DC;
-  }
   .bg-\[\#EEF0D9\] {
     background-color: #EEF0D9;
   }
@@ -2172,6 +2172,9 @@
   }
   .bg-\[\#faf8f5\] {
     background-color: #faf8f5;
+  }
+  .bg-\[\#fbf9f5\] {
+    background-color: #fbf9f5;
   }
   .bg-\[\#fcfaf7\] {
     background-color: #fcfaf7;
@@ -2760,6 +2763,9 @@
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
+  }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
   }
   .pb-3\.5 {
     padding-bottom: calc(var(--spacing) * 3.5);

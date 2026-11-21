@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { IconArrow } from "@/components/LineIcons";
 
 export const metadata: Metadata = {
-  title: "Regulatory Disclosures | Green Shoots Wealth",
+  title: "Regulatory Disclosures | Green Shoots Wealth Fintech LLP",
   description:
-    "Statutory and regulatory disclosures of Green Shoots Wealth Fintech LLP, an AMFI-registered mutual fund distributor (ARN-321729). What you should know before investing.",
+    "Statutory and regulatory disclosures of Green Shoots Wealth Fintech LLP, an AMFI-registered mutual fund & SIF distributor (ARN-321729). What you should know before investing.",
 };
 
 const SECTIONS = [
@@ -75,7 +76,7 @@ export default function RegulatoryDisclosuresPage() {
               1. Who we are
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#283d31] leading-relaxed font-sans">
-              Green Shoots Wealth Fintech LLP (&ldquo;Green Shoots Wealth&rdquo;, &ldquo;GSW&rdquo;) is an AMFI-registered mutual fund distributor (ARN-321729). We are NOT a SEBI-registered Investment Adviser and do not provide investment advice, portfolio management or any other regulated advisory service. All investments are placed directly with the respective Asset Management Companies (&ldquo;AMCs&rdquo;).
+              Green Shoots Wealth Fintech LLP (&ldquo;Green Shoots Wealth&rdquo;, &ldquo;GSW&rdquo;) is an AMFI-registered mutual fund &amp; SIF distributor (ARN-321729). We are NOT a SEBI-registered Investment Adviser and do not provide investment advice, portfolio management or any other regulated advisory service. All investments are placed directly with the respective Asset Management Companies (&ldquo;AMCs&rdquo;).
             </p>
 
             {/* Table */}
@@ -97,7 +98,7 @@ export default function RegulatoryDisclosuresPage() {
                       <td className="px-5 py-4 font-medium text-[#1F3A2C] align-top">
                         Name
                       </td>
-                      <td className="px-5 py-4 leading-relaxed align-top">
+                      <td className="px-5 py-4 leading-relaxed align-top font-medium text-[#1F3A2C]">
                         Green Shoots Wealth Fintech LLP
                       </td>
                     </tr>
@@ -105,7 +106,7 @@ export default function RegulatoryDisclosuresPage() {
                       <td className="px-5 py-4 font-medium text-[#1F3A2C] align-top">
                         AMFI ARN
                       </td>
-                      <td className="px-5 py-4 leading-relaxed align-top">
+                      <td className="px-5 py-4 leading-relaxed align-top font-semibold text-[#1F3A2C]">
                         321729
                       </td>
                     </tr>
@@ -113,8 +114,8 @@ export default function RegulatoryDisclosuresPage() {
                       <td className="px-5 py-4 font-medium text-[#1F3A2C] align-top">
                         ARN valid
                       </td>
-                      <td className="px-5 py-4 leading-relaxed align-top">
-                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[from DD Mon YYYY to DD Mon YYYY]</span>
+                      <td className="px-5 py-4 leading-relaxed align-top text-[#1F3A2C]">
+                        from 14.02.2025 to 13.02.2028
                       </td>
                     </tr>
                     <tr className="hover:bg-[#F5F1E8]/50 transition-colors">
@@ -122,7 +123,7 @@ export default function RegulatoryDisclosuresPage() {
                         Capacity
                       </td>
                       <td className="px-5 py-4 leading-relaxed align-top">
-                        Mutual Fund Distributor
+                        Mutual Fund &amp; SIF Distributor
                       </td>
                     </tr>
                     <tr className="hover:bg-[#F5F1E8]/50 transition-colors">
@@ -149,6 +150,34 @@ export default function RegulatoryDisclosuresPage() {
                 </table>
               </div>
             </div>
+
+            {/* Official AMFI Certificate Letter */}
+            <div className="pt-2">
+              <div className="rounded-2xl border border-[#ded8cb] bg-white p-4 sm:p-6 shadow-xs max-w-xl">
+                <div className="flex items-center justify-between pb-3 border-b border-[#ded8cb]/60 mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#52704e]" />
+                    <span className="text-xs font-semibold uppercase tracking-wider text-[#1F3A2C]">
+                      AMFI Registration &amp; Issuance Certificate
+                    </span>
+                  </div>
+                  <span className="text-xs text-[#798e82] font-mono font-medium">ARN-321729</span>
+                </div>
+                <div className="relative w-full aspect-[593/806] rounded-xl overflow-hidden border border-[#ded8cb]/80 bg-[#fbf9f5]">
+                  <Image
+                    src="/images/amfi_registration_certificate.png"
+                    alt="Official AMFI Registration and Issuance of AMFI Registration Number (ARN) Certificate - Green Shoots Wealth Fintech LLP (ARN-321729)"
+                    fill
+                    sizes="(min-width: 640px) 560px, 100vw"
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <p className="text-[12px] text-[#5d7064] mt-3 leading-relaxed text-center font-sans">
+                  Official renewal letter issued by Association of Mutual Funds in India (AMFI) confirming registration of Green Shoots Wealth Fintech LLP (ARN-321729, Valid: 14-FEB-2025 to 13-FEB-2028).
+                </p>
+              </div>
+            </div>
           </section>
 
           {/* Section 2 */}
@@ -157,7 +186,7 @@ export default function RegulatoryDisclosuresPage() {
               2. Our mutual fund products
             </h2>
             <p className="text-[15px] sm:text-[16px] text-[#283d31] leading-relaxed font-sans">
-              GSW offers only Regular Plans of mutual fund schemes and does not offer Direct Plans. When you invest through GSW, the AMC pays us a commission. This commission is embedded in the scheme&rsquo;s expense ratio and is not an additional charge deducted from your investment. Commission rates vary across AMCs and scheme categories, and our AMC-wise commission structure is available on request at <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[link to commission disclosure PDF]</span>.
+              GSW offers only Regular Plans of mutual fund schemes and does not offer Direct Plans. When you invest through GSW, the AMC pays us a commission. This commission is embedded in the scheme&rsquo;s expense ratio and is not an additional charge deducted from your investment. Commission rates vary across AMCs and scheme categories, and our AMC-wise commission structure is available on request.
             </p>
             <div className="pt-2">
               <p className="text-[15px] sm:text-[16px] font-semibold text-[#1F3A2C] mb-3 font-sans">
@@ -247,15 +276,15 @@ export default function RegulatoryDisclosuresPage() {
             <ul className="space-y-2.5 pt-1 text-[15px] sm:text-[16px] text-[#283d31] font-sans">
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#52704e] mt-2.5 shrink-0" />
-                <span>Statement of Additional Information (SAI): <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[link]</span></span>
+                <span>Statement of Additional Information (SAI)</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#52704e] mt-2.5 shrink-0" />
-                <span>Scheme Information Document (SID): <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[link]</span></span>
+                <span>Scheme Information Document (SID)</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#52704e] mt-2.5 shrink-0" />
-                <span>Key Information Memorandum (KIM): <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[link]</span></span>
+                <span>Key Information Memorandum (KIM)</span>
               </li>
             </ul>
           </section>
@@ -288,8 +317,8 @@ export default function RegulatoryDisclosuresPage() {
                       <td className="px-5 py-4 font-medium text-[#1F3A2C] align-top">
                         Grievance Officer
                       </td>
-                      <td className="px-5 py-4 leading-relaxed align-top">
-                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[Name]</span>
+                      <td className="px-5 py-4 leading-relaxed align-top font-medium text-[#1F3A2C]">
+                        Saloni Mehta
                       </td>
                     </tr>
                     <tr className="hover:bg-[#F5F1E8]/50 transition-colors">
@@ -297,8 +326,8 @@ export default function RegulatoryDisclosuresPage() {
                         Email
                       </td>
                       <td className="px-5 py-4 leading-relaxed align-top">
-                        <a href="mailto:admin@greenshootswealth.com" className="text-[#1F3A2C] underline decoration-[#c5a963] hover:text-[#52704e] transition-colors">
-                          admin@greenshootswealth.com
+                        <a href="mailto:saloni@greenshootswealth.com" className="text-[#1F3A2C] underline decoration-[#c5a963] hover:text-[#52704e] transition-colors">
+                          saloni@greenshootswealth.com
                         </a>
                       </td>
                     </tr>

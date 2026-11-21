@@ -268,8 +268,8 @@ export default function PrivacyPolicyPage() {
                       <td className="px-5 py-4 font-medium text-[#1F3A2C] align-top">
                         Grievance / Data Protection contact
                       </td>
-                      <td className="px-5 py-4 leading-relaxed align-top">
-                        <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDE8DC] text-[#1F3A2C] border border-[#d6cfbf]">[Name]</span>
+                      <td className="px-5 py-4 leading-relaxed align-top font-medium text-[#1F3A2C]">
+                        Saloni Mehta
                       </td>
                     </tr>
                     <tr className="hover:bg-[#F5F1E8]/50 transition-colors">
