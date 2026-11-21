@@ -1475,6 +1475,9 @@
     margin-block-start: calc(calc(var(--spacing) * 24) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 24) * calc(1 - var(--tw-space-y-reverse)));
   }
+  .gap-x-2\.5 {
+    column-gap: calc(var(--spacing) * 2.5);
+  }
   .gap-x-4 {
     column-gap: calc(var(--spacing) * 4);
   }
@@ -1768,9 +1771,6 @@
   .border-\[\#e0dad0\] {
     border-color: #e0dad0;
   }
-  .border-\[\#e1e9d5\] {
-    border-color: #e1e9d5;
-  }
   .border-\[\#e2dcd0\] {
     border-color: #e2dcd0;
   }
@@ -1998,9 +1998,6 @@
   }
   .bg-\[\#5d7064\]\/60 {
     background-color: color-mix(in oklab, #5d7064 60%, transparent);
-  }
-  .bg-\[\#6e8f66\] {
-    background-color: #6e8f66;
   }
   .bg-\[\#8fa868\] {
     background-color: #8fa868;
@@ -2941,9 +2938,6 @@
   .text-\[3\.8rem\] {
     font-size: 3.8rem;
   }
-  .text-\[3rem\] {
-    font-size: 3rem;
-  }
   .text-\[8px\] {
     font-size: 8px;
   }
@@ -3045,6 +3039,9 @@
   }
   .text-\[clamp\(2\.7rem\,8\.2vw\,9rem\)\] {
     font-size: clamp(2.7rem, 8.2vw, 9rem);
+  }
+  .text-\[clamp\(2\.8rem\,3\.8vw\,3\.6rem\)\] {
+    font-size: clamp(2.8rem, 3.8vw, 3.6rem);
   }
   .text-\[clamp\(2rem\,4\.4vw\,3\.6rem\)\] {
     font-size: clamp(2rem, 4.4vw, 3.6rem);
@@ -3307,6 +3304,9 @@
   .text-\[\#1F3A2C\]\/20 {
     color: color-mix(in oklab, #1F3A2C 20%, transparent);
   }
+  .text-\[\#1F3A2C\]\/30 {
+    color: color-mix(in oklab, #1F3A2C 30%, transparent);
+  }
   .text-\[\#1F3A2C\]\/50 {
     color: color-mix(in oklab, #1F3A2C 50%, transparent);
   }
@@ -3423,9 +3423,6 @@
   }
   .text-\[\#564e3c\] {
     color: #564e3c;
-  }
-  .text-\[\#637d53\] {
-    color: #637d53;
   }
   .text-\[\#798e82\] {
     color: #798e82;
@@ -4232,6 +4229,9 @@
     }
     .hover\:border-\[\#1F3A2C\]:hover {
       border-color: #1F3A2C;
+    }
+    .hover\:border-\[\#1F3A2C\]\/25:hover {
+      border-color: color-mix(in oklab, #1F3A2C 25%, transparent);
     }
     .hover\:border-\[\#1F3A2C\]\/60:hover {
       border-color: color-mix(in oklab, #1F3A2C 60%, transparent);

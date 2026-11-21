@@ -45,25 +45,21 @@ const WIDOW_STATS = [
     to: 258,
     suffix: "M+",
     label: "Women worldwide navigating life after the loss of a spouse.",
-    sub: "Global Total",
   },
   {
     to: 585,
     suffix: "M",
     label: "Children worldwide dependent on widowed mothers for their future and security.",
-    sub: "World Dependents",
   },
   {
     to: 38,
     suffix: "M+",
     label: "Widowed women globally pushed into extreme poverty with zero financial safety net.",
-    sub: "Extreme Hardship",
   },
   {
     to: 42,
     suffix: "M",
     label: "Women in India living through widowhood — the largest community worldwide.",
-    sub: "India Baseline",
   },
 ];
 
@@ -314,10 +310,11 @@ export default function WomenAndWealthPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
             {LONGEVITY_STATS.map((s, i) => (
               <Reveal key={s.label} delay={i * 90} className="rounded-3xl border border-white/12 bg-white/[0.04] p-6 sm:p-7">
-                <div className="font-cormorant text-[2.6rem] sm:text-[3rem] leading-none text-[#F5F1E8]">
+                <span className="gs-index text-[#c5a963]">0{i + 1}</span>
+                <div className="font-cormorant font-normal text-[2.6rem] sm:text-[3rem] leading-none text-[#F5F1E8] mt-3 lining-nums tabular-nums tracking-[-0.02em]">
                   <CountUp to={s.to} decimals={s.decimals ?? 0} prefix={s.prefix ?? ""} suffix={s.suffix} duration={2000} />
                 </div>
-                <p className="text-[13px] text-[#cfded5] leading-relaxed mt-4">{s.label}</p>
+                <p className="text-[13px] text-[#cfded5] leading-relaxed mt-4 font-sans">{s.label}</p>
               </Reveal>
             ))}
           </div>
@@ -453,7 +450,7 @@ export default function WomenAndWealthPage() {
               />
             </div>
             <Reveal delay={200} className="lg:col-span-5">
-              <div className="font-cormorant text-[clamp(4.5rem,10vw,8rem)] leading-none text-[#1F3A2C]">
+              <div className="font-cormorant font-normal text-[clamp(4.5rem,10vw,8rem)] leading-none text-[#1F3A2C] lining-nums tabular-nums tracking-[-0.03em]">
                 <CountUp to={80} suffix="%" duration={1800} />
               </div>
               <p className="text-sm sm:text-base text-[#526658] leading-relaxed mt-3 max-w-md">
@@ -464,17 +461,13 @@ export default function WomenAndWealthPage() {
 
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {WIDOW_STATS.map((c, i) => (
-              <Reveal key={c.label} delay={i * 90} className="bg-white rounded-3xl p-7 border border-[#d6e0c6] flex flex-col justify-between hover:shadow-md transition-shadow duration-300">
+              <Reveal key={c.label} delay={i * 90} className="bg-white rounded-3xl p-7 sm:p-8 border border-[#d6e0c6] flex flex-col justify-between hover:border-[#1F3A2C]/25 transition-colors">
                 <div>
-                  {c.sub && (
-                    <span className="inline-block text-[10px] font-mono font-medium tracking-wider text-[#637d53] uppercase bg-[#EEF0D9]/80 px-2.5 py-1 rounded-full mb-3">
-                      {c.sub}
-                    </span>
-                  )}
-                  <div className="font-cormorant text-[3rem] leading-none text-[#1F3A2C]">
+                  <span className="gs-index text-[#73885c]">0{i + 1}</span>
+                  <div className="font-cormorant font-normal text-[clamp(2.8rem,3.8vw,3.6rem)] leading-none text-[#1F3A2C] mt-4 lining-nums tabular-nums tracking-[-0.03em]">
                     <CountUp to={c.to} suffix={c.suffix} duration={2200} />
                   </div>
-                  <p className="text-[13px] text-[#526658] leading-relaxed mt-4">{c.label}</p>
+                  <p className="text-[13.5px] text-[#526658] leading-relaxed mt-4 font-sans">{c.label}</p>
                 </div>
               </Reveal>
             ))}
@@ -487,47 +480,50 @@ export default function WomenAndWealthPage() {
             </p>
           </Reveal>
 
-          {/* Data Relevancy & Source Provenance */}
-          <Reveal delay={250} className="mt-10 rounded-2xl bg-white/70 border border-[#d6e0c6] p-6 sm:p-7">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4 border-b border-[#e1e9d5]">
-              <div className="flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-[#6e8f66]" />
-                <span className="text-[11px] font-mono tracking-wider uppercase text-[#1F3A2C] font-semibold">
-                  Data Relevancy & Source Provenance
-                </span>
+          {/* Data Sources & Research References */}
+          <Reveal delay={250} className="mt-10 pt-6 border-t border-[#1F3A2C]/15">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-[12px] text-[#526658]">
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                <span className="font-semibold text-[#1F3A2C]">Data &amp; Research:</span>
+                <a
+                  href="https://www.theloombafoundation.org/our-work/research/world-widows-report"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-[#1F3A2C] transition-colors"
+                >
+                  World Widows Report (UN-presented)
+                </a>
+                <span className="text-[#1F3A2C]/30">·</span>
+                <a
+                  href="https://www.un.org/en/observances/widows-day"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-[#1F3A2C] transition-colors"
+                >
+                  UN Res 65/189
+                </a>
+                <span className="text-[#1F3A2C]/30">·</span>
+                <a
+                  href="https://mospi.gov.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-[#1F3A2C] transition-colors"
+                >
+                  Census of India &amp; MoSPI
+                </a>
+                <span className="text-[#1F3A2C]/30">·</span>
+                <a
+                  href="https://www.ubs.com/global/en/wealth-management/women-wealth.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-[#1F3A2C] transition-colors"
+                >
+                  UBS Longevity &amp; Wealth Transfer Studies
+                </a>
               </div>
-              <span className="text-[11px] text-[#73885c] font-medium">
-                Why this matters for your family&apos;s estate & continuity planning
-              </span>
-            </div>
-
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-[12px] text-[#526658] leading-relaxed">
-              <div>
-                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
-                  1. Global Scale & Dependencies
-                </p>
-                <p>
-                  Drawn from the landmark <strong className="text-[#1F3A2C]">World Widows Report</strong> (presented to the United Nations General Assembly under Resolution 65/189). Records over 258M widows globally and 585M dependent children, highlighting the compounding generational vulnerability when financial planning is absent.
-                </p>
-              </div>
-
-              <div>
-                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
-                  2. Economic Vulnerability & Poverty
-                </p>
-                <p>
-                  Over 38 million widows globally are pushed into extreme poverty due to lack of asset title, legal inheritance challenges, and zero social safety nets. Structured nominee alignment, clear titling, and independent liquid reserves prevent abrupt economic shocks.
-                </p>
-              </div>
-
-              <div>
-                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
-                  3. India Demographic Baseline
-                </p>
-                <p>
-                  Per the <strong className="text-[#1F3A2C]">Census of India & MoSPI</strong> records, India is home to 42.4M+ widows — the largest population globally, representing ~10% of India&apos;s adult women. Combined with UBS & Harvard research noting 80%+ of married women will outlive partners, proactive financial literacy is an urgent imperative.
-                </p>
-              </div>
+              <p className="text-[11.5px] text-[#73885c] shrink-0">
+                Independent demographic &amp; longevity records
+              </p>
             </div>
           </Reveal>
         </div>
