@@ -1768,6 +1768,9 @@
   .border-\[\#e0dad0\] {
     border-color: #e0dad0;
   }
+  .border-\[\#e1e9d5\] {
+    border-color: #e1e9d5;
+  }
   .border-\[\#e2dcd0\] {
     border-color: #e2dcd0;
   }
@@ -1995,6 +1998,9 @@
   }
   .bg-\[\#5d7064\]\/60 {
     background-color: color-mix(in oklab, #5d7064 60%, transparent);
+  }
+  .bg-\[\#6e8f66\] {
+    background-color: #6e8f66;
   }
   .bg-\[\#8fa868\] {
     background-color: #8fa868;
@@ -3418,6 +3424,9 @@
   .text-\[\#564e3c\] {
     color: #564e3c;
   }
+  .text-\[\#637d53\] {
+    color: #637d53;
+  }
   .text-\[\#798e82\] {
     color: #798e82;
   }
@@ -3450,9 +3459,6 @@
   }
   .text-\[\#526658\] {
     color: #526658;
-  }
-  .text-\[\#526658\]\/80 {
-    color: color-mix(in oklab, #526658 80%, transparent);
   }
   .text-\[\#718579\] {
     color: #718579;

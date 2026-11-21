@@ -41,10 +41,30 @@ const TWO_FUTURES = {
 };
 
 const WIDOW_STATS = [
-  { to: 258, suffix: "M+", label: "Women worldwide navigating life after the loss of a spouse." },
-  { to: 42, suffix: "M", label: "Women in India living through widowhood." },
-  { to: 43, suffix: "M", label: "Women in China living through widowhood." },
-  { to: 11, suffix: "M+", label: "Women in the United States living through widowhood." },
+  {
+    to: 258,
+    suffix: "M+",
+    label: "Women worldwide navigating life after the loss of a spouse.",
+    sub: "Global Total",
+  },
+  {
+    to: 585,
+    suffix: "M",
+    label: "Children worldwide dependent on widowed mothers for their future and security.",
+    sub: "World Dependents",
+  },
+  {
+    to: 38,
+    suffix: "M+",
+    label: "Widowed women globally pushed into extreme poverty with zero financial safety net.",
+    sub: "Extreme Hardship",
+  },
+  {
+    to: 42,
+    suffix: "M",
+    label: "Women in India living through widowhood — the largest community worldwide.",
+    sub: "India Baseline",
+  },
 ];
 
 const WEALTH_ARRIVES = [
@@ -444,11 +464,18 @@ export default function WomenAndWealthPage() {
 
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {WIDOW_STATS.map((c, i) => (
-              <Reveal key={c.label} delay={i * 90} className="bg-white rounded-3xl p-7 border border-[#d6e0c6]">
-                <div className="font-cormorant text-[3rem] leading-none text-[#1F3A2C]">
-                  <CountUp to={c.to} suffix={c.suffix} duration={2200} />
+              <Reveal key={c.label} delay={i * 90} className="bg-white rounded-3xl p-7 border border-[#d6e0c6] flex flex-col justify-between hover:shadow-md transition-shadow duration-300">
+                <div>
+                  {c.sub && (
+                    <span className="inline-block text-[10px] font-mono font-medium tracking-wider text-[#637d53] uppercase bg-[#EEF0D9]/80 px-2.5 py-1 rounded-full mb-3">
+                      {c.sub}
+                    </span>
+                  )}
+                  <div className="font-cormorant text-[3rem] leading-none text-[#1F3A2C]">
+                    <CountUp to={c.to} suffix={c.suffix} duration={2200} />
+                  </div>
+                  <p className="text-[13px] text-[#526658] leading-relaxed mt-4">{c.label}</p>
                 </div>
-                <p className="text-[13px] text-[#526658] leading-relaxed mt-4">{c.label}</p>
               </Reveal>
             ))}
           </div>
@@ -459,9 +486,50 @@ export default function WomenAndWealthPage() {
               That&apos;s why financial education isn&apos;t a luxury for women — <em className="font-cormorant text-[1.2em] text-[#4a6344]">it&apos;s protection.</em>
             </p>
           </Reveal>
-          <p className="mt-8 text-[11px] text-[#526658]/80 max-w-3xl">
-            Figures are approximate and drawn from published research on longevity, widowhood and wealth transfer.
-          </p>
+
+          {/* Data Relevancy & Source Provenance */}
+          <Reveal delay={250} className="mt-10 rounded-2xl bg-white/70 border border-[#d6e0c6] p-6 sm:p-7">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4 border-b border-[#e1e9d5]">
+              <div className="flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-[#6e8f66]" />
+                <span className="text-[11px] font-mono tracking-wider uppercase text-[#1F3A2C] font-semibold">
+                  Data Relevancy & Source Provenance
+                </span>
+              </div>
+              <span className="text-[11px] text-[#73885c] font-medium">
+                Why this matters for your family&apos;s estate & continuity planning
+              </span>
+            </div>
+
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 text-[12px] text-[#526658] leading-relaxed">
+              <div>
+                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
+                  1. Global Scale & Dependencies
+                </p>
+                <p>
+                  Drawn from the landmark <strong className="text-[#1F3A2C]">World Widows Report</strong> (presented to the United Nations General Assembly under Resolution 65/189). Records over 258M widows globally and 585M dependent children, highlighting the compounding generational vulnerability when financial planning is absent.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
+                  2. Economic Vulnerability & Poverty
+                </p>
+                <p>
+                  Over 38 million widows globally are pushed into extreme poverty due to lack of asset title, legal inheritance challenges, and zero social safety nets. Structured nominee alignment, clear titling, and independent liquid reserves prevent abrupt economic shocks.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-medium text-[#1F3A2C] text-[13px] mb-1">
+                  3. India Demographic Baseline
+                </p>
+                <p>
+                  Per the <strong className="text-[#1F3A2C]">Census of India & MoSPI</strong> records, India is home to 42.4M+ widows — the largest population globally, representing ~10% of India&apos;s adult women. Combined with UBS & Harvard research noting 80%+ of married women will outlive partners, proactive financial literacy is an urgent imperative.
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

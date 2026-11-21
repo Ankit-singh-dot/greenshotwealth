@@ -54,7 +54,7 @@ const FOUNDERS: FounderItem[] = [
     contactTopic: "Financial Advisory (Saloni Mehta)",
     contactCta: "Connect with Saloni",
     extended: {
-      education: "Comm Graduate | IIM-K Alumni",
+      education: "IIM-K Alumni",
       goal: "Making Finance Work for Everyone | Helping 1 Million People Build Wealth",
       storyHeadline:
         "20 years in capital markets taught me one thing: financial knowledge shouldn't be a privilege.",
